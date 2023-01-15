@@ -33,8 +33,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         <HeadingItem className="name">Namn</HeadingItem>
         <HeadingItem className="Inskrivningsdatum">Inskrivning</HeadingItem>
         <HeadingItem className="age">Ålder</HeadingItem>
-        <HeadingItem className="parish">Socken</HeadingItem>
-        <HeadingItem className="village">Hemort</HeadingItem>
+        <HeadingItem className="parish">Sjukdom</HeadingItem>
         <HeadingItem className="discharge-date">Uskrivning</HeadingItem>
         <HeadingItem className="discharge-status">Status</HeadingItem>
       </TableHeading>
@@ -49,8 +48,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
               {person.inskrivningsdatum}
             </RowItem>
             <RowItem className="age">{person.ålder}</RowItem>
-            <RowItem className="parish">{person.socken}</RowItem>
-            <RowItem className="village">{person.by}</RowItem>
+            <RowItem className="parish">{person.sjukdom}</RowItem>
             <RowItem className="discharge-date">
               {person.utskrivningsdatum}
             </RowItem>

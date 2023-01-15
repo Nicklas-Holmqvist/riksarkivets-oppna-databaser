@@ -9,7 +9,12 @@ const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
-    setData(kurhuset.data.sort((a, b) => a.nummer - b.nummer));
+    setData(
+      kurhuset.data.sort(
+        (a, b) =>
+          Date.parse(a.inskrivningsdatum) - Date.parse(b.inskrivningsdatum)
+      )
+    );
   }, []);
 
   function handleSearchEvent(searchValue: string) {
@@ -20,7 +25,12 @@ const Kurhuset = () => {
     const result = kurhuset.data.filter((person) =>
       person.förnamn?.toLowerCase().includes(searchValue)
     );
-    setData(result.sort((a, b) => a.nummer - b.nummer));
+    setData(
+      result.sort(
+        (a, b) =>
+          Date.parse(a.inskrivningsdatum) - Date.parse(b.inskrivningsdatum)
+      )
+    );
   }
 
   return (
