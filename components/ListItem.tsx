@@ -31,15 +31,11 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
       <TableHeading>
         <HeadingItem className="number">Nr</HeadingItem>
         <HeadingItem className="name">Namn</HeadingItem>
-        <HeadingItem className="title">Titel</HeadingItem>
+        <HeadingItem className="Inskrivningsdatum">Inskrivning</HeadingItem>
         <HeadingItem className="age">Ålder</HeadingItem>
-        <HeadingItem className="parish">Socken</HeadingItem>
-        <HeadingItem className="village">Hemort</HeadingItem>
-        <HeadingItem className="care-time">Vårdtid</HeadingItem>
-        <HeadingItem className="discharge-date">Utskrivningsdatum</HeadingItem>
-        <HeadingItem className="discharge-status">
-          Utskrivningsstatus
-        </HeadingItem>
+        <HeadingItem className="parish">Sjukdom</HeadingItem>
+        <HeadingItem className="discharge-date">Uskrivning</HeadingItem>
+        <HeadingItem className="discharge-status">Status</HeadingItem>
       </TableHeading>
       <TableRowSection>
         {data.map((person, index) => (
@@ -48,18 +44,17 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
             <RowItem className="name">
               {person.förnamn + ' ' + person.efternamn}
             </RowItem>
-            <RowItem className="title">{person.titel}</RowItem>
+            <RowItem className="inskrivningsdatum">
+              {person.inskrivningsdatum}
+            </RowItem>
             <RowItem className="age">{person.ålder}</RowItem>
-            <RowItem className="parish">{person.socken}</RowItem>
-            <RowItem className="village">{person.by}</RowItem>
-            <RowItem className="care-time">{person.vårdtid}</RowItem>
+            <RowItem className="parish">{person.sjukdom}</RowItem>
             <RowItem className="discharge-date">
               {person.utskrivningsdatum}
             </RowItem>
             <RowItem className="discharge-status">
               {person.utskrivningsstatus}
             </RowItem>
-            <button>^</button>
           </TableRow>
         ))}
       </TableRowSection>
@@ -76,7 +71,7 @@ const Table = styled.div`
 
 const TableHeading = styled.div`
   display: flex;
-  width: 90%;
+  width: 100%;
 `;
 
 const TableRowSection = styled.div`
@@ -100,11 +95,12 @@ const HeadingItem = styled.span`
   width: 100%;
   :nth-child(1) {
     padding-left: 0.5rem;
-    min-width: 56px;
+    min-width: 80px;
+    max-width: 80px;
   }
   :nth-child(2) {
     padding-left: 0.5rem;
-    min-width: 216px;
+    min-width: 116px;
   }
   :nth-child(3) {
     padding-left: 0.5rem;
@@ -132,7 +128,6 @@ const HeadingItem = styled.span`
   }
   :nth-child(9) {
     padding-left: 0.5rem;
-    margin-right: 1rem;
     min-width: 166px;
   }
 `;
@@ -140,12 +135,13 @@ const HeadingItem = styled.span`
 const RowItem = styled.span`
   width: 100%;
   :nth-child(1) {
-    padding-left: 0.5rem;
-    min-width: 56px;
+    padding-left: 0.7rem;
+    min-width: 80px;
+    max-width: 80px;
   }
   :nth-child(2) {
     padding-left: 0.5rem;
-    min-width: 216px;
+    min-width: 116px;
   }
   :nth-child(3) {
     padding-left: 0.5rem;
@@ -173,7 +169,6 @@ const RowItem = styled.span`
   }
   :nth-child(9) {
     padding-left: 0.5rem;
-    margin-right: 1.2rem;
     min-width: 166px;
   }
 `;

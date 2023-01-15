@@ -8,7 +8,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       <Nav />
       <main>{children}</main>
-      <footer>Footer</footer>
+      <footer></footer>
     </>
   );
 };
