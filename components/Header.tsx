@@ -5,7 +5,7 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   return (
     <header>
-      <h2>Riksarkivets nedladdningsbara datamängder</h2>
+      <h1>Riksarkivets nedladdningsbara datamängder</h1>
     </header>
   );
 };

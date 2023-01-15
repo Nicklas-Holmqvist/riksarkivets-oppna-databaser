@@ -22,14 +22,28 @@ const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
 
 export default NavLink;
 
-const StyledLink = styled.p<StyledLinkProps>`
-  font-size: 2rem;
-  ${({ active: active }) =>
-    active
-      ? css`
-           {
-            text-decoration: underline;
-          }
-        `
-      : undefined}
+const StyledLink = styled.h2<StyledLinkProps>`
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: #e8a621;
+    ${({ active }) =>
+      active
+        ? css`
+            width: 100%;
+          `
+        : css`
+            width: 0;
+          `};
+    height: 3px;
+    bottom: -4px;
+    left: 0;
+    transition: 0.2s;
+  }
+  &:hover:after {
+    width: 100%;
+  }
 `;

@@ -1,12 +1,6 @@
 import Head from 'next/head';
 
-import kurhuset from '../data/kurhuset.json';
-
 export default function Home() {
-  const found = kurhuset.data.filter((person) =>
-    person.efternamn?.toLowerCase().includes('gun')
-  );
-
   return (
     <>
       <Head>
