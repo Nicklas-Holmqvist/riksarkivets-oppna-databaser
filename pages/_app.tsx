@@ -19,6 +19,7 @@ html,body {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  background-color: #F5F5F5;
 }
 main, footer, nav {
   max-width: 1200px;
