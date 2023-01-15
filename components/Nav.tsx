@@ -6,15 +6,22 @@ import NavLink from './NavLink';
 
 interface NavProps {}
 
+const navLinks = [
+  { text: 'Kurhuset i Östersund', href: '/kurhuset-i-ostersund' },
+];
+
 const Nav: React.FC<NavProps> = () => {
   const path = useRouter();
   return (
     <StyledNav>
-      <NavLink
-        text="Kurhuset i Östersund"
-        href="/kurhuset-i-ostersund"
-        active={path.asPath === '/kurhuset-i-ostersund'}
-      />
+      {navLinks.map((link, index) => (
+        <NavLink
+          key={index}
+          text={link.text}
+          href={link.href}
+          active={path.asPath === link.href}
+        />
+      ))}
     </StyledNav>
   );
 };
