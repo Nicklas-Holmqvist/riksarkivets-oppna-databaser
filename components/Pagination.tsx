@@ -45,7 +45,7 @@ const Pagination: React.FC<PaginationProps> = ({
   useEffect(() => {
     const pageIndex = pageNumbers.findIndex((number) => number === currentPage);
 
-    if (currentPage <= 5) {
+    if (currentPage <= 6) {
       setStart(0);
       setEnd(7);
       return;
@@ -65,29 +65,36 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const currentPages = pageNumbers.slice(start, end);
 
+  function handlePaginationArrows(value: number) {
+    paginate(value);
+    router.push(`${pathname}?page=${value}`);
+  }
+
   return (
     <nav>
       <StyledUl>
-        <Link href={`${pathname}?page=${1}`} scroll={false}>
-          <StyledArrows activePage={false}>
-            <Icon
-              onClick={() => paginate(1)}
-              src={toStart}
-              alt="start"
-              hover={true}
-            />
-          </StyledArrows>
-        </Link>
-        <Link href={`${pathname}?page=${currentPage - 1}`} scroll={false}>
-          <StyledArrows activePage={false}>
-            <Icon
-              onClick={() => paginate(currentPage - 1)}
-              src={back}
-              alt="start"
-              hover={true}
-            />
-          </StyledArrows>
-        </Link>
+        <StyledArrows activePage={false}>
+          <Icon
+            onClick={() =>
+              currentPage <= 1 ? undefined : handlePaginationArrows(1)
+            }
+            src={toStart}
+            alt="start"
+            hover={true}
+          />
+        </StyledArrows>
+        <StyledArrows activePage={false}>
+          <Icon
+            onClick={() =>
+              currentPage <= 1
+                ? undefined
+                : handlePaginationArrows(currentPage - 1)
+            }
+            src={back}
+            alt="start"
+            hover={true}
+          />
+        </StyledArrows>
 
         {currentPages.map((number: any) => (
           <Link key={number} href={`${pathname}?page=${number}`}>
@@ -103,26 +110,30 @@ const Pagination: React.FC<PaginationProps> = ({
             </StyledLi>
           </Link>
         ))}
-        <Link href={`${pathname}?page=${currentPage + 1}`} scroll={false}>
-          <StyledArrows activePage={false}>
-            <Icon
-              onClick={() => paginate(currentPage + 1)}
-              src={forward}
-              alt="slutet"
-              hover={true}
-            />
-          </StyledArrows>
-        </Link>
-        <Link href={`${pathname}?page=${pageNumbers.length}`} scroll={false}>
-          <StyledArrows activePage={false}>
-            <Icon
-              onClick={() => paginate(pageNumbers.length)}
-              src={toEnd}
-              alt="slutet"
-              hover={true}
-            />
-          </StyledArrows>
-        </Link>
+        <StyledArrows activePage={false}>
+          <Icon
+            onClick={() =>
+              currentPage >= pageNumbers.length
+                ? undefined
+                : handlePaginationArrows(currentPage + 1)
+            }
+            src={forward}
+            alt="slutet"
+            hover={true}
+          />
+        </StyledArrows>
+        <StyledArrows activePage={false}>
+          <Icon
+            onClick={
+              currentPage >= pageNumbers.length
+                ? undefined
+                : () => handlePaginationArrows(pageNumbers.length)
+            }
+            src={toEnd}
+            alt="slutet"
+            hover={true}
+          />
+        </StyledArrows>
       </StyledUl>
     </nav>
   );
