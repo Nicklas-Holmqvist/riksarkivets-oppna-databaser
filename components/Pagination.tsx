@@ -10,7 +10,7 @@ import back from '../public/back.svg';
 import forward from '../public/forward.svg';
 
 interface StyledLiProps {
-  activePage: boolean;
+  active: boolean;
 }
 interface PaginationProps {
   totalItems: number;
@@ -73,17 +73,17 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <nav>
       <StyledUl>
-        <StyledArrows activePage={false}>
+        <StyledArrows active={currentPage <= 1}>
           <Icon
             onClick={() =>
               currentPage <= 1 ? undefined : handlePaginationArrows(1)
             }
             src={toStart}
             alt="start"
-            hover={true}
+            size={14}
           />
         </StyledArrows>
-        <StyledArrows activePage={false}>
+        <StyledArrows active={currentPage <= 1}>
           <Icon
             onClick={() =>
               currentPage <= 1
@@ -92,7 +92,7 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             src={back}
             alt="start"
-            hover={true}
+            size={14}
           />
         </StyledArrows>
 
@@ -104,13 +104,13 @@ const Pagination: React.FC<PaginationProps> = ({
                   ? undefined
                   : () => paginate(number)
               }
-              activePage={Number(query.page) === number}
+              active={Number(query.page) === number}
             >
               {number}
             </StyledLi>
           </Link>
         ))}
-        <StyledArrows activePage={false}>
+        <StyledArrows active={currentPage >= pageNumbers.length}>
           <Icon
             onClick={() =>
               currentPage >= pageNumbers.length
@@ -119,10 +119,10 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             src={forward}
             alt="slutet"
-            hover={true}
+            size={14}
           />
         </StyledArrows>
-        <StyledArrows activePage={false}>
+        <StyledArrows active={currentPage >= pageNumbers.length}>
           <Icon
             onClick={
               currentPage >= pageNumbers.length
@@ -131,7 +131,7 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             src={toEnd}
             alt="slutet"
-            hover={true}
+            size={14}
           />
         </StyledArrows>
       </StyledUl>
@@ -152,6 +152,7 @@ const StyledUl = styled.ul`
 const StyledLi = styled.li<StyledLiProps>`
   box-sizing: border-box;
   width: 3rem;
+  height: 2.5rem;
   list-style-type: none;
   text-align: center;
   margin: 0 auto;
@@ -162,8 +163,8 @@ const StyledLi = styled.li<StyledLiProps>`
     color: white;
     background-color: black;
   }
-  ${({ activePage }) =>
-    activePage
+  ${({ active: active }) =>
+    active
       ? css`
           background-color: black;
           color: white;
@@ -171,11 +172,23 @@ const StyledLi = styled.li<StyledLiProps>`
       : undefined}
 `;
 
-const StyledArrows = styled(StyledLi)`
-  border: none;
-  padding: 0.8rem 0.2rem 0.4rem 0.2rem;
+const StyledArrows = styled.li<StyledLiProps>`
+  box-sizing: border-box;
+  width: 3rem;
+  height: 2.5rem;
+  list-style-type: none;
+  margin: auto;
+  padding: 0.8rem 0.8rem;
   background-color: white;
-  :hover {
-    background-color: white;
+  transition: all ease 0.3s;
+  cursor: pointer;
   }
+  ${({ active: active }) =>
+    active
+      ? css`
+          background-color: #dbdbdb;
+          cursor: unset;
+          color: white;
+        `
+      : undefined}
 `;

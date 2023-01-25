@@ -6,7 +6,6 @@ export interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
   size?: number;
-  hover: boolean;
 }
 
 interface StyledIconProps {
@@ -17,34 +16,24 @@ export const Icon: React.FC<IconProps> = ({
   src,
   alt,
   size = 18,
-  hover,
   ...props
 }) => {
   if (!src) {
     return <span>{alt}</span>;
   }
   return (
-    <div {...props}>
-      <StyledIcon
-        hover={hover}
-        src={src}
-        height={size}
-        width={size}
-        alt={alt}
-      />
-    </div>
+    <StyledIconContainer {...props}>
+      <StyledIcon src={src} height={size} width={size} alt={alt} />
+    </StyledIconContainer>
   );
 };
 
+const StyledIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyledIcon = styled(Image)<StyledIconProps>`
-  cursor: pointer;
   transition: all 0, 2s;
-  ${({ hover }) =>
-    hover
-      ? css`
-          :hover {
-            transform: scale(1.1);
-          }
-        `
-      : undefined};
 `;
