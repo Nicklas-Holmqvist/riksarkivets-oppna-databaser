@@ -8,10 +8,6 @@ export interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: number;
 }
 
-interface StyledIconProps {
-  hover: boolean;
-}
-
 export const Icon: React.FC<IconProps> = ({
   src,
   alt,
@@ -34,6 +30,6 @@ const StyledIconContainer = styled.div`
   align-items: center;
 `;
 
-const StyledIcon = styled(Image)<StyledIconProps>`
+const StyledIcon = styled(Image)`
   transition: all 0, 2s;
 `;

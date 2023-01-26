@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+
+import Search from '../components/Search';
+import kurhuset from '../data/kurhuset.json';
 import ListItem from '../components/ListItem';
 import Pagination from '../components/Pagination';
-import Search from '../components/Search';
-
-import kurhuset from '../data/kurhuset.json';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);

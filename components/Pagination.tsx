@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
+import styled, { css } from 'styled-components';
+import React, { useEffect, useState } from 'react';
 
 import { Icon } from './Icon';
+import back from '../public/back.svg';
 import toEnd from '../public/toEnd.svg';
 import toStart from '../public/toStart.svg';
-import back from '../public/back.svg';
 import forward from '../public/forward.svg';
 
 interface StyledLiProps {
