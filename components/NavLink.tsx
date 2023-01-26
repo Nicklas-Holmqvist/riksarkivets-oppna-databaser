@@ -14,7 +14,7 @@ interface StyledLinkProps {
 
 const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
   return (
-    <Link href={`${href}`}>
+    <Link href={`${href}?page=1`}>
       <StyledLink active={active}>{text}</StyledLink>
     </Link>
   );

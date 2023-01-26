@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ListItem from '../components/ListItem';
-import Search from '../components/Search';
+import React, { useEffect, useState } from 'react';
 
+import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
+import ListItem from '../components/ListItem';
+import Pagination from '../components/Pagination';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
     setData(
@@ -19,6 +26,10 @@ const Kurhuset = () => {
 
   function handleSearchEvent(searchValue: string) {
     return fetchSearchResult(searchValue);
+  }
+
+  function paginate(pageNumber: number) {
+    return setCurrentPage(pageNumber);
   }
 
   function fetchSearchResult(searchValue: string) {
@@ -39,7 +50,12 @@ const Kurhuset = () => {
         <Search handleSearchEvent={handleSearchEvent} />
       </SearchSection>
       <section>
-        <ListItem data={data} />
+        <ListItem data={currentPosts} />
+        <Pagination
+          totalItems={data.length}
+          itemsPerPage={itemsPerPage}
+          paginate={paginate}
+        />
       </section>
     </main>
   );
