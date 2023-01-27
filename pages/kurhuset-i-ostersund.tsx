@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
-import ListItem from '../components/ListItem';
 import Pagination from '../components/Pagination';
+import TableList from '../components/TableList';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
@@ -50,7 +50,7 @@ const Kurhuset = () => {
         <Search handleSearchEvent={handleSearchEvent} />
       </SearchSection>
       <section>
-        <ListItem data={currentPosts} />
+        <TableList data={currentPosts} />
         <Pagination
           totalItems={data.length}
           itemsPerPage={itemsPerPage}

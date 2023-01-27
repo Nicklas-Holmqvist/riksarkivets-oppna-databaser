@@ -14,10 +14,13 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const GlobalStyles = createGlobalStyle`
-html,body {
+*{
   margin: 0px;
   padding: 0px;
-  box-sizing: border-box;
+  box-sizing: border-box;  
+}
+
+html, body {
   background-color: #F5F5F5;
 }
 main, footer, nav {
@@ -34,4 +37,19 @@ h1 {
   font-size: 1.5rem;
   text-align: center;
   padding: 1rem 0;
+}
+
+h2 {
+
+}
+
+h3 {
+  font-weight: normal;
+  padding: 0.5rem 0
+
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }`;
