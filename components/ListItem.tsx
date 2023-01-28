@@ -32,6 +32,7 @@ const TableRowSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  transition: all 1s ease-in;
 `;
 
 const TableRow = styled.div`

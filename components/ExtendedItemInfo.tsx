@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Person } from './TableList';
 
 interface ExtendedItemInfoProps {
@@ -11,75 +11,88 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
     <StyledExtendedSection>
       <h3>
         <StyledSpan>Nummber {information.nummer}</StyledSpan>,{' '}
-        {information.förnamn} {information.efternamn}
+        {information.förnamn}{' '}
+        {information.efternamn != undefined ? information.efternamn : ''}
       </h3>
       <StyledInformationSection>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Inskrivningsdatum: </StyledSpan>
-            {information.inskrivningsdatum}
+            {information.inskrivningsdatum != undefined
+              ? information.inskrivningsdatum
+              : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Titel: </StyledSpan>
-            {information.titel}
+            {information.titel != undefined ? information.titel : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Ålder: </StyledSpan>
-            {information.ålder}
+            {information.ålder != undefined ? information.ålder : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Familj: </StyledSpan>
-            {information.familj}
+            {information.familj != undefined ? information.familj : '-'}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Socken: </StyledSpan>
-            {information.socken}
+            {information.socken != undefined ? information.socken : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Hemort: </StyledSpan>
-            {information.by}
+            {information.by != undefined ? information.by : '-'}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
+      <hr />
       <StyledInformationSection>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Sjukdom: </StyledSpan>
-            {information.sjukdom}
+            {information.sjukdom != undefined ? information.sjukdom : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Beskrivning: </StyledSpan>
-            {information.sjukdomsbeskrivning}
+            {information.sjukdomsbeskrivning != undefined
+              ? information.sjukdomsbeskrivning
+              : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Behandling: </StyledSpan>
-            {information.sjukdomsbehandling}
+            {information.sjukdomsbehandling != undefined
+              ? information.sjukdomsbeskrivning
+              : '-'}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
+      <hr />
       <StyledInformationSection>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsdatum: </StyledSpan>
-            {information.utskrivningsdatum}
+            {information.utskrivningsdatum != undefined
+              ? information.utskrivningsdatum
+              : '-'}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Anmärkning: </StyledSpan>
-            {information.anmärkning}
+            {information.anmärkning != undefined ? information.anmärkning : '-'}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Vårdtid: </StyledSpan>
-            {information.vårdtid}
+            {information.vårdtid != undefined ? information.vårdtid : '-'}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsdatum: </StyledSpan>
-            {information.utskrivningsstatus}
+            {information.utskrivningsstatus != undefined
+              ? information.utskrivningsstatus
+              : '-'}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -89,6 +102,15 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
 
 export default ExtendedItemInfo;
 
+const animateExtendedSection = keyframes`
+0% {
+  opacity: 0;
+}
+100% {
+  opacity: 1;
+}
+`;
+
 const StyledExtendedSection = styled.div`
   width: 97%;
   margin: 0 auto;
@@ -96,6 +118,7 @@ const StyledExtendedSection = styled.div`
   margin-bottom: 0.3rem;
   padding: 0.5rem 1rem;
   background-color: white;
+  animation: ${animateExtendedSection} 0.5s forwards;
 `;
 
 const StyledInformationSection = styled.div`

@@ -14,10 +14,12 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const GlobalStyles = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap');
 *{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;  
+  font-family: 'Inter', sans-serif;
 }
 
 html, body {
@@ -52,4 +54,9 @@ h3 {
 a {
   text-decoration: none;
   color: black;
+}
+
+hr {
+  margin: 0.5rem;
+  border-top: lightgrey;
 }`;
