@@ -19,7 +19,7 @@ const Nav: React.FC<NavProps> = () => {
           key={index}
           text={link.text}
           href={link.href}
-          active={path.asPath === link.href}
+          active={path.asPath.includes(link.href)}
         />
       ))}
     </StyledNav>

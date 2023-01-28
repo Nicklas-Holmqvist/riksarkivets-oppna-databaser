@@ -142,9 +142,9 @@ const Pagination: React.FC<PaginationProps> = ({
 export default Pagination;
 
 const StyledUl = styled.ul`
-  width: 20rem;
+  width: 32rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0 auto;
   padding: 1rem 0;
 `;
