@@ -7,42 +7,50 @@ interface ExtendedItemInfoProps {
 }
 
 const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
+  const inskrivningsdatum = new Date(information.inskrivningsdatum).getTime();
+  const utskrivningsdatum = new Date(information.utskrivningsdatum).getTime();
+  const difference =
+    (utskrivningsdatum - inskrivningsdatum) / (1000 * 3600 * 24);
+
+  function controlValidText(text: string) {
+    if (text === undefined) return '-';
+    else return text;
+  }
+
   return (
     <StyledExtendedSection>
       <h3>
-        <StyledSpan>Nummber {information.nummer}</StyledSpan>,{' '}
+        <StyledSpan>Nummer {information.nummer}</StyledSpan>,{' '}
         {information.förnamn}{' '}
-        {information.efternamn != undefined ? information.efternamn : ''}
+        {information.efternamn !== undefined ? information.efternamn : ''}
       </h3>
       <StyledInformationSection>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Inskrivningsdatum: </StyledSpan>
-            {information.inskrivningsdatum != undefined
-              ? information.inskrivningsdatum
-              : '-'}
+            {controlValidText(information.inskrivningsdatum)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Titel: </StyledSpan>
-            {information.titel != undefined ? information.titel : '-'}
+            {controlValidText(information.titel)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Ålder: </StyledSpan>
-            {information.ålder != undefined ? information.ålder : '-'}
+            {controlValidText(information.ålder)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Familj: </StyledSpan>
-            {information.familj != undefined ? information.familj : '-'}
+            {controlValidText(information.familj)}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Socken: </StyledSpan>
-            {information.socken != undefined ? information.socken : '-'}
+            {controlValidText(information.socken)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Hemort: </StyledSpan>
-            {information.by != undefined ? information.by : '-'}
+            {controlValidText(information.by)}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -51,19 +59,15 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Sjukdom: </StyledSpan>
-            {information.sjukdom != undefined ? information.sjukdom : '-'}
+            {controlValidText(information.sjukdom)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Beskrivning: </StyledSpan>
-            {information.sjukdomsbeskrivning != undefined
-              ? information.sjukdomsbeskrivning
-              : '-'}
+            {controlValidText(information.sjukdomsbeskrivning)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Behandling: </StyledSpan>
-            {information.sjukdomsbehandling != undefined
-              ? information.sjukdomsbeskrivning
-              : '-'}
+            {controlValidText(information.sjukdomsbehandling)}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -72,27 +76,25 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsdatum: </StyledSpan>
-            {information.utskrivningsdatum != undefined
-              ? information.utskrivningsdatum
-              : '-'}
+            {controlValidText(information.utskrivningsdatum)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Anmärkning: </StyledSpan>
-            {information.anmärkning != undefined ? information.anmärkning : '-'}
+            {controlValidText(information.anmärkning)}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Vårdtid: </StyledSpan>
-            {information.vårdtid != undefined ? information.vårdtid : '-'}
+            {information.vårdtid != undefined
+              ? information.vårdtid
+              : difference + ' dagar'}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsdatum: </StyledSpan>
-            {information.utskrivningsstatus != undefined
-              ? information.utskrivningsstatus
-              : '-'}
+            {controlValidText(information.utskrivningsstatus)}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -113,6 +115,7 @@ const animateExtendedSection = keyframes`
 
 const StyledExtendedSection = styled.div`
   width: 97%;
+  top: 20rem;
   margin: 0 auto;
   margin-top: -0.2rem;
   margin-bottom: 0.3rem;

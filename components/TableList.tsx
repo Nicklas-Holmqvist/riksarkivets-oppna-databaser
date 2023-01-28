@@ -14,7 +14,7 @@ export interface Person {
   efternamn: string;
   ålder: string;
   titel: string;
-  familj?: string;
+  familj: string;
   by: string;
   socken: string;
   sjukdom: string;
@@ -22,7 +22,7 @@ export interface Person {
   sjukdomsbehandling: string;
   utskrivningsdatum: string;
   utskrivningsstatus: string;
-  vårdtid?: string;
+  vårdtid: string;
   anmärkning: string;
   arkiv: string;
   volym: number;

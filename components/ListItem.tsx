@@ -14,7 +14,10 @@ const ListItem: React.FC<ListItemProps> = ({ person }) => {
     <TableRowSection>
       <TableRow onClick={() => setOpen(!open)}>
         <RowItem>{person.nummer}</RowItem>
-        <RowItem>{person.förnamn + ' ' + person.efternamn}</RowItem>
+        <RowItem>
+          {person.förnamn + ' '}
+          {person.efternamn !== undefined ? person.efternamn : ''}
+        </RowItem>
         <RowItem>{person.inskrivningsdatum}</RowItem>
         <RowItem>{person.ålder}</RowItem>
         <RowItem>{person.sjukdom}</RowItem>
