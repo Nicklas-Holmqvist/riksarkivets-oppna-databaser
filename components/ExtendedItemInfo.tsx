@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+
 import { Person } from './TableList';
 
 interface ExtendedItemInfoProps {
