@@ -40,7 +40,6 @@ const TableRowSection = styled.div`
 
 const TableRow = styled.div`
   display: flex;
-  box-sizing: border-box;
   padding: 0.6rem 0;
   margin: 0.2rem 0;
   background-color: #fff;
@@ -51,41 +50,29 @@ const TableRow = styled.div`
 
 const RowItem = styled.span`
   width: 100%;
+  padding-left: 0.8rem;
   :nth-child(1) {
-    padding-left: 0.7rem;
-    min-width: 80px;
-    max-width: 80px;
+    width: 50px;
   }
   :nth-child(2) {
-    padding-left: 0.5rem;
-    min-width: 116px;
+    max-width: 300px;
   }
   :nth-child(3) {
-    padding-left: 0.5rem;
-    min-width: 116px;
+    max-width: 140px;
   }
   :nth-child(4) {
-    padding-left: 0.5rem;
-    min-width: 76px;
+    max-width: 90px;
   }
   :nth-child(5) {
-    padding-left: 0.5rem;
-    min-width: 116px;
+    max-width: 140px;
   }
   :nth-child(6) {
-    padding-left: 0.5rem;
-    min-width: 166px;
+    max-width: 140px;
   }
   :nth-child(7) {
-    padding-left: 0.5rem;
-    min-width: 91px;
+    max-width: 120px;
   }
   :nth-child(8) {
-    padding-left: 0.5rem;
-    min-width: 166px;
-  }
-  :nth-child(9) {
-    padding-left: 0.5rem;
-    min-width: 166px;
+    max-width: 120px;
   }
 `;
