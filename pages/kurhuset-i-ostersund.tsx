@@ -5,6 +5,7 @@ import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
 import Pagination from '../components/Pagination';
 import TableList from '../components/TableList';
+import NoSearchResult from '../components/NoSearchResult';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
@@ -50,12 +51,18 @@ const Kurhuset = () => {
         <Search handleSearchEvent={handleSearchEvent} />
       </SearchSection>
       <section>
-        <TableList data={currentPosts} />
-        <Pagination
-          totalItems={data.length}
-          itemsPerPage={itemsPerPage}
-          paginate={paginate}
-        />
+        {currentPosts.length !== 0 ? (
+          <TableList data={currentPosts} />
+        ) : undefined}
+        {currentPosts.length !== 0 ? (
+          <Pagination
+            totalItems={data.length}
+            itemsPerPage={itemsPerPage}
+            paginate={paginate}
+          />
+        ) : (
+          <NoSearchResult />
+        )}
       </section>
     </main>
   );
