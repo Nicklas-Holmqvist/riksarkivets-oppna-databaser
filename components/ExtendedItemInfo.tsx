@@ -94,7 +94,7 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
-            <StyledSpan>Utskrivningsdatum: </StyledSpan>
+            <StyledSpan>Utskrivningsstatus: </StyledSpan>
             {controlValidText(information.utskrivningsstatus)}
           </StyledParagraph>
         </StyledInformationContainer>
