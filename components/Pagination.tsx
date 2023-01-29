@@ -71,7 +71,7 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <nav>
+    <StyledNavigation>
       <StyledUl>
         <StyledArrows active={currentPage <= 1}>
           <Icon
@@ -135,27 +135,26 @@ const Pagination: React.FC<PaginationProps> = ({
           />
         </StyledArrows>
       </StyledUl>
-    </nav>
+    </StyledNavigation>
   );
 };
 
 export default Pagination;
 
-const StyledUl = styled.ul`
-  width: 32rem;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
+const StyledNavigation = styled.nav`
   padding: 1rem 0;
 `;
 
+const StyledUl = styled.ul`
+  display: flex;
+  justify-content: center;
+`;
+
 const StyledLi = styled.li<StyledLiProps>`
-  box-sizing: border-box;
   width: 3rem;
   height: 2.5rem;
   list-style-type: none;
   text-align: center;
-  margin: 0 auto;
   padding: 0.7rem 0.9rem;
   background-color: white;
   transition: all ease 0.3s;
@@ -177,7 +176,6 @@ const StyledArrows = styled.li<StyledLiProps>`
   width: 3rem;
   height: 2.5rem;
   list-style-type: none;
-  margin: auto;
   padding: 0.8rem 0.8rem;
   background-color: white;
   transition: all ease 0.3s;
