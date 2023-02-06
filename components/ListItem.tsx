@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Person } from './TableList';
 import ExtendedItemInfo from './ExtendedItemInfo';
 
+interface TableRowProps {
+  active: boolean;
+}
 interface ListItemProps {
   person: Person;
 }
@@ -12,7 +15,7 @@ const ListItem: React.FC<ListItemProps> = ({ person }) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <TableRowSection>
-      <TableRow onClick={() => setOpen(!open)}>
+      <TableRow active={open} onClick={() => setOpen(!open)}>
         <RowItem>{person.nummer}</RowItem>
         <RowItem>
           {person.förnamn + ' '}
@@ -23,6 +26,9 @@ const ListItem: React.FC<ListItemProps> = ({ person }) => {
         <RowItem>{person.sjukdom}</RowItem>
         <RowItem>{person.utskrivningsdatum}</RowItem>
         <RowItem>{person.utskrivningsstatus}</RowItem>
+        <StyledButton onClick={() => setOpen(!open)}>
+          {open ? 'Stäng' : 'Läs mer'}
+        </StyledButton>
       </TableRow>
       {open ? <ExtendedItemInfo information={person} /> : undefined}
     </TableRowSection>
@@ -38,19 +44,33 @@ const TableRowSection = styled.div`
   transition: all 1s ease-in;
 `;
 
-const TableRow = styled.div`
+const TableRow = styled.div<TableRowProps>`
+  position: relative;
   display: flex;
-  padding: 0.6rem 0;
+  padding: 0.6rem 0.8rem;
   margin: 0.2rem 0;
   background-color: #fff;
   border-radius: 0.2rem;
-  box-shadow: 2px 2px 5px lightgrey;
+  cursor: pointer;
+  ${({ active }) =>
+    active
+      ? css`
+          box-shadow: 2px 2px 5px lightgrey;
+          transform: scaleZ(5);
+        `
+      : css`
+          box-shadow: unset;
+          :hover {
+            box-shadow: 2px 2px 5px lightgrey;
+            transform: scaleZ(5);
+          }
+        `};
+
   z-index: 1000;
 `;
 
 const RowItem = styled.span`
   width: 100%;
-  padding-left: 0.8rem;
   :nth-child(1) {
     width: 50px;
   }
@@ -72,7 +92,14 @@ const RowItem = styled.span`
   :nth-child(7) {
     max-width: 120px;
   }
-  :nth-child(8) {
-    max-width: 120px;
-  }
+`;
+
+const StyledButton = styled.button`
+  position: absolute;
+  right: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  min-width: 80px;
 `;
