@@ -62,6 +62,7 @@ const Table = styled.div`
 const TableHeading = styled.div`
   display: flex;
   width: 100%;
+  padding-left: 0.8rem;
 `;
 
 const TableRowSection = styled.div`
@@ -73,8 +74,6 @@ const TableRowSection = styled.div`
 const HeadingItem = styled.span`
   font-weight: bold;
   width: 100%;
-  padding-left: 0.8rem;
-  padding-bottom: 0.2rem;
   :nth-child(1) {
     width: 50px;
   }
@@ -96,7 +95,9 @@ const HeadingItem = styled.span`
   :nth-child(7) {
     max-width: 120px;
   }
-  :nth-child(8) {
-    max-width: 120px;
+  @media (max-width: 1024px) {
+    :nth-child(7) {
+      padding-right: 8.5rem;
+    }
   }
 `;
