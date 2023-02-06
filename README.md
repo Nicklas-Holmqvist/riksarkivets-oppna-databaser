@@ -22,3 +22,5 @@ Färgerna är valda efter Riksarkivets egna färger.
 
 ![image](https://user-images.githubusercontent.com/70426543/216139966-d64b2221-a1b6-480e-b28d-a0e74eddb19a.png)
 
+## Följ framstegen
+[Vercel-sida](https://historiska-databaser.vercel.app/kurhuset-i-ostersund?page=1)
