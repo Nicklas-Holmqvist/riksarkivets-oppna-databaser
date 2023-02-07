@@ -1,49 +1,68 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+import search from '../public/search.svg';
+import reset from '../public/reset.svg';
+import { Icon } from './Icon';
+
 interface SearchProps {
-  handleSearchEvent: (searchValue: string) => void;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleResetEvent: () => void;
+  searchValue: string;
 }
 
-const Search: React.FC<SearchProps> = ({ handleSearchEvent }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchValue(event.target.value);
-  }
+const Search: React.FC<SearchProps> = ({
+  onInputChange,
+  handleResetEvent,
+  searchValue,
+}) => {
   return (
-    <form
-      onSubmit={(event: React.ChangeEvent<SubmitEventInit>) => {
-        event.preventDefault();
-        handleSearchEvent(searchValue);
-      }}
-    >
-      <label>
-        <StyledTextInput
-          type="text"
-          value={searchValue}
-          onChange={handleChange}
-          placeholder="Sök på person"
-        />
-      </label>
-      <StyledButtonInput type="submit" value="Sök" />
-    </form>
+    <StyledForm>
+      <StyledTextInput
+        type="text"
+        value={searchValue}
+        onChange={(event) => onInputChange(event)}
+        maxLength={25}
+        placeholder="Sök på namn"
+      />
+      {searchValue.length > 0 ? (
+        <StyledResetIcon onClick={handleResetEvent}>
+          <Icon src={reset} alt="reset" size={14} />
+        </StyledResetIcon>
+      ) : (
+        <StyledSearchIcon>
+          <Icon src={search} alt="start" size={14} />
+        </StyledSearchIcon>
+      )}
+    </StyledForm>
   );
 };
 
 export default Search;
 
-const StyledTextInput = styled.input`
-  box-sizing: border-box;
-  border: none;
-  border-bottom: solid 1px black;
-  padding: 0.5rem 0.8rem;
+const StyledForm = styled.form`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
 `;
 
-const StyledButtonInput = styled.input`
-  border: none;
+const StyledTextInput = styled.input`
+  width: 18.75rem;
+  padding: 0.5rem 0.8rem;
+  color: grey;
   background-color: white;
-  padding: 0.5rem 0.5rem;
-  border-bottom: solid 1px black;
+  border: none;
+  border-radius: 0.2rem;
+  ::placeholder {
+    color: grey;
+  }
+`;
+
+const StyledSearchIcon = styled.div`
+  align-self: center;
+  margin-left: -1.5rem;
+`;
+
+const StyledResetIcon = styled(StyledSearchIcon)`
   cursor: pointer;
 `;

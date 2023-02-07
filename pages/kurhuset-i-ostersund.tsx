@@ -1,16 +1,17 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
-import Pagination from '../components/Pagination';
 import TableList from '../components/TableList';
+import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(20);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -25,8 +26,28 @@ const Kurhuset = () => {
     );
   }, []);
 
-  function handleSearchEvent(searchValue: string) {
-    return fetchSearchResult(searchValue);
+  const prevSearchValueRef = useRef(searchValue);
+
+  function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchValue(event.target.value);
+    prevSearchValueRef.current = searchValue;
+    if (event.target.value.length > 3)
+      return handleSearchEvent(event.target.value);
+    if (
+      event.target.value.length === 0 &&
+      prevSearchValueRef.current.length <= 1
+    )
+      return handleSearchEvent('');
+  }
+
+  function handleSearchEvent(event: string) {
+    return fetchSearchResult(event);
+  }
+
+  function handleResetEvent() {
+    prevSearchValueRef.current = '';
+    setSearchValue('');
+    handleSearchEvent('');
   }
 
   function paginate(pageNumber: number) {
@@ -48,7 +69,11 @@ const Kurhuset = () => {
   return (
     <main>
       <SearchSection>
-        <Search handleSearchEvent={handleSearchEvent} />
+        <Search
+          onInputChange={onInputChange}
+          handleResetEvent={handleResetEvent}
+          searchValue={searchValue}
+        />
       </SearchSection>
       <section>
         {currentPosts.length !== 0 ? (
