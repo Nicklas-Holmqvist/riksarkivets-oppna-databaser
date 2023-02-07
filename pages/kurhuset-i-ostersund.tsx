@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
-import Pagination from '../components/Pagination';
 import TableList from '../components/TableList';
+import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 
 const Kurhuset = () => {
