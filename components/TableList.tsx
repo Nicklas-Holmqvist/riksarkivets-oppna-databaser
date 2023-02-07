@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ListItem from './ListItem';
+import MobileListItem from './MobileListItem';
 
 interface TableListProps {
   data: Person[];
@@ -30,21 +31,41 @@ export interface Person {
 }
 
 const TableList: React.FC<TableListProps> = ({ data }) => {
+  const [mobileView, setMobileView] = useState<boolean>(false);
+
+  const changeMobileView = () => {
+    const innerWidth = window.innerWidth;
+    if (innerWidth <= 800) setMobileView(true);
+    else {
+      setMobileView(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', changeMobileView);
+  });
+
   return (
     <Table>
-      <TableHeading>
-        <HeadingItem>Nr</HeadingItem>
-        <HeadingItem>Namn</HeadingItem>
-        <HeadingItem>Inskrivning</HeadingItem>
-        <HeadingItem>Ålder</HeadingItem>
-        <HeadingItem>Sjukdom</HeadingItem>
-        <HeadingItem>Uskrivning</HeadingItem>
-        <HeadingItem>Status</HeadingItem>
-      </TableHeading>
+      {!mobileView ? (
+        <TableHeading>
+          <HeadingItem>Nr</HeadingItem>
+          <HeadingItem>Namn</HeadingItem>
+          <HeadingItem>Inskrivning</HeadingItem>
+          <HeadingItem>Ålder</HeadingItem>
+          <HeadingItem>Sjukdom</HeadingItem>
+          <HeadingItem>Uskrivning</HeadingItem>
+          <HeadingItem>Status</HeadingItem>
+        </TableHeading>
+      ) : undefined}
       <TableRowSection>
         {data.map((person) => (
           <div key={person.id}>
-            <ListItem person={person} />
+            {mobileView ? (
+              <MobileListItem person={person} />
+            ) : (
+              <ListItem person={person} />
+            )}
           </div>
         ))}
       </TableRowSection>
@@ -63,12 +84,16 @@ const TableHeading = styled.div`
   display: flex;
   width: 100%;
   padding-left: 0.8rem;
+  padding-bottom: 0.3rem;
 `;
 
 const TableRowSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  @media (max-width: 800px) {
+    padding: 0 0.5rem;
+  }
 `;
 
 const HeadingItem = styled.span`

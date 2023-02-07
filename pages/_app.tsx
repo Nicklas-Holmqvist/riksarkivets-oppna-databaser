@@ -48,7 +48,7 @@ h2 {
 h3 {
   font-size: 1rem;
   font-weight: normal;
-  padding: 0.5rem 0
+  padding: 0.2rem 0;
 }
 
 a {
