@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import search from '../public/search.svg';
@@ -6,32 +6,27 @@ import reset from '../public/reset.svg';
 import { Icon } from './Icon';
 
 interface SearchProps {
-  handleSearchEvent: (searchValue: string) => void;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleResetEvent: () => void;
+  searchValue: string;
 }
 
-const Search: React.FC<SearchProps> = ({ handleSearchEvent }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchValue(event.target.value);
-  }
-
-  useEffect(() => {
-    if (searchValue.length < 1) return handleSearchEvent('');
-    if (searchValue.length >= 3) return handleSearchEvent(searchValue);
-  }, [handleSearchEvent, searchValue]);
-
+const Search: React.FC<SearchProps> = ({
+  onInputChange,
+  handleResetEvent,
+  searchValue,
+}) => {
   return (
     <StyledForm>
       <StyledTextInput
         type="text"
         value={searchValue}
-        onChange={handleChange}
+        onChange={(event) => onInputChange(event)}
         maxLength={25}
         placeholder="Sök på namn"
       />
       {searchValue.length > 0 ? (
-        <StyledResetIcon onClick={() => setSearchValue('')}>
+        <StyledResetIcon onClick={handleResetEvent}>
           <Icon src={reset} alt="reset" size={14} />
         </StyledResetIcon>
       ) : (
