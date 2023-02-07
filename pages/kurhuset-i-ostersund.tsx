@@ -70,7 +70,6 @@ const Kurhuset = () => {
     <main>
       <SearchSection>
         <Search
-          handleSearchEvent={handleSearchEvent}
           onInputChange={onInputChange}
           handleResetEvent={handleResetEvent}
           searchValue={searchValue}
