@@ -127,15 +127,18 @@ const StyledExtendedSection = styled.div`
 
 const StyledInformationSection = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const StyledInformationContainer = styled.div`
-  width: 100%;
-  max-width: 20rem;
+  width: 20rem;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const StyledParagraph = styled.p`
-  padding: 0.3rem 0;
+  padding: 0.2rem 0;
 `;
 
 const StyledSpan = styled.span`

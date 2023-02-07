@@ -32,5 +32,9 @@ const StyledNav = styled.nav`
   display: flex;
   box-sizing: border-box;
   height: 3.5rem;
-  padding-top: 1.5rem;
+  padding-top: 1.2rem;
+  margin-bottom: 0.5rem;
+  @media (max-width: 1240px) {
+    padding-left: 0.8rem;
+  }
 `;

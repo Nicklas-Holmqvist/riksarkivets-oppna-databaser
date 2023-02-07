@@ -44,6 +44,9 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   margin-bottom: 0.5rem;
+  @media (max-width: 480px) {
+    padding: 0 0.5rem;
+  }
 `;
 
 const StyledTextInput = styled.input`
@@ -53,6 +56,9 @@ const StyledTextInput = styled.input`
   background-color: white;
   border: none;
   border-radius: 0.2rem;
+  @media (max-width: 480px) {
+    width: 100%;
+  }
   ::placeholder {
     color: grey;
   }
@@ -61,6 +67,7 @@ const StyledTextInput = styled.input`
 const StyledSearchIcon = styled.div`
   align-self: center;
   margin-left: -1.5rem;
+  padding-right: 0.7rem;
 `;
 
 const StyledResetIcon = styled(StyledSearchIcon)`

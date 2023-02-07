@@ -27,8 +27,11 @@ const Pagination: React.FC<PaginationProps> = ({
   const { query, push, pathname, asPath } = router;
   let pageNumbers: number[] = [];
 
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(7);
+  const baseStart: number = 0;
+  const baseEnd: number = 5;
+
+  const [start, setStart] = useState(baseStart);
+  const [end, setEnd] = useState<number>(baseEnd);
 
   const currentPage: number = Number(query.page);
 
@@ -45,19 +48,19 @@ const Pagination: React.FC<PaginationProps> = ({
   useEffect(() => {
     const pageIndex = pageNumbers.findIndex((number) => number === currentPage);
 
-    if (currentPage <= 6) {
-      setStart(0);
-      setEnd(7);
+    if (currentPage <= 5) {
+      setStart(baseStart);
+      setEnd(baseEnd);
       return;
     }
-    if (pageIndex + 3 >= pageNumbers.length) {
+    if (pageIndex + 2 >= pageNumbers.length) {
       const lastPages = pageNumbers.length;
-      setStart(lastPages - 7);
+      setStart(lastPages - 5);
       setEnd(lastPages);
       return;
     } else {
-      setStart(currentPage - 4);
-      setEnd(currentPage + 3);
+      setStart(currentPage - 3);
+      setEnd(currentPage + 2);
       return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,6 +151,9 @@ const StyledNavigation = styled.nav`
 const StyledUl = styled.ul`
   display: flex;
   justify-content: center;
+  @media (max-width: 800px) {
+    padding: 0 0.5rem;
+  }
 `;
 
 const StyledLi = styled.li<StyledLiProps>`
@@ -161,6 +167,10 @@ const StyledLi = styled.li<StyledLiProps>`
   :hover {
     color: white;
     background-color: black;
+  }
+  @media (max-width: 800px) {
+    width: 2.5rem;
+    heigth: 2rem;
   }
   ${({ active: active }) =>
     active
@@ -180,6 +190,10 @@ const StyledArrows = styled.li<StyledLiProps>`
   background-color: white;
   transition: all ease 0.3s;
   cursor: pointer;
+  }
+  @media (max-width: 400px) {
+    width: 2rem;
+    heigth: 2rem;
   }
   ${({ active: active }) =>
     active
