@@ -17,7 +17,7 @@ const Search: React.FC<SearchProps> = ({
   searchValue,
 }) => {
   return (
-    <StyledForm>
+    <StyledForm onSubmit={(event) => event.preventDefault()}>
       <StyledTextInput
         type="text"
         value={searchValue}
