@@ -45,7 +45,7 @@ const StyledForm = styled.form`
   justify-content: center;
   margin-bottom: 0.5rem;
   @media (max-width: 480px) {
-    padding: 0 0.5rem;
+    padding: 0 1rem;
   }
 `;
 
