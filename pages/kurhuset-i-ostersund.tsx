@@ -37,7 +37,7 @@ const Kurhuset = () => {
       event.target.value.length === 0 &&
       prevSearchValueRef.current.length <= 1
     )
-      return handleSearchEvent('');
+      return handleResetEvent();
   }
 
   function handleSearchEvent(event: string) {
@@ -48,6 +48,7 @@ const Kurhuset = () => {
     prevSearchValueRef.current = '';
     setSearchValue('');
     handleSearchEvent('');
+    setCurrentPage(1);
   }
 
   function paginate(pageNumber: number) {
