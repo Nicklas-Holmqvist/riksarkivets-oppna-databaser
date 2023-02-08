@@ -6,6 +6,7 @@ import kurhuset from '../data/kurhuset.json';
 import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
+import { sortDate } from '../utils/sortDate';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
@@ -18,12 +19,7 @@ const Kurhuset = () => {
   const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    setData(
-      kurhuset.data.sort(
-        (a, b) =>
-          Date.parse(a.inskrivningsdatum) - Date.parse(b.inskrivningsdatum)
-      )
-    );
+    setData(sortDate(kurhuset.data));
   }, []);
 
   const prevSearchValueRef = useRef(searchValue);
@@ -31,7 +27,7 @@ const Kurhuset = () => {
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(event.target.value);
     prevSearchValueRef.current = searchValue;
-    if (event.target.value.length > 3)
+    if (event.target.value.length >= 3)
       return handleSearchEvent(event.target.value);
     if (
       event.target.value.length === 0 &&
@@ -47,24 +43,19 @@ const Kurhuset = () => {
   function handleResetEvent() {
     prevSearchValueRef.current = '';
     setSearchValue('');
-    handleSearchEvent('');
+    setData(sortDate(kurhuset.data));
     setCurrentPage(1);
-  }
-
-  function paginate(pageNumber: number) {
-    return setCurrentPage(pageNumber);
   }
 
   function fetchSearchResult(searchValue: string) {
     const result = kurhuset.data.filter((person) =>
       person.förnamn?.toLowerCase().includes(searchValue.toLowerCase())
     );
-    setData(
-      result.sort(
-        (a, b) =>
-          Date.parse(a.inskrivningsdatum) - Date.parse(b.inskrivningsdatum)
-      )
-    );
+    setData(sortDate(result));
+  }
+
+  function paginate(pageNumber: number) {
+    return setCurrentPage(pageNumber);
   }
 
   return (
