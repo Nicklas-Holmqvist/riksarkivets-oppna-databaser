@@ -24,7 +24,6 @@ Färgerna är valda efter Riksarkivets egna färger.
 
 ## Följ framstegen
 
-Aktiv to-do punkt: Sökhantering + styling
-(Ingen mobilanpassning än)
+Nästa punkt är att skapa en mobil meny och föra över data till MongoDB eller Firebase
 
 [Vercel-sida](https://historiska-databaser.vercel.app/kurhuset-i-ostersund?page=1)
