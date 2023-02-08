@@ -10,7 +10,7 @@ import NoSearchResult from '../components/NoSearchResult';
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -56,7 +56,7 @@ const Kurhuset = () => {
 
   function fetchSearchResult(searchValue: string) {
     const result = kurhuset.data.filter((person) =>
-      person.förnamn?.toLowerCase().includes(searchValue)
+      person.förnamn?.toLowerCase().includes(searchValue.toLowerCase())
     );
     setData(
       result.sort(
@@ -76,6 +76,7 @@ const Kurhuset = () => {
         />
       </SearchSection>
       <section>
+        <StyledListCount>Personer i urval: {data.length}</StyledListCount>
         {currentPosts.length !== 0 ? (
           <TableList data={currentPosts} />
         ) : undefined}
@@ -99,4 +100,13 @@ const SearchSection = styled.section`
   box-sizing: border-box;
   text-align: center;
   padding: 1rem 0;
+`;
+
+const StyledListCount = styled.section`
+  padding-bottom: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  @media (max-width: 800px) {
+    padding-left: 1rem;
+  }
 `;

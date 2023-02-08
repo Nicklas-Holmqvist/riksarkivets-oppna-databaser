@@ -45,6 +45,10 @@ const TableList: React.FC<TableListProps> = ({ data }) => {
     window.addEventListener('resize', changeMobileView);
   });
 
+  useEffect(() => {
+    changeMobileView();
+  }, []);
+
   return (
     <Table>
       {!mobileView ? (
@@ -92,7 +96,7 @@ const TableRowSection = styled.div`
   flex-direction: column;
   width: 100%;
   @media (max-width: 800px) {
-    padding: 0 0.5rem;
+    padding: 0 1rem;
   }
 `;
 

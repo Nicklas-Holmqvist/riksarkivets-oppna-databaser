@@ -35,6 +35,6 @@ const StyledNav = styled.nav`
   padding-top: 1.2rem;
   margin-bottom: 0.5rem;
   @media (max-width: 1240px) {
-    padding-left: 0.8rem;
+    padding-left: 1rem;
   }
 `;
