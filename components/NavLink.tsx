@@ -30,10 +30,12 @@ const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
 
 export default NavLink;
 
-const StyledLink = styled.h2<StyledLinkProps>`
+const StyledLink = styled.span<StyledLinkProps>`
   position: relative;
   text-decoration: none;
   cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 600;
   &:after {
     content: '';
     position: absolute;

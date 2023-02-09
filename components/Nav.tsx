@@ -41,29 +41,34 @@ const Nav: React.FC<NavProps> = () => {
   }, []);
 
   return (
-    <>
-      {mobileView ? (
+    <StyledNav>
+      {!mobileView ? (
+        <DesktopNavigation navLinks={navLinks} path={path.route} />
+      ) : (
         <MobileNavigation
           navLinks={navLinks}
           path={path.route}
           drawer={drawer}
           setDrawer={() => setDrawer(!drawer)}
         />
-      ) : (
-        <DesktopNavigation navLinks={navLinks} path={path.route} />
       )}
-    </>
+    </StyledNav>
   );
 };
 
 export default Nav;
 
 const StyledNav = styled.nav`
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-  box-sizing: border-box;
   height: 3.5rem;
   padding-top: 1.2rem;
   margin-bottom: 0.5rem;
+  a {
+    padding-right: 1.5rem;
+  }
   @media (max-width: 1240px) {
     padding-left: 1rem;
   }
