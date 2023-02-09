@@ -150,27 +150,29 @@ const StyledNavigation = styled.nav`
 
 const StyledUl = styled.ul`
   display: flex;
-  justify-content: center;
+  max-width: 25rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
   @media (max-width: 800px) {
-    padding: 0 0.5rem;
+  }
+  a {
+    width: 100%;
   }
 `;
 
 const StyledLi = styled.li<StyledLiProps>`
-  width: 3rem;
   height: 2.5rem;
   list-style-type: none;
-  text-align: center;
-  padding: 0.7rem 0.9rem;
   background-color: white;
   transition: all ease 0.3s;
+  text-align: center;
+  padding-top: 0.7rem;
   :hover {
     color: white;
     background-color: black;
   }
   @media (max-width: 800px) {
-    padding: 0.7rem 0.2rem;
-    width: 2.5rem;
     heigth: 2rem;
   }
   ${({ active: active }) =>
@@ -192,8 +194,8 @@ const StyledArrows = styled.li<StyledLiProps>`
   transition: all ease 0.3s;
   cursor: pointer;
   }
-  @media (max-width: 400px) {
-    width: 2rem;
+  @media (max-width: 800px) {
+    width: 3rem;
     heigth: 2rem;
   }
   ${({ active: active }) =>

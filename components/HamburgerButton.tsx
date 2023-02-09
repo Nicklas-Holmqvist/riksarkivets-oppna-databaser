@@ -24,10 +24,10 @@ const StyledHamburgerButton = styled.button<StyledHamburgerButtonProps>`
   margin: 0;
   padding: 0;
   position: fixed;
-  left: 1rem;
-  top: 0.9rem;
-  width: 2rem;
-  height: 1.8rem;
+  left: 1.5rem;
+  top: 1.1rem;
+  width: 1.6rem;
+  height: 1.3rem;
   background: none;
   border: none;
   cursor: pointer;

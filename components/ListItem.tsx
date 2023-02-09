@@ -22,8 +22,20 @@ const ListItem: React.FC<ListItemProps> = ({ person }) => {
           {person.efternamn !== undefined ? person.efternamn : ''}
         </RowItem>
         <RowItem>{person.inskrivningsdatum}</RowItem>
-        <RowItem>{person.ålder}</RowItem>
-        <RowItem>{person.sjukdom}</RowItem>
+        <RowItem>
+          {person.ålder === undefined
+            ? undefined
+            : person.ålder.length >= 8
+            ? person.ålder.slice(0, 5) + '...'
+            : person.ålder}
+        </RowItem>
+        <RowItem>
+          {person.sjukdom === undefined
+            ? undefined
+            : person.sjukdom.length >= 15
+            ? person.sjukdom.slice(0, 12) + '...'
+            : person.sjukdom}
+        </RowItem>
         <RowItem>{person.utskrivningsdatum}</RowItem>
         <RowItem>{person.utskrivningsstatus}</RowItem>
         <StyledButton onClick={() => setOpen(!open)}>
@@ -47,7 +59,7 @@ const TableRowSection = styled.div`
 const TableRow = styled.div<TableRowProps>`
   position: relative;
   display: flex;
-  padding: 0.6rem 0.8rem;
+  padding: 0.8rem 0.8rem;
   margin: 0.2rem 0;
   background-color: #fff;
   border-radius: 0.2rem;
@@ -55,6 +67,7 @@ const TableRow = styled.div<TableRowProps>`
   ${({ active }) =>
     active
       ? css`
+          border: 0.5px solid lightgrey;
           box-shadow: 2px 2px 5px lightgrey;
           transform: scaleZ(5);
         `

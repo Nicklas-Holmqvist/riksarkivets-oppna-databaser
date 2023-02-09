@@ -15,12 +15,12 @@ export default Header;
 
 const StyledHeader = styled.header`
   transition: all ease;
+  background-color: white;
   @media (max-width: 800px) {
     left: 0;
     right: 0;
     padding: 0 2rem;
     position: fixed;
-    background-color: white;
     z-index: 200;
   }
 `;
