@@ -23,7 +23,7 @@ const Search: React.FC<SearchProps> = ({
         value={searchValue}
         onChange={(event) => onInputChange(event)}
         maxLength={25}
-        placeholder="Sök på namn"
+        placeholder="Sök på för- eller efternamn"
       />
       {searchValue.length > 0 ? (
         <StyledResetIcon onClick={handleResetEvent}>
@@ -44,7 +44,6 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   margin-bottom: 0.5rem;
-  padding-top: 0.5rem;
   @media (max-width: 800px) {
     margin-top: 4.5rem;
     padding: 0 1rem;

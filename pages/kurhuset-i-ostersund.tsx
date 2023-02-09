@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
+import Head from 'next/head';
 
 import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
@@ -48,8 +49,10 @@ const Kurhuset = () => {
   }
 
   function fetchSearchResult(searchValue: string) {
-    const result = kurhuset.data.filter((person) =>
-      person.förnamn?.toLowerCase().includes(searchValue.toLowerCase())
+    const result = kurhuset.data.filter(
+      (person) =>
+        person.förnamn?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        person.efternamn?.toLowerCase().includes(searchValue.toLowerCase())
     );
     setData(sortDate(result));
   }
@@ -59,30 +62,40 @@ const Kurhuset = () => {
   }
 
   return (
-    <MainSection>
-      <SearchSection>
-        <Search
-          onInputChange={onInputChange}
-          handleResetEvent={handleResetEvent}
-          searchValue={searchValue}
+    <>
+      <Head>
+        <title>Kurhuset i Östersund</title>
+        <meta
+          name="description"
+          content="Kurhuset i Östersund byggdes i början av 1800-talet för att inhysa de sjuka i sjukdomen Syfilis. Det var aktivt mellan 1817 och 1866"
         />
-      </SearchSection>
-      <section>
-        <StyledListCount>Personer i urval: {data.length}</StyledListCount>
-        {currentPosts.length !== 0 ? (
-          <TableList data={currentPosts} />
-        ) : undefined}
-        {currentPosts.length !== 0 ? (
-          <Pagination
-            totalItems={data.length}
-            itemsPerPage={itemsPerPage}
-            paginate={paginate}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <MainSection>
+        <SearchSection>
+          <Search
+            onInputChange={onInputChange}
+            handleResetEvent={handleResetEvent}
+            searchValue={searchValue}
           />
-        ) : (
-          <NoSearchResult />
-        )}
-      </section>
-    </MainSection>
+        </SearchSection>
+        <section>
+          <StyledListCount>Personer i urval: {data.length}</StyledListCount>
+          {currentPosts.length !== 0 ? (
+            <TableList data={currentPosts} />
+          ) : undefined}
+          {currentPosts.length !== 0 ? (
+            <Pagination
+              totalItems={data.length}
+              itemsPerPage={itemsPerPage}
+              paginate={paginate}
+            />
+          ) : (
+            <NoSearchResult />
+          )}
+        </section>
+      </MainSection>
+    </>
   );
 };
 

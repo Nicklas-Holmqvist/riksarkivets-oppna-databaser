@@ -20,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
   padding: 0px;
   box-sizing: border-box;  
   font-family: 'Inter', sans-serif;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 html, body {

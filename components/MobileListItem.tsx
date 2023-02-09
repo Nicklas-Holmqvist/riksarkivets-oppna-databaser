@@ -75,6 +75,7 @@ const TableRow = styled.div<TableRowProps>`
   ${({ active }) =>
     active
       ? css`
+          border: 0.5px solid lightgrey;
           box-shadow: 2px 2px 5px lightgrey;
           transform: scaleZ(5);
         `
