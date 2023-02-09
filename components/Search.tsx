@@ -27,11 +27,11 @@ const Search: React.FC<SearchProps> = ({
       />
       {searchValue.length > 0 ? (
         <StyledResetIcon onClick={handleResetEvent}>
-          <Icon src={reset} alt="reset" size={14} />
+          <Icon src={reset} alt="reset" size={18} />
         </StyledResetIcon>
       ) : (
         <StyledSearchIcon>
-          <Icon src={search} alt="start" size={14} />
+          <Icon src={search} alt="start" size={18} />
         </StyledSearchIcon>
       )}
     </StyledForm>
@@ -44,30 +44,34 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   margin-bottom: 0.5rem;
-  @media (max-width: 480px) {
+  padding-top: 0.5rem;
+  @media (max-width: 800px) {
+    margin-top: 4.5rem;
     padding: 0 1rem;
   }
 `;
 
 const StyledTextInput = styled.input`
   width: 18.75rem;
-  padding: 0.5rem 0.8rem;
+  padding: 0.8rem 1rem;
   color: grey;
   background-color: white;
   border: none;
   border-radius: 0.2rem;
-  @media (max-width: 480px) {
+  font-size: 1rem;
+  @media (max-width: 800px) {
     width: 100%;
   }
   ::placeholder {
     color: grey;
+    font-size: 1rem;
   }
 `;
 
 const StyledSearchIcon = styled.div`
   align-self: center;
-  margin-left: -1.5rem;
-  padding-right: 0.7rem;
+  margin-left: -1.8rem;
+  padding-right: 0.8rem;
 `;
 
 const StyledResetIcon = styled(StyledSearchIcon)`

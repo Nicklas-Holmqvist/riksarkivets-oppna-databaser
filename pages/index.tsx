@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import styled from 'styled-components';
 
 export default function Home() {
   return (
@@ -9,9 +10,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <StyledMain>
         <p>Om sidan</p>
-      </main>
+      </StyledMain>
     </>
   );
 }
+
+const StyledMain = styled.main`
+  @media (max-width: 800px) {
+    padding-top: 4.5rem;
+  }
+`;

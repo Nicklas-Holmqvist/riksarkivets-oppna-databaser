@@ -13,11 +13,19 @@ interface StyledLinkProps {
 }
 
 const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
-  return (
-    <Link href={`${href}?page=1`}>
-      <StyledLink active={active}>{text}</StyledLink>
-    </Link>
-  );
+  if (text === 'Start') {
+    return (
+      <Link href={href}>
+        <StyledLink active={active}>{text}</StyledLink>
+      </Link>
+    );
+  } else {
+    return (
+      <Link href={`${href}?page=1`}>
+        <StyledLink active={active}>{text}</StyledLink>
+      </Link>
+    );
+  }
 };
 
 export default NavLink;

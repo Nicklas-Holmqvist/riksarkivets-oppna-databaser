@@ -65,8 +65,7 @@ const TableRow = styled.div<TableRowProps>`
             transform: scaleZ(5);
           }
         `};
-
-  z-index: 1000;
+  z-index: 100;
 `;
 
 const RowItem = styled.span`
