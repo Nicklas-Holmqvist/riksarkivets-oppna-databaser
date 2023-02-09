@@ -169,6 +169,7 @@ const StyledLi = styled.li<StyledLiProps>`
     background-color: black;
   }
   @media (max-width: 800px) {
+    padding: 0.7rem 0.2rem;
     width: 2.5rem;
     heigth: 2rem;
   }

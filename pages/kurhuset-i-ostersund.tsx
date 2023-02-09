@@ -59,7 +59,7 @@ const Kurhuset = () => {
   }
 
   return (
-    <main>
+    <MainSection>
       <SearchSection>
         <Search
           onInputChange={onInputChange}
@@ -82,11 +82,17 @@ const Kurhuset = () => {
           <NoSearchResult />
         )}
       </section>
-    </main>
+    </MainSection>
   );
 };
 
 export default Kurhuset;
+
+const MainSection = styled.main`
+  @media (max-width: 1200px) {
+    padding: 0 0.5rem;
+  }
+`;
 
 const SearchSection = styled.section`
   box-sizing: border-box;

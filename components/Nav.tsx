@@ -1,28 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import NavLink from './NavLink';
+import MobileNavigation from './MobileNavigation';
+import DesktopNavigation from './DesktopNavigation';
 
 interface NavProps {}
 
-const navLinks = [
+export interface NavLinksProps {
+  text: string;
+  href: string;
+}
+
+const navLinks: NavLinksProps[] = [
+  { text: 'Start', href: '/' },
   { text: 'Kurhuset i Östersund', href: '/kurhuset-i-ostersund' },
 ];
 
 const Nav: React.FC<NavProps> = () => {
+  const [drawer, setDrawer] = useState<boolean>(false);
+  const [mobileView, setMobileView] = useState<boolean>(false);
+
   const path = useRouter();
+
+  function changeMobileView() {
+    const innerWidth = window.innerWidth;
+    if (innerWidth <= 800) setMobileView(true);
+    else {
+      setMobileView(false);
+      setDrawer(false);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', changeMobileView);
+  });
+
+  useEffect(() => {
+    changeMobileView();
+  }, []);
+
   return (
-    <StyledNav>
-      {navLinks.map((link, index) => (
-        <NavLink
-          key={index}
-          text={link.text}
-          href={link.href}
-          active={path.asPath.includes(link.href)}
+    <>
+      {mobileView ? (
+        <MobileNavigation
+          navLinks={navLinks}
+          path={path.route}
+          drawer={drawer}
+          setDrawer={() => setDrawer(!drawer)}
         />
-      ))}
-    </StyledNav>
+      ) : (
+        <DesktopNavigation navLinks={navLinks} path={path.route} />
+      )}
+    </>
   );
 };
 
@@ -36,5 +66,10 @@ const StyledNav = styled.nav`
   margin-bottom: 0.5rem;
   @media (max-width: 1240px) {
     padding-left: 1rem;
+  }
+  @media (max-width: 800px) {
+    height: 0px;
+    padding: 0;
+    margin: 0;
   }
 `;
