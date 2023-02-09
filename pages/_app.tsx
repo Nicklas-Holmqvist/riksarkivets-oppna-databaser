@@ -25,7 +25,7 @@ const GlobalStyles = createGlobalStyle`
 html, body {
   background-color: #F5F5F5;
 }
-main, nav, footer {
+main, footer {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -39,10 +39,6 @@ h1 {
   font-size: 1.5rem;
   text-align: center;
   padding: 1rem 0;
-}
-
-h2 {
-
 }
 
 h3 {
