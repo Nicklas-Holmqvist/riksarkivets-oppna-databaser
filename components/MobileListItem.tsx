@@ -7,6 +7,10 @@ import ExtendedItemInfo from './ExtendedItemInfo';
 interface TableRowProps {
   active: boolean;
 }
+
+interface StyledButtonProps {
+  active: boolean;
+}
 interface MobileListItemProps {
   person: Person;
 }
@@ -45,7 +49,7 @@ const MobileListItem: React.FC<MobileListItemProps> = ({ person }) => {
           <StyledSpan>Status: </StyledSpan>
           {person.utskrivningsstatus}
         </RowItem>
-        <StyledButton onClick={() => setOpen(!open)}>
+        <StyledButton active={open} onClick={() => setOpen(!open)}>
           {open ? 'Stäng' : 'Läs mer'}
         </StyledButton>
       </TableRow>
@@ -75,7 +79,7 @@ const TableRow = styled.div<TableRowProps>`
   ${({ active }) =>
     active
       ? css`
-          border: 0.5px solid lightgrey;
+          border: 2px solid #0d5c91;
           box-shadow: 2px 2px 5px lightgrey;
           transform: scaleZ(5);
         `
@@ -98,13 +102,26 @@ const StyledSpan = styled.span`
   font-weight: 700;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<StyledButtonProps>`
   position: absolute;
-  right: 0;
+  right: 1rem;
   bottom: 0.8rem;
-  border: none;
+  padding: 0.2rem 0.6rem;
   background-color: transparent;
   cursor: pointer;
   font-weight: 600;
   min-width: 80px;
+  border: 1px solid #0d5c91;
+  border-radius: 0.2rem;
+  text-align: center;
+  ${({ active }) =>
+    active
+      ? css`
+          background-color: #0d5c91;
+          color: white;
+        `
+      : css`
+      border: 1px solid #0d5c91;
+          }
+        `};
 `;
