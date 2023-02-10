@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import ListItem from './ListItem';
 import MobileListItem from './MobileListItem';
+import NoSearchResult from './NoSearchResult';
 
 interface TableListProps {
   data: Person[];
