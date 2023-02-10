@@ -6,8 +6,8 @@ import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
 import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
-import NoSearchResult from '../components/NoSearchResult';
 import { sortDate } from '../utils/sortDate';
+import NoSearchResult from '../components/NoSearchResult';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
@@ -38,6 +38,7 @@ const Kurhuset = () => {
   }
 
   function handleSearchEvent(event: string) {
+    setCurrentPage(1);
     return fetchSearchResult(event);
   }
 
@@ -82,14 +83,14 @@ const Kurhuset = () => {
         <section>
           <StyledListCount>Personer i urval: {data.length}</StyledListCount>
           {currentPosts.length !== 0 ? (
-            <TableList data={currentPosts} />
-          ) : undefined}
-          {currentPosts.length !== 0 ? (
-            <Pagination
-              totalItems={data.length}
-              itemsPerPage={itemsPerPage}
-              paginate={paginate}
-            />
+            <>
+              <TableList data={currentPosts} />
+              <Pagination
+                totalItems={data.length}
+                itemsPerPage={itemsPerPage}
+                paginate={paginate}
+              />
+            </>
           ) : (
             <NoSearchResult />
           )}
