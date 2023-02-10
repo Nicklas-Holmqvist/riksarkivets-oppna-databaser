@@ -105,6 +105,9 @@ const MainSection = styled.main`
   @media (max-width: 1200px) {
     padding: 0 0.5rem;
   }
+  @media (max-width: 800px) {
+    padding-top: 4.5rem;
+  }
 `;
 
 const SearchSection = styled.section`
