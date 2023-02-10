@@ -90,6 +90,7 @@ const MobileNav = styled.nav`
   a {
     margin: 1.8rem 0;
     padding-bottom: 0.5rem;
+    padding-right: 0;
     font-size: 1rem;
   }
 `;
