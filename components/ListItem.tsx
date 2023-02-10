@@ -67,6 +67,7 @@ const TableRow = styled.div<TableRowProps>`
   background-color: #fff;
   border-radius: 0.2rem;
   cursor: pointer;
+  transition: transform ease 0.05s;
   ${({ active }) =>
     active
       ? css`

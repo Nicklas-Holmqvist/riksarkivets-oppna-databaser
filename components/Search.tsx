@@ -92,6 +92,12 @@ const StyledSearchIcon = styled.div`
   align-self: center;
   margin-left: -1.8rem;
   padding-right: 0.8rem;
+  :nth-child(2) {
+    transition: all ease 0.1s;
+    :hover {
+      transform: scale(1.05);
+    }
+  }
 `;
 
 const StyledResetIcon = styled(StyledSearchIcon)`
