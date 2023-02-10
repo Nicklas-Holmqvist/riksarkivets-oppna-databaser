@@ -1,20 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import search from '../public/search.svg';
 import reset from '../public/reset.svg';
 import { Icon } from './Icon';
 
+interface styledTextInput {
+  noResult: boolean;
+}
+
 interface SearchProps {
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleResetEvent: () => void;
   searchValue: string;
+  placeholder: string;
+  noResult: boolean;
 }
 
 const Search: React.FC<SearchProps> = ({
   onInputChange,
   handleResetEvent,
   searchValue,
+  placeholder,
+  noResult,
 }) => {
   return (
     <StyledForm onSubmit={(event) => event.preventDefault()}>
@@ -23,7 +31,9 @@ const Search: React.FC<SearchProps> = ({
         value={searchValue}
         onChange={(event) => onInputChange(event)}
         maxLength={25}
-        placeholder="Sök på för- eller efternamn"
+        placeholder={placeholder}
+        autoFocus
+        noResult={noResult}
       />
       {searchValue.length > 0 ? (
         <StyledResetIcon onClick={handleResetEvent}>
@@ -49,7 +59,7 @@ const StyledForm = styled.form`
   }
 `;
 
-const StyledTextInput = styled.input`
+const StyledTextInput = styled.input<styledTextInput>`
   width: 18.75rem;
   padding: 0.8rem 1rem;
   color: grey;
@@ -64,6 +74,18 @@ const StyledTextInput = styled.input`
     color: grey;
     font-size: 1rem;
   }
+  ${({ noResult }) =>
+    noResult
+      ? css`
+          :focus {
+            outline: 2px solid #e8a621;
+          }
+        `
+      : css`
+          :focus {
+            outline: 2px solid red;
+          }
+        `};
 `;
 
 const StyledSearchIcon = styled.div`

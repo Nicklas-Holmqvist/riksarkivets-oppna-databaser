@@ -78,6 +78,8 @@ const Kurhuset = () => {
             onInputChange={onInputChange}
             handleResetEvent={handleResetEvent}
             searchValue={searchValue}
+            placeholder="Sök på namn- eller efternamn"
+            noResult={currentPosts.length !== 0}
           />
         </SearchSection>
         <section>
