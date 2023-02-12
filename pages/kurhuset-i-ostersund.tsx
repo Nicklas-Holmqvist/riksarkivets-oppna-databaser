@@ -193,7 +193,6 @@ const Kurhuset = () => {
 
   useEffect(() => {
     if (prevDropdownValueRef.current === true) {
-      console.log('WOOT');
       setData(
         data.filter(
           (person: Person) =>
@@ -236,15 +235,15 @@ const Kurhuset = () => {
         <FilterSection>
           <StyledForm onSubmit={(event) => event.preventDefault()}>
             <StyledButton
-              active={showFilter}
+              active={!showFilter}
               onClick={() => setShowFilter(!showFilter)}
             >
-              {showFilter ? 'Visa filter' : 'Dölj filter'}
+              {!showFilter ? 'Visa filter' : 'Dölj filter'}
             </StyledButton>
             <StyledResetButton type="reset" onClick={handleResetEvent}>
               Rensa sök och filter
             </StyledResetButton>
-            {showFilter ? undefined : (
+            {!showFilter ? undefined : (
               <FilterContainer>
                 <DropdownFilter
                   onDropdownChange={onDropdownChange}
@@ -307,7 +306,6 @@ const SearchSection = styled.section`
 `;
 
 const FilterSection = styled.section`
-  padding-top: 1rem;
   @media (max-width: 800px) {
     padding: 1rem;
   }
@@ -317,7 +315,10 @@ const FilterContainer = styled.section`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
+  @media (max-width: 800px) {
+    padding-top: 1.5rem;
+  }
 `;
 
 const StyledListCount = styled.section`

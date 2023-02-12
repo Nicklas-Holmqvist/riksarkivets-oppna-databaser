@@ -97,9 +97,3 @@ const StyledButton = styled.button`
     color: #0d5c91;
   }
 `;
-
-// const StyledSearchIcon = styled.div`
-//   align-self: center;
-//   margin-left: -1.8rem;
-//   padding-right: 0.8rem;
-// `;
