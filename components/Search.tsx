@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import search from '../public/search.svg';
-import reset from '../public/reset.svg';
 import { Icon } from './Icon';
 
 interface styledTextInput {
@@ -11,7 +10,6 @@ interface styledTextInput {
 
 interface SearchProps {
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleResetEvent: () => void;
   searchValue: string;
   placeholder: string;
   noResult: boolean;
@@ -20,7 +18,6 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({
   onInputChange,
-  handleResetEvent,
   searchValue,
   placeholder,
   noResult,
@@ -37,15 +34,9 @@ const Search: React.FC<SearchProps> = ({
         autoFocus
         noResult={noResult}
       />
-      {searchValue.length > 0 ? (
-        <StyledResetIcon onClick={handleResetEvent}>
-          <Icon src={reset} alt="reset" size={18} />
-        </StyledResetIcon>
-      ) : (
-        <StyledSearchIcon>
-          <Icon src={search} alt="start" size={18} />
-        </StyledSearchIcon>
-      )}
+      <StyledSearchIcon>
+        <Icon src={search} alt="start" size={18} />
+      </StyledSearchIcon>
     </StyledForm>
   );
 };
@@ -94,14 +85,4 @@ const StyledSearchIcon = styled.div`
   align-self: center;
   margin-left: -1.8rem;
   padding-right: 0.8rem;
-  :nth-child(2) {
-    transition: all ease 0.1s;
-    :hover {
-      transform: scale(1.05);
-    }
-  }
-`;
-
-const StyledResetIcon = styled(StyledSearchIcon)`
-  cursor: pointer;
 `;
