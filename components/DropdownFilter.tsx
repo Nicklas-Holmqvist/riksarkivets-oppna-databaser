@@ -5,14 +5,12 @@ interface SearchableFilterProps {
   data: string[];
   id: string;
   onDropdownChange: (id: string, value: string) => void;
-  reset: (id: string, value: string) => void;
 }
 
 const DropdownFilter: React.FC<SearchableFilterProps> = ({
   data,
   id,
   onDropdownChange,
-  reset,
 }) => {
   return (
     <StyledDiv>
@@ -40,8 +38,8 @@ export default DropdownFilter;
 const StyledDiv = styled.div`
   display: flex;
   padding: 1rem 0;
-  width: 20%;
-  @media (max-width: 680px) {
+  width: 15rem;
+  @media (max-width: 690px) {
     width: 100%;
     padding: 0.5rem 0;
   }
@@ -49,11 +47,11 @@ const StyledDiv = styled.div`
     padding: 0.2rem 0.5rem 0.2rem 0;
     text-align: right;
     font-size: 0.8rem;
-    width: 3.5rem;
     font-weight: 600;
   }
   select {
     padding: 0.2rem;
+    width: 13rem;
     @media (max-width: 680px) {
       width: 100%;
     }

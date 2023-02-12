@@ -4,11 +4,11 @@ import Head from 'next/head';
 
 import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
-import TableList, { Person } from '../components/TableList';
 import Pagination from '../components/Pagination';
-import { sortDate } from '../utils/sortDate';
 import NoSearchResult from '../components/NoSearchResult';
 import DropdownFilter from '../components/DropdownFilter';
+import { sortDate } from '../utils/sortDate';
+import TableList, { Person } from '../components/TableList';
 
 interface FilterProps {
   socken: string;
@@ -93,16 +93,11 @@ const Kurhuset = () => {
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(event.target.value);
     prevSearchValueRef.current = searchValue;
-    if (event.target.value.length >= 3)
-      return handleSearchEvent(event.target.value);
-    else
-      event.target.value.length === 0 && prevSearchValueRef.current.length <= 1;
-    // return handleResetEvent();
   }
 
-  function handleSearchEvent(event: string) {
+  function handleSearchEvent() {
     setCurrentPage(1);
-    return fetchSearchResult(event);
+    return fetchSearchResult(searchValue);
   }
 
   function handleResetEvent() {
@@ -231,6 +226,7 @@ const Kurhuset = () => {
         <SearchSection>
           <Search
             onInputChange={onInputChange}
+            handleSearchEvent={handleSearchEvent}
             searchValue={searchValue}
             placeholder="Sök på namn- eller efternamn"
             noResult={currentPosts.length !== 0}
@@ -254,25 +250,21 @@ const Kurhuset = () => {
                   onDropdownChange={onDropdownChange}
                   data={dropdowns.socken}
                   id={'Socken'}
-                  reset={onDropdownChange}
                 />
                 <DropdownFilter
                   onDropdownChange={onDropdownChange}
                   data={dropdowns.by}
                   id={'By'}
-                  reset={onDropdownChange}
                 />
                 <DropdownFilter
                   onDropdownChange={onDropdownChange}
                   data={dropdowns.titel}
                   id={'Titel'}
-                  reset={onDropdownChange}
                 />
                 <DropdownFilter
                   onDropdownChange={onDropdownChange}
                   data={dropdowns.utskrivningsstatus}
                   id={'Status'}
-                  reset={onDropdownChange}
                 />
               </FilterContainer>
             )}

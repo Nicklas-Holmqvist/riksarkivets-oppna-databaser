@@ -1,15 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import search from '../public/search.svg';
-import { Icon } from './Icon';
-
 interface styledTextInput {
   noResult: boolean;
 }
 
 interface SearchProps {
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearchEvent: () => void;
   searchValue: string;
   placeholder: string;
   noResult: boolean;
@@ -18,6 +16,7 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({
   onInputChange,
+  handleSearchEvent,
   searchValue,
   placeholder,
   noResult,
@@ -34,9 +33,11 @@ const Search: React.FC<SearchProps> = ({
         autoFocus
         noResult={noResult}
       />
-      <StyledSearchIcon>
-        <Icon src={search} alt="start" size={18} />
-      </StyledSearchIcon>
+      <StyledButton
+        onClick={searchValue.length === 0 ? undefined : handleSearchEvent}
+      >
+        Sök
+      </StyledButton>
     </StyledForm>
   );
 };
@@ -46,7 +47,7 @@ export default Search;
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
-  margin-bottom: 0.5rem;
+  border-radius: 0.2rem;
   @media (max-width: 800px) {
     padding: 0 1rem;
   }
@@ -54,11 +55,10 @@ const StyledForm = styled.form`
 
 const StyledTextInput = styled.input<styledTextInput>`
   width: 18.75rem;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   color: grey;
   background-color: white;
   border: none;
-  border-radius: 0.2rem;
   font-size: 1rem;
   @media (max-width: 800px) {
     width: 100%;
@@ -81,8 +81,25 @@ const StyledTextInput = styled.input<styledTextInput>`
         `};
 `;
 
-const StyledSearchIcon = styled.div`
-  align-self: center;
-  margin-left: -1.8rem;
-  padding-right: 0.8rem;
+const StyledButton = styled.button`
+  padding: 0.2rem 0.6rem;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #0d5c91;
+  color: white;
+  min-width: 80px;
+  border: 1px solid #0d5c91;
+  text-align: center;
+  transition: all ease 0.2s;
+  :active {
+    background-color: white;
+    color: #0d5c91;
+  }
 `;
+
+// const StyledSearchIcon = styled.div`
+//   align-self: center;
+//   margin-left: -1.8rem;
+//   padding-right: 0.8rem;
+// `;
