@@ -4,10 +4,12 @@ import Head from 'next/head';
 
 import Search from '../components/Search';
 import kurhuset from '../data/kurhuset.json';
-import TableList from '../components/TableList';
+import TableList, { Person } from '../components/TableList';
 import Pagination from '../components/Pagination';
 import { sortDate } from '../utils/sortDate';
 import NoSearchResult from '../components/NoSearchResult';
+import Filter from '../components/Filter';
+import DropdownFilter from '../components/DropdownFilter';
 
 const Kurhuset = () => {
   const [data, setData] = useState<any>([]);
@@ -18,6 +20,49 @@ const Kurhuset = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const dropdowns = {
+    socken: GetDropdownValues('socken') || [],
+    by: GetDropdownValues('by') || [],
+    titel: GetDropdownValues('titel') || [],
+    utskrivningsstatus: GetDropdownValues('utskrivningsstatus') || [],
+  };
+
+  function GetDropdownValues(dropdownValue: string) {
+    const dropdownValues: string[] = [];
+
+    switch (dropdownValue) {
+      case 'socken':
+        data.forEach((person: Person) => {
+          dropdownValues.push(person.socken);
+        });
+        break;
+      case 'by':
+        data.forEach((person: Person) => {
+          dropdownValues.push(person.by);
+        });
+        break;
+      case 'titel':
+        data.forEach((person: Person) => {
+          dropdownValues.push(person.titel);
+        });
+        break;
+      case 'utskrivningsstatus':
+        data.forEach((person: Person) => {
+          dropdownValues.push(person.utskrivningsstatus);
+        });
+        break;
+      default:
+        console.log('Inget värde!');
+    }
+
+    const filteredDropdownValues = dropdownValues.filter(
+      (dropdown: string, index: number) => {
+        return dropdownValues.indexOf(dropdown) === index;
+      }
+    );
+    return filteredDropdownValues.sort();
+  }
 
   useEffect(() => {
     setData(sortDate(kurhuset.data));
@@ -58,6 +103,24 @@ const Kurhuset = () => {
     setData(sortDate(result));
   }
 
+  function filterData() {
+    const filter = {
+      socken: '',
+      by: '',
+      titel: 'Flickan',
+      utskrivningsstatus: '',
+    };
+    setData(
+      data.filter(
+        (person: Person) =>
+          person.socken.includes(filter.socken) &&
+          person.by.includes(filter.by) &&
+          person.titel.includes(filter.titel) &&
+          person.utskrivningsstatus.includes(filter.utskrivningsstatus)
+      )
+    );
+  }
+
   function paginate(pageNumber: number) {
     return setCurrentPage(pageNumber);
   }
@@ -80,8 +143,18 @@ const Kurhuset = () => {
             searchValue={searchValue}
             placeholder="Sök på namn- eller efternamn"
             noResult={currentPosts.length !== 0}
+            maxLength={25}
           />
         </SearchSection>
+        <FilterSection>
+          <Filter filterData={filterData} />
+          <FilterContainer>
+            <DropdownFilter data={dropdowns.socken} id={'Socken'} />
+            <DropdownFilter data={dropdowns.by} id={'By'} />
+            <DropdownFilter data={dropdowns.titel} id={'Titel'} />
+            <DropdownFilter data={dropdowns.utskrivningsstatus} id={'Status'} />
+          </FilterContainer>
+        </FilterSection>
         <section>
           <StyledListCount>Personer i urval: {data.length}</StyledListCount>
           {currentPosts.length !== 0 ? (
@@ -114,9 +187,18 @@ const MainSection = styled.main`
 `;
 
 const SearchSection = styled.section`
-  box-sizing: border-box;
   text-align: center;
   padding: 1rem 0;
+`;
+
+const FilterSection = styled.section`
+  padding: 1rem;
+`;
+
+const FilterContainer = styled.section`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const StyledListCount = styled.section`

@@ -15,6 +15,7 @@ interface SearchProps {
   searchValue: string;
   placeholder: string;
   noResult: boolean;
+  maxLength: number;
 }
 
 const Search: React.FC<SearchProps> = ({
@@ -23,6 +24,7 @@ const Search: React.FC<SearchProps> = ({
   searchValue,
   placeholder,
   noResult,
+  maxLength,
 }) => {
   return (
     <StyledForm onSubmit={(event) => event.preventDefault()}>
@@ -30,7 +32,7 @@ const Search: React.FC<SearchProps> = ({
         type="text"
         value={searchValue}
         onChange={(event) => onInputChange(event)}
-        maxLength={25}
+        maxLength={maxLength}
         placeholder={placeholder}
         autoFocus
         noResult={noResult}
