@@ -40,7 +40,13 @@ const ListItem: React.FC<ListItemProps> = ({ person }) => {
             : person.sjukdom}
         </RowItem>
         <RowItem>{person.utskrivningsdatum}</RowItem>
-        <RowItem>{person.utskrivningsstatus}</RowItem>
+        <RowItem>
+          {person.utskrivningsstatus === undefined
+            ? undefined
+            : person.utskrivningsstatus.length >= 10
+            ? person.utskrivningsstatus.slice(0, 8) + '...'
+            : person.utskrivningsstatus}
+        </RowItem>
         <StyledButton active={open} onClick={() => setOpen(!open)}>
           {open ? 'Stäng' : 'Läs mer'}
         </StyledButton>
