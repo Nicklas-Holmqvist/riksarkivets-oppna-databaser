@@ -16,13 +16,12 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
   return (
     <>
       {navLinks.map((navLink, index) => (
-        <StyledNavLink key={index}>
-          <NavLink
-            text={navLink.text}
-            href={navLink.href}
-            active={path === navLink.href}
-          />
-        </StyledNavLink>
+        <NavLink
+          key={index}
+          text={navLink.text}
+          href={navLink.href}
+          active={path === navLink.href}
+        />
       ))}
     </>
   );
@@ -30,6 +29,4 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
 
 export default DesktopNavigation;
 
-const StyledNavLink = styled.div`
-  margin-right: 1.5rem;
-`;
+const StyledNavContainer = styled.div``;

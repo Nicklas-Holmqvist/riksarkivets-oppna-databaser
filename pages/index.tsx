@@ -11,13 +11,19 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <StyledMain>
-        <p>Om sidan</p>
+        <p>Sidan är skapad som ett hobby projekt av Nicklas Holmqvist.</p>
+        <p>En startsida håller på att skapas till det här.</p>
+        <p>För frågor om projektet kan ni maila:</p>
+        <a href="mailto:nicklas_holmqvist@outlook.com">
+          nicklas_holmqvist@outlook.com
+        </a>
       </StyledMain>
     </>
   );
 }
 
 const StyledMain = styled.main`
+  padding-left: 1rem;
   @media (max-width: 800px) {
     padding-top: 4.5rem;
   }

@@ -14,7 +14,7 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
     (utskrivningsdatum - inskrivningsdatum) / (1000 * 3600 * 24);
 
   function controlValidText(text: string) {
-    if (text === undefined) return '-';
+    if (text.length === 0) return '-';
     else return text;
   }
 
@@ -87,15 +87,27 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Vårdtid: </StyledSpan>
-            {information.vårdtid != undefined
-              ? information.vårdtid
-              : difference + ' dagar'}
+
+            {difference + ' dagar'}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsstatus: </StyledSpan>
             {controlValidText(information.utskrivningsstatus)}
+          </StyledParagraph>
+        </StyledInformationContainer>
+      </StyledInformationSection>
+      <hr />
+      <StyledInformationSection>
+        <StyledInformationContainer>
+          <StyledParagraph>
+            <StyledSpan>Utskrivningsdatum: </StyledSpan>
+            {controlValidText(information.arkiv)}
+          </StyledParagraph>
+          <StyledParagraph>
+            <StyledSpan>Anmärkning: </StyledSpan>
+            {information.volym}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>

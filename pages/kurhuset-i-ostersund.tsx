@@ -88,11 +88,8 @@ const Kurhuset = () => {
     setData(sortDate(kurhuset.data));
   }, []);
 
-  const prevSearchValueRef = useRef(searchValue);
-
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(event.target.value);
-    prevSearchValueRef.current = searchValue;
   }
 
   function handleSearchEvent() {
@@ -101,10 +98,9 @@ const Kurhuset = () => {
   }
 
   function handleResetEvent() {
-    prevSearchValueRef.current = '';
+    setCurrentPage(1);
     setSearchValue('');
     setData(sortDate(kurhuset.data));
-    setCurrentPage(1);
     setFilterValues(baseFilter);
     prevDropdownValueRef.current = false;
   }
@@ -120,6 +116,7 @@ const Kurhuset = () => {
 
   const prevDropdownValueRef = useRef(false);
   function onDropdownChange(id: string, value: string) {
+    setCurrentPage(1);
     prevDropdownValueRef.current = false;
     switch (id) {
       case 'Socken':
@@ -244,28 +241,31 @@ const Kurhuset = () => {
               Rensa sök och filter
             </StyledResetButton>
             {!showFilter ? undefined : (
-              <FilterContainer>
-                <DropdownFilter
-                  onDropdownChange={onDropdownChange}
-                  data={dropdowns.socken}
-                  id={'Socken'}
-                />
-                <DropdownFilter
-                  onDropdownChange={onDropdownChange}
-                  data={dropdowns.by}
-                  id={'By'}
-                />
-                <DropdownFilter
-                  onDropdownChange={onDropdownChange}
-                  data={dropdowns.titel}
-                  id={'Titel'}
-                />
-                <DropdownFilter
-                  onDropdownChange={onDropdownChange}
-                  data={dropdowns.utskrivningsstatus}
-                  id={'Status'}
-                />
-              </FilterContainer>
+              <>
+                <FilterContainer>
+                  <DropdownFilter
+                    onDropdownChange={onDropdownChange}
+                    data={dropdowns.socken}
+                    id={'Socken'}
+                  />
+                  <DropdownFilter
+                    onDropdownChange={onDropdownChange}
+                    data={dropdowns.by}
+                    id={'By'}
+                  />
+                  <DropdownFilter
+                    onDropdownChange={onDropdownChange}
+                    data={dropdowns.titel}
+                    id={'Titel'}
+                  />
+                  <DropdownFilter
+                    onDropdownChange={onDropdownChange}
+                    data={dropdowns.utskrivningsstatus}
+                    id={'Status'}
+                  />
+                </FilterContainer>
+                <hr />
+              </>
             )}
           </StyledForm>
         </FilterSection>

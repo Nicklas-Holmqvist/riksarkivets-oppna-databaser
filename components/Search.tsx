@@ -30,7 +30,6 @@ const Search: React.FC<SearchProps> = ({
         onChange={(event) => onInputChange(event)}
         maxLength={maxLength}
         placeholder={placeholder}
-        autoFocus
         noResult={noResult}
       />
       <StyledButton

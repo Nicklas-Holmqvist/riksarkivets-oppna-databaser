@@ -42,16 +42,18 @@ const Nav: React.FC<NavProps> = () => {
 
   return (
     <StyledNav>
-      {!mobileView ? (
-        <DesktopNavigation navLinks={navLinks} path={path.route} />
-      ) : (
-        <MobileNavigation
-          navLinks={navLinks}
-          path={path.route}
-          drawer={drawer}
-          setDrawer={() => setDrawer(!drawer)}
-        />
-      )}
+      <StyledNavContainer>
+        {!mobileView ? (
+          <DesktopNavigation navLinks={navLinks} path={path.route} />
+        ) : (
+          <MobileNavigation
+            navLinks={navLinks}
+            path={path.route}
+            drawer={drawer}
+            setDrawer={() => setDrawer(!drawer)}
+          />
+        )}
+      </StyledNavContainer>
     </StyledNav>
   );
 };
@@ -67,11 +69,17 @@ const StyledNav = styled.nav`
   padding-top: 1.2rem;
   margin-bottom: 0.5rem;
   @media (max-width: 1240px) {
-    padding-left: 1rem;
+    padding-left: 0.5rem;
   }
   @media (max-width: 800px) {
     height: 0px;
     padding: 0;
     margin: 0;
   }
+`;
+
+const StyledNavContainer = styled.div`
+  width: 20rem;
+  display: flex;
+  justify-content: space-between;
 `;
