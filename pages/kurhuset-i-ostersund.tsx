@@ -36,6 +36,7 @@ const Kurhuset = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [filterValues, setFilterValues] = useState<FilterProps>(baseFilter);
+  const [showReset, setShowReset] = useState<Boolean>(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -188,6 +189,13 @@ const Kurhuset = () => {
     }
   }
 
+  function showResetFilterButton() {
+    for (let values in filterValues) {
+      if (values !== '') return true;
+      else return false;
+    }
+  }
+
   useEffect(() => {
     if (prevDropdownValueRef.current === true) {
       setData(
@@ -237,9 +245,11 @@ const Kurhuset = () => {
             >
               {!showFilter ? 'Visa filter' : 'Dölj filter'}
             </StyledButton>
-            <StyledResetButton type="reset" onClick={handleResetEvent}>
-              Rensa sök och filter
-            </StyledResetButton>
+            {showResetFilterButton() ? (
+              <StyledResetButton type="reset" onClick={handleResetEvent}>
+                Rensa sök och filter
+              </StyledResetButton>
+            ) : undefined}
             {!showFilter ? undefined : (
               <>
                 <FilterContainer>
