@@ -32,7 +32,7 @@ interface StyledButtonProps {
 }
 
 const Kurhuset = ({
-  dataList,
+  fetchedData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [data, setData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -46,18 +46,17 @@ const Kurhuset = ({
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
 
-  console.log(dataList);
+  console.log(fetchedData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      let { data: arkiv, error } = await supabase
-        .from('arkiv')
-        .select('*')
-        .eq('data_list', 'kurhuset');
-      console.log(arkiv);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     let { data: arkiv, error } = await supabase
+  //       .from('arkiv')
+  //       .select('*')
+  //     console.log(arkiv);
+  //   };
+  //   fetchData();
+  // }, []);
 
   const dropdowns = {
     socken: GetDropdownValues('socken'),
@@ -317,11 +316,19 @@ const Kurhuset = ({
 };
 
 export async function getServerSideProps() {
-  let data = await supabase.from('arkiv').select();
+  let { data, count } = await supabase
+    .from('kurhuset')
+    .select('*', { count: 'exact' })
+    .range(0, 19);
+
+  const fetchedData = {
+    data: data,
+    count: count,
+  };
 
   return {
     props: {
-      dataList: data,
+      fetchedData,
     },
   };
 }
