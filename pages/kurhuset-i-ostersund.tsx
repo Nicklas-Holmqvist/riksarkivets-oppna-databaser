@@ -9,6 +9,8 @@ import NoSearchResult from '../components/NoSearchResult';
 import DropdownFilter from '../components/DropdownFilter';
 import { sortDate } from '../utils/sortDate';
 import TableList, { Person } from '../components/TableList';
+import { supabase } from '../lib/supabaseClient';
+import { InferGetServerSidePropsType } from 'next';
 
 interface FilterProps {
   socken: string;
@@ -29,7 +31,9 @@ interface StyledButtonProps {
   active: boolean;
 }
 
-const Kurhuset = () => {
+const Kurhuset = ({
+  dataList,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [data, setData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
@@ -41,6 +45,19 @@ const Kurhuset = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  console.log(dataList);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let { data: arkiv, error } = await supabase
+        .from('arkiv')
+        .select('*')
+        .eq('data_list', 'kurhuset');
+      console.log(arkiv);
+    };
+    fetchData();
+  }, []);
 
   const dropdowns = {
     socken: GetDropdownValues('socken'),
@@ -298,6 +315,16 @@ const Kurhuset = () => {
     </>
   );
 };
+
+export async function getServerSideProps() {
+  let data = await supabase.from('arkiv').select();
+
+  return {
+    props: {
+      dataList: data,
+    },
+  };
+}
 
 export default Kurhuset;
 
