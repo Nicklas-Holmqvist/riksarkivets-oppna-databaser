@@ -1,19 +1,20 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { Person } from './TableList';
+import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
 
 interface ExtendedItemInfoProps {
-  information: Person;
+  information: KurhusetIOstersund;
 }
 
 const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
-  const inskrivningsdatum = new Date(information.inskrivningsdatum).getTime();
-  const utskrivningsdatum = new Date(information.utskrivningsdatum).getTime();
+  const inskrivningsdatum = new Date(information.date_of_enrollment).getTime();
+  const utskrivningsdatum = new Date(information.discharge_date).getTime();
   const difference =
     (utskrivningsdatum - inskrivningsdatum) / (1000 * 3600 * 24);
 
   function controlValidText(text: string) {
+    if (text === undefined) return '-';
     if (text.length === 0) return '-';
     else return text;
   }
@@ -21,37 +22,37 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
   return (
     <StyledExtendedSection>
       <h3>
-        <StyledSpan>Nummer {information.nummer}</StyledSpan>,{' '}
-        {information.förnamn}{' '}
-        {information.efternamn !== undefined ? information.efternamn : ''}
+        <StyledSpan>Nummer {information.number}</StyledSpan>,{' '}
+        {information.first_name}{' '}
+        {information.last_name !== undefined ? information.last_name : ''}
       </h3>
       <StyledInformationSection>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Inskrivningsdatum: </StyledSpan>
-            {controlValidText(information.inskrivningsdatum)}
+            {controlValidText(information.date_of_enrollment)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Titel: </StyledSpan>
-            {controlValidText(information.titel)}
+            {controlValidText(information.title)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Ålder: </StyledSpan>
-            {controlValidText(information.ålder)}
+            {controlValidText(information.age)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Familj: </StyledSpan>
-            {controlValidText(information.familj)}
+            {controlValidText(information.family)}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Socken: </StyledSpan>
-            {controlValidText(information.socken)}
+            {controlValidText(information.parish)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Hemort: </StyledSpan>
-            {controlValidText(information.by)}
+            {controlValidText(information.village)}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -60,15 +61,15 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Sjukdom: </StyledSpan>
-            {controlValidText(information.sjukdom)}
+            {controlValidText(information.disease)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Beskrivning: </StyledSpan>
-            {controlValidText(information.sjukdomsbeskrivning)}
+            {controlValidText(information.disease_description)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Behandling: </StyledSpan>
-            {controlValidText(information.sjukdomsbehandling)}
+            {controlValidText(information.disease_treatment)}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -77,11 +78,11 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsdatum: </StyledSpan>
-            {controlValidText(information.utskrivningsdatum)}
+            {controlValidText(information.discharge_date)}
           </StyledParagraph>
           <StyledParagraph>
             <StyledSpan>Anmärkning: </StyledSpan>
-            {controlValidText(information.anmärkning)}
+            {controlValidText(information.observation)}
           </StyledParagraph>
         </StyledInformationContainer>
         <StyledInformationContainer>
@@ -94,7 +95,7 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
         <StyledInformationContainer>
           <StyledParagraph>
             <StyledSpan>Utskrivningsstatus: </StyledSpan>
-            {controlValidText(information.utskrivningsstatus)}
+            {controlValidText(information.discharge_status)}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>
@@ -102,12 +103,12 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({ information }) => {
       <StyledInformationSection>
         <StyledInformationContainer>
           <StyledParagraph>
-            <StyledSpan>Utskrivningsdatum: </StyledSpan>
+            <StyledSpan>Arkiv: </StyledSpan>
             {controlValidText(information.arkiv)}
           </StyledParagraph>
           <StyledParagraph>
-            <StyledSpan>Anmärkning: </StyledSpan>
-            {information.volym}
+            <StyledSpan>Volym: </StyledSpan>
+            {information.volume}
           </StyledParagraph>
         </StyledInformationContainer>
       </StyledInformationSection>

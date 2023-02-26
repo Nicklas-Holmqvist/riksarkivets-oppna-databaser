@@ -11,7 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.4",
+    "@metamist/lucide-react": "^0.72.0-patch4",
     "@next/font": "13.1.1",
     "@supabase/supabase-js": "^2.8.0",
     "@types/node": "18.11.18",

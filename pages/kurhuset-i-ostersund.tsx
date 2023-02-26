@@ -1,236 +1,111 @@
-import styled, { css } from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
+import styled from 'styled-components';
+import { supabase } from '../lib/supabaseClient';
+import { useRouter } from 'next/router';
+import { InferGetServerSidePropsType } from 'next';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Search from '../components/Search';
-import kurhuset from '../data/kurhuset.json';
+import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
-import NoSearchResult from '../components/NoSearchResult';
-import DropdownFilter from '../components/DropdownFilter';
 import { sortDate } from '../utils/sortDate';
-import TableList, { Person } from '../components/TableList';
-import { supabase } from '../lib/supabaseClient';
-import { InferGetServerSidePropsType } from 'next';
-
-interface FilterProps {
-  socken: string;
-  by: string;
-  titel: string;
-  utskrivningsstatus: string;
-}
-[];
-
-const baseFilter = {
-  socken: '',
-  by: '',
-  titel: '',
-  utskrivningsstatus: '',
-};
-
-interface StyledButtonProps {
-  active: boolean;
-}
+import NoSearchResult from '../components/NoSearchResult';
+import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
 
 const Kurhuset = ({
-  fetchedData,
+  startData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [data, setData] = useState<any>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [listData, setListData] = useState<KurhusetIOstersund[] | []>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [filterValues, setFilterValues] = useState<FilterProps>(baseFilter);
-  const [showReset, setShowReset] = useState<Boolean>(false);
+  const [totalInList, setTotalInList] = useState<number>(0);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
+  const router = useRouter();
+  const { push, pathname } = router;
 
-  console.log(fetchedData);
+  const searchDB = 'kurhuset';
+  const prevSearchValue = useRef('');
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     let { data: arkiv, error } = await supabase
-  //       .from('arkiv')
-  //       .select('*')
-  //     console.log(arkiv);
-  //   };
-  //   fetchData();
-  // }, []);
-
-  const dropdowns = {
-    socken: GetDropdownValues('socken'),
-    by: GetDropdownValues('by'),
-    titel: GetDropdownValues('titel'),
-    utskrivningsstatus: GetDropdownValues('status'),
-  };
-
-  function GetDropdownValues(dropdownValue: string) {
-    const dropdownValues: string[] = [];
-
-    switch (dropdownValue) {
-      case 'socken':
-        data.forEach((person: Person) => {
-          dropdownValues.push(person.socken);
-        });
-        break;
-      case 'by':
-        data.forEach((person: Person) => {
-          dropdownValues.push(person.by);
-        });
-        break;
-      case 'titel':
-        data.forEach((person: Person) => {
-          dropdownValues.push(person.titel);
-        });
-        break;
-      case 'status':
-        data.forEach((person: Person) => {
-          dropdownValues.push(person.utskrivningsstatus);
-        });
-        break;
-      default:
-        console.log('Inget värde!');
-    }
-
-    const filteredDropdownValues = dropdownValues.filter(
-      (dropdown: string, index: number) => {
-        return dropdownValues.indexOf(dropdown) === index;
-      }
-    );
-    return filteredDropdownValues.sort();
-  }
-
-  useEffect(() => {
-    setData(sortDate(kurhuset.data));
-  }, []);
-
-  function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchValue(event.target.value);
-  }
-
-  function handleSearchEvent() {
-    setCurrentPage(1);
-    return fetchSearchResult(searchValue);
+  function onInputChange(value: string) {
+    setSearchValue(value);
+    prevSearchValue.current = searchValue;
   }
 
   function handleResetEvent() {
-    setCurrentPage(1);
     setSearchValue('');
-    setData(sortDate(kurhuset.data));
-    setFilterValues(baseFilter);
-    prevDropdownValueRef.current = false;
+    prevSearchValue.current = '';
+    getAllPosts();
   }
 
-  function fetchSearchResult(searchValue: string) {
-    const result = kurhuset.data.filter(
-      (person) =>
-        person.förnamn?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        person.efternamn?.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setData(sortDate(result));
+  async function handleSearchEvent() {
+    push(pathname + '?page=1');
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        searchDB,
+        searchValue,
+      }),
+    };
+    const response = await fetch('/api/get-search-result', options);
+    const data = await response.json();
+
+    setTotalInList(data.count);
+    setListData(data.data);
+    return data;
   }
 
-  const prevDropdownValueRef = useRef(false);
-  function onDropdownChange(id: string, value: string) {
-    setCurrentPage(1);
-    prevDropdownValueRef.current = false;
-    switch (id) {
-      case 'Socken':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            socken: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            socken: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      case 'By':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            by: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            by: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      case 'Titel':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            titel: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            titel: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      case 'Status':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            utskrivningsstatus: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            utskrivningsstatus: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      default:
-        console.log('Inget värde!');
-    }
+  async function handlePagination(page: number) {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        searchDB,
+        searchValue,
+        pagination: { perPage: itemsPerPage, page: page },
+      }),
+    };
+    const response = await fetch('/api/handle-pagination', options);
+    const data = await response.json();
+
+    setTotalInList(data.count);
+    setListData(data.data);
+    return data;
   }
 
-  function showResetFilterButton() {
-    for (let values in filterValues) {
-      if (values !== '') return true;
-      else return false;
-    }
+  async function getAllPosts() {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        searchDB,
+        searchValue,
+      }),
+    };
+    const response = await fetch('/api/get-all-posts', options);
+    const data = await response.json();
+
+    setTotalInList(data.count);
+    setListData(data.data);
+    return data;
+  }
+
+  function paginate(pageNumber: number) {
+    return handlePagination(pageNumber);
   }
 
   useEffect(() => {
-    if (prevDropdownValueRef.current === true) {
-      setData(
-        data.filter(
-          (person: Person) =>
-            person.socken.includes(filterValues.socken) &&
-            person.by.includes(filterValues.by) &&
-            person.titel.includes(filterValues.titel) &&
-            person.utskrivningsstatus.includes(filterValues.utskrivningsstatus)
-        )
-      );
-      prevDropdownValueRef.current = false;
+    setListData(sortDate(startData.data));
+    setTotalInList(startData.count!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (prevSearchValue.current.length === 1 && searchValue === '') {
+      handleResetEvent();
     } else return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterValues]);
-
-  function paginate(pageNumber: number) {
-    return setCurrentPage(pageNumber);
-  }
+  }, [searchValue]);
 
   return (
     <>
@@ -243,65 +118,26 @@ const Kurhuset = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <MainSection>
+        <StyledPageTitle>Kurhuset i Östersund</StyledPageTitle>
         <SearchSection>
           <Search
             onInputChange={onInputChange}
             handleSearchEvent={handleSearchEvent}
+            handleResetEvent={handleResetEvent}
             searchValue={searchValue}
-            placeholder="Sök på namn- eller efternamn"
-            noResult={currentPosts.length !== 0}
+            placeholder="Sök i databas"
+            helper="Sökfält: För-, efternamn, socken, by, sjukdom och status"
+            noResult={listData.length !== 0}
             maxLength={25}
           />
         </SearchSection>
-        <FilterSection>
-          <StyledForm onSubmit={(event) => event.preventDefault()}>
-            <StyledButton
-              active={!showFilter}
-              onClick={() => setShowFilter(!showFilter)}
-            >
-              {!showFilter ? 'Visa filter' : 'Dölj filter'}
-            </StyledButton>
-            {showResetFilterButton() ? (
-              <StyledResetButton type="reset" onClick={handleResetEvent}>
-                Rensa sök och filter
-              </StyledResetButton>
-            ) : undefined}
-            {!showFilter ? undefined : (
-              <>
-                <FilterContainer>
-                  <DropdownFilter
-                    onDropdownChange={onDropdownChange}
-                    data={dropdowns.socken}
-                    id={'Socken'}
-                  />
-                  <DropdownFilter
-                    onDropdownChange={onDropdownChange}
-                    data={dropdowns.by}
-                    id={'By'}
-                  />
-                  <DropdownFilter
-                    onDropdownChange={onDropdownChange}
-                    data={dropdowns.titel}
-                    id={'Titel'}
-                  />
-                  <DropdownFilter
-                    onDropdownChange={onDropdownChange}
-                    data={dropdowns.utskrivningsstatus}
-                    id={'Status'}
-                  />
-                </FilterContainer>
-                <hr />
-              </>
-            )}
-          </StyledForm>
-        </FilterSection>
-        <section>
-          <StyledListCount>Personer i urval: {data.length}</StyledListCount>
-          {currentPosts.length !== 0 ? (
+        <ListSection>
+          <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
+          {listData.length !== 0 ? (
             <>
-              <TableList data={currentPosts} />
+              <TableList data={listData} />
               <Pagination
-                totalItems={data.length}
+                totalItems={totalInList!}
                 itemsPerPage={itemsPerPage}
                 paginate={paginate}
               />
@@ -309,60 +145,46 @@ const Kurhuset = ({
           ) : (
             <NoSearchResult />
           )}
-        </section>
+        </ListSection>
       </MainSection>
     </>
   );
 };
 
+export default Kurhuset;
+
 export async function getServerSideProps() {
-  let { data, count } = await supabase
+  let { data, count, error } = await supabase
     .from('kurhuset')
     .select('*', { count: 'exact' })
-    .range(0, 19);
+    .order('list_order', { ascending: true })
+    .range(0, 24);
 
-  const fetchedData = {
+  const startData = {
     data: data,
     count: count,
+    error: error,
   };
 
   return {
     props: {
-      fetchedData,
+      startData,
     },
   };
 }
-
-export default Kurhuset;
 
 const MainSection = styled.main`
   @media (max-width: 1200px) {
     padding: 0 0.5rem;
   }
   @media (max-width: 800px) {
-    padding-top: 4.5rem;
+    padding-top: 5rem;
   }
 `;
 
 const SearchSection = styled.section`
   text-align: center;
   padding-top: 1rem;
-`;
-
-const FilterSection = styled.section`
-  @media (max-width: 800px) {
-    padding: 1rem;
-  }
-`;
-
-const FilterContainer = styled.section`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding-top: 1rem;
-  @media (max-width: 800px) {
-    padding-top: 1.5rem;
-  }
 `;
 
 const StyledListCount = styled.section`
@@ -374,64 +196,12 @@ const StyledListCount = styled.section`
   }
 `;
 
-const StyledForm = styled.form`
-  flex-direction: column;
-  padding: 1rem 0;
-  @media (max-width: 680px) {
-    width: 100%;
-    padding: 0.5rem 0;
-  }
-  label {
-    padding: 0.2rem 0.5rem 0.2rem 0;
-    font-size: 0.8rem;
-    width: 4rem;
-    font-weight: 600;
-  }
-  select {
-    width: 15rem;
-    padding: 0.2rem;
-    @media (max-width: 680px) {
-      width: 100%;
-    }
+const StyledPageTitle = styled.h2`
+  display: none;
+  @media (max-width: 800px) {
+    display: inline-block;
+    padding-left: 1rem;
   }
 `;
 
-const StyledResetButton = styled.button`
-  padding: 0.2rem 0.6rem;
-  background-color: transparent;
-  cursor: pointer;
-  font-weight: 600;
-  background-color: #0d5c91;
-  color: white;
-  min-width: 80px;
-  border: 1px solid #0d5c91;
-  border-radius: 0.2rem;
-  text-align: center;
-  transition: all ease 0.2s;
-  :active {
-    background-color: white;
-    color: #0d5c91;
-  }
-`;
-
-const StyledButton = styled.button<StyledButtonProps>`
-  padding: 0.2rem 0.6rem;
-  background-color: transparent;
-  cursor: pointer;
-  font-weight: 600;
-  min-width: 80px;
-  border: 1px solid #0d5c91;
-  border-radius: 0.2rem;
-  text-align: center;
-  margin-right: 1rem;
-  ${({ active }) =>
-    active
-      ? css`
-          background-color: #0d5c91;
-          color: white;
-        `
-      : css`
-      border: 1px solid #0d5c91;
-          }
-        `};
-`;
+const ListSection = styled.section``;
