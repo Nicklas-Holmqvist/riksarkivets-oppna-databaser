@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import React, { useState } from 'react';
 
-import { Person } from './TableList';
 import ExtendedItemInfo from './ExtendedItemInfo';
+import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
 
 interface TableRowProps {
   active: boolean;
@@ -12,7 +12,7 @@ interface StyledButtonProps {
   active: boolean;
 }
 interface MobileListItemProps {
-  person: Person;
+  person: KurhusetIOstersund;
 }
 
 const MobileListItem: React.FC<MobileListItemProps> = ({ person }) => {
@@ -22,32 +22,32 @@ const MobileListItem: React.FC<MobileListItemProps> = ({ person }) => {
       <TableRow active={open} onClick={() => setOpen(!open)}>
         <RowItem>
           <StyledSpan>Nr: </StyledSpan>
-          {person.nummer}
+          {person.number}
         </RowItem>
         <RowItem>
           <StyledSpan>Namns: </StyledSpan>
-          {person.förnamn + ' '}
-          {person.efternamn !== undefined ? person.efternamn : ''}
+          {person.first_name + ' '}
+          {person.last_name !== undefined ? person.last_name : ''}
         </RowItem>
         <RowItem>
           <StyledSpan>Inskrivning: </StyledSpan>
-          {person.inskrivningsdatum}
+          {person.date_of_enrollment}
         </RowItem>
         <RowItem>
           <StyledSpan>Ålder: </StyledSpan>
-          {person.ålder}
+          {person.age}
         </RowItem>
         <RowItem>
           <StyledSpan>Sjukdom: </StyledSpan>
-          {person.sjukdom}
+          {person.disease}
         </RowItem>
         <RowItem>
           <StyledSpan>Utskrivning: </StyledSpan>
-          {person.utskrivningsdatum}
+          {person.discharge_date}
         </RowItem>
         <RowItem>
           <StyledSpan>Status: </StyledSpan>
-          {person.utskrivningsstatus}
+          {person.discharge_status}
         </RowItem>
         <StyledButton active={open} onClick={() => setOpen(!open)}>
           {open ? 'Stäng' : 'Läs mer'}

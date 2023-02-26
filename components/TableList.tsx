@@ -1,33 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 
 import ListItem from './ListItem';
 import MobileListItem from './MobileListItem';
+import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
 
 interface TableListProps {
-  data: Person[];
-}
-
-export interface Person {
-  id: number;
-  nummer: number;
-  inskrivningsdatum: string;
-  förnamn: string;
-  efternamn: string;
-  ålder: string;
-  titel: string;
-  familj: string;
-  by: string;
-  socken: string;
-  sjukdom: string;
-  sjukdomsbeskrivning: string;
-  sjukdomsbehandling: string;
-  utskrivningsdatum: string;
-  utskrivningsstatus: string;
-  vårdtid: string;
-  anmärkning: string;
-  arkiv: string;
-  volym: number;
+  data: KurhusetIOstersund[];
 }
 
 const TableList: React.FC<TableListProps> = ({ data }) => {
@@ -64,7 +43,7 @@ const TableList: React.FC<TableListProps> = ({ data }) => {
       ) : undefined}
       <TableRowSection>
         {data.map((person) => (
-          <div key={person.id}>
+          <div key={person.list_order}>
             {mobileView ? (
               <MobileListItem person={person} />
             ) : (

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import React, { useState } from 'react';
 
-import { Person } from './TableList';
 import ExtendedItemInfo from './ExtendedItemInfo';
+import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
 
 interface TableRowProps {
   active: boolean;
@@ -11,7 +11,7 @@ interface StyledButtonProps {
   active: boolean;
 }
 interface ListItemProps {
-  person: Person;
+  person: KurhusetIOstersund;
 }
 
 const ListItem: React.FC<ListItemProps> = ({ person }) => {
@@ -19,33 +19,33 @@ const ListItem: React.FC<ListItemProps> = ({ person }) => {
   return (
     <TableRowSection>
       <TableRow active={open} onClick={() => setOpen(!open)}>
-        <RowItem>{person.nummer}</RowItem>
+        <RowItem>{person.number}</RowItem>
         <RowItem>
-          {person.förnamn + ' '}
-          {person.efternamn !== undefined ? person.efternamn : ''}
+          {person.first_name + ' '}
+          {person.last_name !== undefined ? person.last_name : ''}
         </RowItem>
-        <RowItem>{person.inskrivningsdatum}</RowItem>
+        <RowItem>{person.date_of_enrollment}</RowItem>
         <RowItem>
-          {person.ålder === undefined
+          {person.age === undefined
             ? undefined
-            : person.ålder.length >= 8
-            ? person.ålder.slice(0, 5) + '...'
-            : person.ålder}
+            : person.age.length >= 8
+            ? person.age.slice(0, 5) + '...'
+            : person.age}
         </RowItem>
         <RowItem>
-          {person.sjukdom === undefined
+          {person.disease === undefined
             ? undefined
-            : person.sjukdom.length >= 15
-            ? person.sjukdom.slice(0, 12) + '...'
-            : person.sjukdom}
+            : person.disease.length >= 15
+            ? person.disease.slice(0, 12) + '...'
+            : person.disease}
         </RowItem>
-        <RowItem>{person.utskrivningsdatum}</RowItem>
+        <RowItem>{person.discharge_date}</RowItem>
         <RowItem>
-          {person.utskrivningsstatus === undefined
+          {person.discharge_status === undefined
             ? undefined
-            : person.utskrivningsstatus.length >= 10
-            ? person.utskrivningsstatus.slice(0, 8) + '...'
-            : person.utskrivningsstatus}
+            : person.discharge_status.length >= 10
+            ? person.discharge_status.slice(0, 8) + '...'
+            : person.discharge_status}
         </RowItem>
         <StyledButton active={open} onClick={() => setOpen(!open)}>
           {open ? 'Stäng' : 'Läs mer'}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { LuX } from '@metamist/lucide-react';
 import styled, { css } from 'styled-components';
 
 interface styledTextInput {
@@ -6,10 +7,12 @@ interface styledTextInput {
 }
 
 interface SearchProps {
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputChange: (value: string) => void;
   handleSearchEvent: () => void;
+  handleResetEvent: () => void;
   searchValue: string;
   placeholder: string;
+  helper: string;
   noResult: boolean;
   maxLength: number;
 }
@@ -17,26 +20,37 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({
   onInputChange,
   handleSearchEvent,
+  handleResetEvent,
   searchValue,
   placeholder,
+  helper,
   noResult,
   maxLength,
 }) => {
   return (
     <StyledForm onSubmit={(event) => event.preventDefault()}>
-      <StyledTextInput
-        type="text"
-        value={searchValue}
-        onChange={(event) => onInputChange(event)}
-        maxLength={maxLength}
-        placeholder={placeholder}
-        noResult={noResult}
-      />
-      <StyledButton
-        onClick={searchValue.length === 0 ? undefined : handleSearchEvent}
-      >
-        Sök
-      </StyledButton>
+      <StyledSearchSection>
+        <StyledTextInput
+          type="text"
+          value={searchValue}
+          onChange={(event) => onInputChange(event.target.value)}
+          maxLength={maxLength}
+          placeholder={placeholder}
+          noResult={noResult}
+        />
+
+        <StyledButton
+          onClick={searchValue.length === 0 ? undefined : handleSearchEvent}
+        >
+          Sök
+        </StyledButton>
+        <StyledReset onClick={handleResetEvent}>
+          {searchValue.length === 0 ? undefined : (
+            <LuX color="black" size={18} />
+          )}
+        </StyledReset>
+      </StyledSearchSection>
+      <StyledHelper>{helper}</StyledHelper>
     </StyledForm>
   );
 };
@@ -44,12 +58,17 @@ const Search: React.FC<SearchProps> = ({
 export default Search;
 
 const StyledForm = styled.form`
-  display: flex;
-  justify-content: center;
   border-radius: 0.2rem;
+  width: 25rem;
+  margin: 0 auto;
   @media (max-width: 800px) {
+    width: 100%;
     padding: 0 1rem;
   }
+`;
+const StyledSearchSection = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const StyledTextInput = styled.input<styledTextInput>`
@@ -80,6 +99,15 @@ const StyledTextInput = styled.input<styledTextInput>`
         `};
 `;
 
+const StyledReset = styled.button`
+  background-color: white;
+  border: none;
+  padding-top: 0.2rem;
+  cursor: pointer;
+  width: 0;
+  transform: translateX(-7rem);
+`;
+
 const StyledButton = styled.button`
   padding: 0.2rem 0.6rem;
   background-color: transparent;
@@ -94,5 +122,15 @@ const StyledButton = styled.button`
   :active {
     background-color: white;
     color: #0d5c91;
+  }
+`;
+const StyledHelper = styled.p`
+  font-size: 0.8rem;
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  color: grey;
+  @media (max-width: 800px) {
+    width: 100%;
+    padding: 0.5rem 0 1rem 0;
   }
 `;
