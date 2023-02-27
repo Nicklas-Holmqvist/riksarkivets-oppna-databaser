@@ -11,6 +11,7 @@ import Pagination from '../components/Pagination';
 import { sortDate } from '../utils/sortDate';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
+import Loader from '../components/Loader';
 
 const Kurhuset = ({
   startData,
@@ -19,6 +20,7 @@ const Kurhuset = ({
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const { push, pathname } = router;
@@ -38,6 +40,7 @@ const Kurhuset = ({
   }
 
   async function handleSearchEvent() {
+    setLoading(true);
     push(pathname + '?page=1');
     const options = {
       method: 'POST',
@@ -49,13 +52,14 @@ const Kurhuset = ({
     };
     const response = await fetch('/api/get-search-result', options);
     const data = await response.json();
-
     setTotalInList(data.count);
     setListData(data.data);
+    setLoading(false);
     return data;
   }
 
   async function handlePagination(page: number) {
+    setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -67,13 +71,14 @@ const Kurhuset = ({
     };
     const response = await fetch('/api/handle-pagination', options);
     const data = await response.json();
-
     setTotalInList(data.count);
     setListData(data.data);
+    setLoading(false);
     return data;
   }
 
   async function getAllPosts() {
+    setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -87,6 +92,7 @@ const Kurhuset = ({
 
     setTotalInList(data.count);
     setListData(data.data);
+    setLoading(false);
     return data;
   }
 
@@ -95,8 +101,10 @@ const Kurhuset = ({
   }
 
   useEffect(() => {
+    setLoading(true);
     setListData(sortDate(startData.data));
     setTotalInList(startData.count!);
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -131,21 +139,25 @@ const Kurhuset = ({
             maxLength={25}
           />
         </SearchSection>
-        <ListSection>
-          <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
-          {listData.length !== 0 ? (
-            <>
-              <TableList data={listData} />
-              <Pagination
-                totalItems={totalInList!}
-                itemsPerPage={itemsPerPage}
-                paginate={paginate}
-              />
-            </>
-          ) : (
-            <NoSearchResult />
-          )}
-        </ListSection>
+        {loading ? (
+          <Loader />
+        ) : (
+          <ListSection>
+            <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
+            {listData.length !== 0 ? (
+              <>
+                <TableList data={listData} />
+                <Pagination
+                  totalItems={totalInList!}
+                  itemsPerPage={itemsPerPage}
+                  paginate={paginate}
+                />
+              </>
+            ) : (
+              <NoSearchResult />
+            )}
+          </ListSection>
+        )}
       </MainSection>
     </>
   );
