@@ -59,7 +59,6 @@ const Kurhuset = ({
   }
 
   async function handlePagination(page: number) {
-    setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -73,7 +72,6 @@ const Kurhuset = ({
     const data = await response.json();
     setTotalInList(data.count);
     setListData(data.data);
-    setLoading(false);
     return data;
   }
 
