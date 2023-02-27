@@ -30,7 +30,7 @@ const StyledContainer = styled.div`
 const StyledLoader = styled.div`
 width: 3rem;
 height: 3rem;
-border-top: 0.1rem solid rgb(20, 20, 20);
+border-top: 0.5rem solid #0d5c91;
 border-radius: 50%;
 transition: all;
 animation: ${KeyframesSpinner} 1s linear infinite;
