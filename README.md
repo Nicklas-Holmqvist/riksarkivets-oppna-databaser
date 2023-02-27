@@ -12,7 +12,8 @@ Tech-stack (än):
 * NextJS
 * Typescript
 * Styled-component
-* MongoDB eller Firebase
+* Ev. byta ut Styled-component till Tailwind
+* Supabase
 
 ## Figma design
 Designen är simpel och fixad i Figma. Inte slutresultat utan en vägledning.
@@ -24,6 +25,6 @@ Färgerna är valda efter Riksarkivets egna färger.
 
 ## Följ framstegen
 
-Nästa punkt är att skapa en landingpage samt kika på vilken databas jag vill använda
+Nästa punkt är att skapa en landingpage
 
 [Vercel-sida](https://historiska-databaser.vercel.app/kurhuset-i-ostersund?page=1)
