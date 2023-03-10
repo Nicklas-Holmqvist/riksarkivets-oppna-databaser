@@ -21,6 +21,6 @@ const StyledHeader = styled.header`
     right: 0;
     padding: 0 2rem;
     position: fixed;
-    z-index: 200;
+    z-index: 300;
   }
 `;
