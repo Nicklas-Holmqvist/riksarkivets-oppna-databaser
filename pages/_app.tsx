@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const GlobalStyles = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Enriqueta&family=Inter:wght@300;600&display=swap');
 *{
   margin: 0px;
   padding: 0px;
@@ -40,6 +40,10 @@ h1 {
   font-size: 1.5rem;
   text-align: center;
   padding: 1rem 0;
+}
+
+h2 {
+  font-family: 'Enriqueta', sans-serif;
 }
 
 h3 {
