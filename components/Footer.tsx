@@ -64,10 +64,14 @@ const Content = styled.div`
   @media (max-width: 680px) {
     flex: auto;
     width: 100%;
-    :nth-child(1) {
+  }
+  :nth-child(1) {
+    @media (max-width: 680px) {
       padding-bottom: 1rem;
     }
-    :nth-child(2) {
+  }
+  :nth-child(2) {
+    @media (max-width: 680px) {
       padding-bottom: 1rem;
     }
   }
