@@ -14,7 +14,7 @@ export interface NavLinksProps {
 
 const navLinks: NavLinksProps[] = [
   { text: 'Start', href: '/' },
-  { text: 'Kurhuset i Östersund', href: '/kurhuset-i-ostersund' },
+  { text: 'Kurhuset i Östersund', href: '/kurhuset-i-ostersund?page=1' },
 ];
 
 const Nav: React.FC<NavProps> = () => {

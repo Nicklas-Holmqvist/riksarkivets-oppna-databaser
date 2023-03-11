@@ -23,7 +23,7 @@ const Kurhuset = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
-  const { push, pathname } = router;
+  const { push, pathname, query } = router;
 
   const searchDB = 'kurhuset';
   const prevSearchValue = useRef('');
@@ -58,14 +58,14 @@ const Kurhuset = ({
     return data;
   }
 
-  async function handlePagination(page: number) {
+  async function handlePagination() {
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         searchDB,
         searchValue,
-        pagination: { perPage: itemsPerPage, page: page },
+        pagination: { perPage: itemsPerPage, page: query.page },
       }),
     };
     const response = await fetch('/api/handle-pagination', options);
@@ -94,15 +94,14 @@ const Kurhuset = ({
     return data;
   }
 
-  function paginate(pageNumber: number) {
-    return handlePagination(pageNumber);
-  }
-
   useEffect(() => {
     setLoading(true);
     setListData(sortDate(startData.data));
     setTotalInList(startData.count!);
     setLoading(false);
+    query.page
+      ? push(`${pathname}?page=${query.page}`)
+      : push(pathname + '?page=1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -112,6 +111,11 @@ const Kurhuset = ({
     } else return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
+
+  useEffect(() => {
+    query.page ? handlePagination() : undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query.page]);
 
   return (
     <>
@@ -148,7 +152,7 @@ const Kurhuset = ({
                 <Pagination
                   totalItems={totalInList!}
                   itemsPerPage={itemsPerPage}
-                  paginate={paginate}
+                  handlePagination={handlePagination}
                 />
               </>
             ) : (

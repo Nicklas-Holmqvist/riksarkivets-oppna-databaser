@@ -21,7 +21,7 @@ const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
     );
   } else {
     return (
-      <Link href={`${href}?page=1`}>
+      <Link href={`${href}`}>
         <StyledLink active={active}>{text}</StyledLink>
       </Link>
     );
