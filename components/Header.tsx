@@ -6,7 +6,7 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   return (
     <StyledHeader>
-      <h1>Riksarkivets öppna data</h1>
+      <h1>Historiska databaser</h1>
     </StyledHeader>
   );
 };

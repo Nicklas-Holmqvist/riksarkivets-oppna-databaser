@@ -119,7 +119,7 @@ const Kurhuset = ({
         <title>Kurhuset i Östersund</title>
         <meta
           name="description"
-          content="Kurhuset i Östersund byggdes i början av 1800-talet för att inhysa de sjuka i sjukdomen Syfilis. Det var aktivt mellan 1817 och 1866"
+          content="Sök i patientregistret från Kurhuset i Östersund som byggdes i början av 1800-talet för att inhysa de sjuka i sjukdomen Syfilis. Det var aktivt mellan 1817 och 1866."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
