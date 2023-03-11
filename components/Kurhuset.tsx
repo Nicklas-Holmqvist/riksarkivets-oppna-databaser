@@ -20,22 +20,22 @@ const Kurhuset: React.FC<KurhusetProps> = () => {
       <InformationContent>
         <h2>Vårdade på Kurhuset i Östersund</h2>
         <TextContent>
-          <p>
+          <Paragraph>
             Vid riksdagen 1815 togs så beslut att anslå medel för att inrätta
             särskilda kurhus, ofta i anslutning till lasarettinrättningar, med
             avsikt att försöka utrota den veneriska smittan i riket. Enligt
             Kungl. Maj:ts instruktion skulle de veneriskt smittade hållas
             åtskilda från andra sjuka vid lasarettet.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             Riksarkivet innehavet ett patientregister som innehåller nära på
             3000 inskrivna patienter mellan 1817-1866 och det är fritt fram till
             att använda datan. I denna informationsmängd finns de vårdade
             registrerade med inskrivningsdatum, namn, hemort, yrke och givetvis
             sjukdom. Dessutom finns sjukdomsbeskrivningar, vårdmetoder m.m. i
             data.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             Så jag har städat lite i datan och skapat ett eget sökbart register
             av det hela. Det jag finns mest intressant i datan är att titel
             benämns på de flesta patienter. De här titlarna finner man sällan i
@@ -47,12 +47,12 @@ const Kurhuset: React.FC<KurhusetProps> = () => {
             månad 1865. Tycker det är helt oväntat och är man tillräckligt
             nyfiken kanske man t.o.m söker vidare med den informationen man
             nyligen hittat.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             Sök gärna runt lite bland datan och undras över hur det ibland kan
             gått så illa som det gjort. Eller gå till Riksarkivets sida för att
             läsa lite mer om arkivet.
-          </p>
+          </Paragraph>
         </TextContent>
         <ButtonContainer>
           <PrimaryButton
@@ -104,14 +104,13 @@ const InformationContent = styled.div`
 
 const TextContent = styled.div`
   padding: 1rem 0 1.5rem 0;
-  p {
-    max-width: 60ch;
-    padding-bottom: 0.8rem;
-  }
+`;
+
+const Paragraph = styled.p`
+  max-width: 60ch;
+  padding-bottom: 0.8rem;
   @media (max-width: 1000px) {
-    p {
-      max-width: 100%;
-    }
+    max-width: 100%;
   }
 `;
 
