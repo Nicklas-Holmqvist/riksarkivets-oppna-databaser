@@ -107,7 +107,9 @@ const TextContent = styled.div`
   p {
     max-width: 60ch;
     padding-bottom: 0.8rem;
-    @media (max-width: 1000px) {
+  }
+  @media (max-width: 1000px) {
+    p {
       max-width: 100%;
     }
   }
