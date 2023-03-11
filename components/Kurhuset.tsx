@@ -74,6 +74,7 @@ export default Kurhuset;
 const Article = styled.article`
   display: flex;
   background-color: white;
+  margin-bottom: 2rem;
   padding: 5rem 0;
   @media (max-width: 800px) {
     padding: 3rem 1rem;

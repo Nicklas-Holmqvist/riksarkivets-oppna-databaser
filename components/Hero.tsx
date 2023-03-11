@@ -23,10 +23,13 @@ const HeroSection = styled.section`
   width: 100%;
   justify-content: center;
   padding: 16rem 0;
+  margin-bottom: 1rem;
+  background-color: white;
   h2 {
     padding-bottom: 0.5rem;
   }
   @media (max-width: 800px) {
+    background-color: transparent;
     padding: 6rem 4rem 8rem 4rem;
     h2 {
       font-size: 1.2rem;

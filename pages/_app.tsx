@@ -26,7 +26,7 @@ const GlobalStyles = createGlobalStyle`
 html, body {
   background-color: #F5F5F5;
 }
-main, footer {
+main {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
