@@ -19,8 +19,11 @@ const StyledHeader = styled.header`
   @media (max-width: 800px) {
     left: 0;
     right: 0;
-    padding: 0 2rem;
+    padding: 0.2rem 2rem;
     position: fixed;
     z-index: 300;
+    h1 {
+      font-size: 1.2rem;
+    }
   }
 `;
