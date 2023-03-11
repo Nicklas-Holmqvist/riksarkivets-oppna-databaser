@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './Footer';
 
 import Header from './Header';
 import Nav from './Nav';
@@ -9,7 +10,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       <Nav />
       <main>{children}</main>
-      <footer></footer>
+      <Footer />
     </>
   );
 };

@@ -184,6 +184,7 @@ export async function getServerSideProps() {
 }
 
 const MainSection = styled.main`
+  margin-bottom: 0.5rem;
   @media (max-width: 1200px) {
     padding: 0 0.5rem;
   }
