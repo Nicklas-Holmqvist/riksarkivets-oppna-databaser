@@ -7,8 +7,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Riksarkivet nedladdningsbara datamängder</title>
-        <meta name="description" content="Skapad av Nicklas Holmqvist" />
+        <title>Historiska databaser | Skapat av Nicklas Holmqvist</title>
+        <meta
+          name="description"
+          content="En samling av sökbara databaser som har bearbetats från Riksarkivets nedladdningsbara datamängder. Skapad av Nicklas Holmqvist som driver bloggen Glömd Värld"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -81,7 +81,7 @@ const Article = styled.article`
 `;
 
 const ImageContent = styled.div`
-  width: 50%;
+  flex: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,10 +94,10 @@ const ImageContent = styled.div`
 const InformationContent = styled.div`
   width: 50%;
   @media (max-width: 1000px) {
-    width: 60%;
+    width: 70%;
     margin: 0 auto;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 680px) {
     width: 100%;
   }
 `;
@@ -107,6 +107,9 @@ const TextContent = styled.div`
   p {
     max-width: 60ch;
     padding-bottom: 0.8rem;
+    @media (max-width: 1000px) {
+      max-width: 100%;
+    }
   }
 `;
 

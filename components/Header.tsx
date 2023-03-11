@@ -6,7 +6,7 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   return (
     <StyledHeader>
-      <h1>Riksarkivets öppna data</h1>
+      <h1>Historiska databaser</h1>
     </StyledHeader>
   );
 };
@@ -19,8 +19,11 @@ const StyledHeader = styled.header`
   @media (max-width: 800px) {
     left: 0;
     right: 0;
-    padding: 0 2rem;
+    padding: 0.2rem 2rem;
     position: fixed;
     z-index: 300;
+    h1 {
+      font-size: 1.2rem;
+    }
   }
 `;

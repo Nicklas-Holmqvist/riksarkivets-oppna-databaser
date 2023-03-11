@@ -27,18 +27,16 @@ const HeroSection = styled.section`
     padding-bottom: 0.5rem;
   }
   @media (max-width: 800px) {
-    padding: 6rem 0 12rem 0;
+    padding: 6rem 4rem 8rem 4rem;
     h2 {
       font-size: 1.2rem;
     }
   }
   @media (max-width: 540px) {
-    h2 {
-      font-size: 1rem;
+    p {
+      font-size: 0.8rem;
     }
   }
 `;
 
-const HeroContent = styled.section`
-  padding: 0 1rem;
-`;
+const HeroContent = styled.section``;
