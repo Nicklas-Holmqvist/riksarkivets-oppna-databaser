@@ -13,13 +13,13 @@ interface StyledLiProps {
 interface PaginationProps {
   totalItems: number;
   itemsPerPage: number;
-  paginate: (pageNumber: number) => void;
+  handlePagination: () => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   totalItems,
   itemsPerPage,
-  paginate,
+  handlePagination,
 }) => {
   const router = useRouter();
   const { query, push, pathname, asPath } = router;
@@ -36,12 +36,6 @@ const Pagination: React.FC<PaginationProps> = ({
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
-
-  useEffect(() => {
-    if (asPath === 'page=1') return;
-    push(pathname + '?page=1');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalItems]);
 
   useEffect(() => {
     const pageIndex = pageNumbers.findIndex((number) => number === currentPage);
@@ -62,12 +56,12 @@ const Pagination: React.FC<PaginationProps> = ({
       return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, paginate]);
+  }, [currentPage, handlePagination]);
 
   const currentPages = pageNumbers.slice(start, end);
 
   function handlePaginationArrows(value: number) {
-    paginate(value);
+    handlePagination();
     router.push(`${pathname}?page=${value}`);
   }
 
@@ -99,7 +93,9 @@ const Pagination: React.FC<PaginationProps> = ({
           <StyledLi
             key={number}
             onClick={
-              Number(query.page) === number ? undefined : () => paginate(number)
+              Number(query.page) === number
+                ? undefined
+                : () => handlePagination()
             }
           >
             <StyledLink
