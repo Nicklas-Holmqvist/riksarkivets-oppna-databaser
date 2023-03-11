@@ -41,7 +41,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
                   <NavLink
                     href={navLink.href}
                     text={navLink.text}
-                    active={path === navLink.href}
+                    active={path === navLink.path}
                   />
                 </motion.a>
               ))}

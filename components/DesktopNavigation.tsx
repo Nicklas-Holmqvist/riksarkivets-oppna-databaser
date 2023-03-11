@@ -20,7 +20,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
           key={index}
           text={navLink.text}
           href={navLink.href}
-          active={path === navLink.href}
+          active={path === navLink.path}
         />
       ))}
     </>
