@@ -23,10 +23,16 @@ const GlobalStyles = createGlobalStyle`
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+#__next {
+  height: 100%;
+}
+
 html, body {
+  height: 100%;
   background-color: #F5F5F5;
 }
 main {
+  min-height: 100%;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
