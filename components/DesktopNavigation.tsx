@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { NavLinksProps } from './Nav';
 import NavLink from './NavLink';
@@ -28,5 +27,3 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
 };
 
 export default DesktopNavigation;
-
-const StyledNavContainer = styled.div``;
