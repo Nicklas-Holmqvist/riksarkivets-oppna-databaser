@@ -118,7 +118,7 @@ const Kurhuset = ({
   }, [query.page]);
 
   return (
-    <>
+    <MainSection>
       <Head>
         <title>Kurhuset i Östersund</title>
         <meta
@@ -127,41 +127,39 @@ const Kurhuset = ({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <MainSection>
-        <StyledPageTitle>Kurhuset i Östersund</StyledPageTitle>
-        <SearchSection>
-          <Search
-            onInputChange={onInputChange}
-            handleSearchEvent={handleSearchEvent}
-            handleResetEvent={handleResetEvent}
-            searchValue={searchValue}
-            placeholder="Sök i databas"
-            helper="Sökfält: För-, efternamn, socken, by, sjukdom och status"
-            noResult={listData.length !== 0}
-            maxLength={25}
-          />
-        </SearchSection>
-        {loading ? (
-          <Loader />
-        ) : (
-          <ListSection>
-            <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
-            {listData.length !== 0 ? (
-              <>
-                <TableList data={listData} />
-                <Pagination
-                  totalItems={totalInList!}
-                  itemsPerPage={itemsPerPage}
-                  handlePagination={handlePagination}
-                />
-              </>
-            ) : (
-              <NoSearchResult />
-            )}
-          </ListSection>
-        )}
-      </MainSection>
-    </>
+      <StyledPageTitle>Kurhuset i Östersund</StyledPageTitle>
+      <SearchSection>
+        <Search
+          onInputChange={onInputChange}
+          handleSearchEvent={handleSearchEvent}
+          handleResetEvent={handleResetEvent}
+          searchValue={searchValue}
+          placeholder="Sök i databas"
+          helper="Sökfält: För-, efternamn, socken, by, sjukdom och status"
+          noResult={listData.length !== 0}
+          maxLength={25}
+        />
+      </SearchSection>
+      {loading ? (
+        <Loader />
+      ) : (
+        <ListSection>
+          <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
+          {listData.length !== 0 ? (
+            <List>
+              <TableList data={listData} />
+              <Pagination
+                totalItems={totalInList!}
+                itemsPerPage={itemsPerPage}
+                handlePagination={handlePagination}
+              />
+            </List>
+          ) : (
+            <NoSearchResult />
+          )}
+        </ListSection>
+      )}
+    </MainSection>
   );
 };
 
@@ -187,7 +185,8 @@ export async function getServerSideProps() {
   };
 }
 
-const MainSection = styled.main`
+const MainSection = styled.section`
+  height: 100%;
   margin-bottom: 0.5rem;
   @media (max-width: 1200px) {
     padding: 0 0.5rem;
@@ -197,12 +196,16 @@ const MainSection = styled.main`
   }
 `;
 
-const SearchSection = styled.section`
+const ListSection = styled.article`
+  height: 100%;
+`;
+
+const SearchSection = styled.article`
   text-align: center;
   padding-top: 1rem;
 `;
 
-const StyledListCount = styled.section`
+const StyledListCount = styled.article`
   padding-bottom: 0.6rem;
   font-size: 0.8rem;
   font-weight: 600;
@@ -211,6 +214,8 @@ const StyledListCount = styled.section`
   }
 `;
 
+const List = styled.div``;
+
 const StyledPageTitle = styled.h2`
   display: none;
   @media (max-width: 800px) {
@@ -218,5 +223,3 @@ const StyledPageTitle = styled.h2`
     padding-left: 1rem;
   }
 `;
-
-const ListSection = styled.section``;
