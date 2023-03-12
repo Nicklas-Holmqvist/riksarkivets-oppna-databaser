@@ -1,16 +1,21 @@
 import Head from 'next/head';
 import styled from 'styled-components';
+import { supabase } from '../lib/supabaseClient';
 import { useRouter } from 'next/router';
+import { InferGetServerSidePropsType } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 
 import Search from '../components/Search';
-import Loader from '../components/Loader';
 import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
+import { sortDate } from '../utils/sortDate';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
+import Loader from '../components/Loader';
 
-const Kurhuset = () => {
+const Kurhuset = ({
+  startData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [listData, setListData] = useState<KurhusetIOstersund[] | []>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -91,10 +96,12 @@ const Kurhuset = () => {
 
   useEffect(() => {
     setLoading(true);
+    setListData(sortDate(startData.data));
+    setTotalInList(startData.count!);
+    setLoading(false);
     query.page
       ? push(`${pathname}?page=${query.page}`)
       : push(pathname + '?page=1');
-    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -106,9 +113,7 @@ const Kurhuset = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    setLoading(true);
     query.page ? handlePagination() : undefined;
-    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.page]);
 
@@ -159,6 +164,26 @@ const Kurhuset = () => {
 };
 
 export default Kurhuset;
+
+export async function getServerSideProps() {
+  let { data, count, error } = await supabase
+    .from('kurhuset')
+    .select('*', { count: 'exact' })
+    .order('list_order', { ascending: true })
+    .range(0, 24);
+
+  const startData = {
+    data: data,
+    count: count,
+    error: error,
+  };
+
+  return {
+    props: {
+      startData,
+    },
+  };
+}
 
 const MainSection = styled.section`
   height: 100%;
