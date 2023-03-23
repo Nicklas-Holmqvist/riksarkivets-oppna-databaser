@@ -20,25 +20,35 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { searchDB } = req.body;
-  const { data, count, error } = await supabase
-    .from(searchDB)
-    .select('*', { count: 'exact' })
-    .order('list_order', { ascending: true })
-    .range(0, 24);
 
-  if (error) {
+  try {
+    const { data, count, error } = await supabase
+      .from(searchDB)
+      .select('*', { count: 'exact' })
+      .order('list_order', { ascending: true })
+      .range(0, 24);
+
+    if (error) {
+      const fetchedData = {
+        data: [],
+        count: 0,
+        error: error,
+      };
+      res.status(500).json(fetchedData);
+    } else {
+    }
+    const fetchedData = {
+      data: data,
+      count: count,
+      error: error,
+    };
+    res.status(200).json(fetchedData);
+  } catch (error) {
     const fetchedData = {
       data: [],
       count: 0,
       error: error,
     };
-    res.status(200).json(fetchedData);
-  } else {
+    res.status(500).json(fetchedData);
   }
-  const fetchedData = {
-    data: data,
-    count: count,
-    error: error,
-  };
-  res.status(200).json(fetchedData);
 }

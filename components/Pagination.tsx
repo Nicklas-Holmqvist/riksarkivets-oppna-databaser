@@ -12,8 +12,9 @@ interface StyledLiProps {
 }
 interface PaginationProps {
   totalItems: number;
+  searchValue: string;
   itemsPerPage: number;
-  handlePagination: () => void;
+  handlePagination: (page: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -60,19 +61,12 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const currentPages = pageNumbers.slice(start, end);
 
-  function handlePaginationArrows(value: number) {
-    handlePagination();
-    router.push(`${pathname}?page=${value}`);
-  }
-
   return (
     <StyledNavigation>
       <StyledUl>
         <StyledArrows active={currentPage <= 1}>
           <LuChevronFirst
-            onClick={() =>
-              currentPage <= 1 ? undefined : handlePaginationArrows(1)
-            }
+            onClick={() => (currentPage <= 1 ? undefined : handlePagination(1))}
             color={currentPage <= 1 ? 'lightgrey' : 'black'}
             size={24}
           />
@@ -80,9 +74,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <StyledArrows active={currentPage <= 1}>
           <LuChevronLeft
             onClick={() =>
-              currentPage <= 1
-                ? undefined
-                : handlePaginationArrows(currentPage - 1)
+              currentPage <= 1 ? undefined : handlePagination(currentPage - 1)
             }
             color={currentPage <= 1 ? 'lightgrey' : 'black'}
             size={24}
@@ -95,7 +87,7 @@ const Pagination: React.FC<PaginationProps> = ({
             onClick={
               Number(query.page) === number
                 ? undefined
-                : () => handlePagination()
+                : () => handlePagination(number)
             }
           >
             <StyledLink
@@ -111,7 +103,7 @@ const Pagination: React.FC<PaginationProps> = ({
             onClick={() =>
               currentPage >= pageNumbers.length
                 ? undefined
-                : handlePaginationArrows(currentPage + 1)
+                : handlePagination(currentPage + 1)
             }
             color={currentPage >= pageNumbers.length ? 'lightgrey' : 'black'}
             size={24}
@@ -122,7 +114,7 @@ const Pagination: React.FC<PaginationProps> = ({
             onClick={
               currentPage >= pageNumbers.length
                 ? undefined
-                : () => handlePaginationArrows(pageNumbers.length)
+                : () => handlePagination(pageNumbers.length)
             }
             color={currentPage >= pageNumbers.length ? 'lightgrey' : 'black'}
             size={24}
