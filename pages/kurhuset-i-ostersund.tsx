@@ -1,21 +1,26 @@
 import Head from 'next/head';
 import styled from 'styled-components';
+import { supabase } from '../lib/supabaseClient';
 import { useRouter } from 'next/router';
+import { InferGetServerSidePropsType } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 
-import Loader from '../components/Loader';
 import Search from '../components/Search';
 import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
+import { sortDate } from '../utils/sortDate';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
+import Loader from '../components/Loader';
 
-const Kurhuset = () => {
+const Kurhuset = ({
+  startData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [listData, setListData] = useState<KurhusetIOstersund[] | []>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const { push, pathname, query } = router;
@@ -29,7 +34,6 @@ const Kurhuset = () => {
   }
 
   function handleResetEvent() {
-    push(pathname + '?page=1');
     setSearchValue('');
     prevSearchValue.current = '';
     getAllPosts();
@@ -55,7 +59,6 @@ const Kurhuset = () => {
   }
 
   async function handlePagination() {
-    setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -69,7 +72,6 @@ const Kurhuset = () => {
     const data = await response.json();
     setTotalInList(data.count);
     setListData(data.data);
-    setLoading(false);
     return data;
   }
 
@@ -93,7 +95,10 @@ const Kurhuset = () => {
   }
 
   useEffect(() => {
-    getAllPosts();
+    setLoading(true);
+    setListData(sortDate(startData.data));
+    setTotalInList(startData.count!);
+    setLoading(false);
     query.page
       ? push(`${pathname}?page=${query.page}`)
       : push(pathname + '?page=1');
@@ -159,6 +164,26 @@ const Kurhuset = () => {
 };
 
 export default Kurhuset;
+
+export async function getServerSideProps() {
+  let { data, count, error } = await supabase
+    .from('kurhuset')
+    .select('*', { count: 'exact' })
+    .order('list_order', { ascending: true })
+    .range(0, 24);
+
+  const startData = {
+    data: data,
+    count: count,
+    error: error,
+  };
+
+  return {
+    props: {
+      startData,
+    },
+  };
+}
 
 const MainSection = styled.section`
   height: 100%;
