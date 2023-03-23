@@ -35,17 +35,7 @@ export default async function handler(
         .from(searchDB)
         .select('*', { count: 'exact' })
         .or(
-          `first_name.eq.${capitalizeFirstLetter(
-            search
-          )},last_name.eq.${capitalizeFirstLetter(
-            search
-          )},village.eq.${capitalizeFirstLetter(
-            search
-          )},parish.eq.${capitalizeFirstLetter(
-            search
-          )},discharge_status.eq.${capitalizeFirstLetter(
-            search
-          )},disease.eq.${capitalizeFirstLetter(search)}`
+          `first_name.ilike.${search},last_name.ilike.${search},village.ilike.${search},parish.ilike.${search},discharge_status.ilike.${search},disease.ilike.${search},full_name.ilike.${search}`
         )
         .order('list_order', { ascending: true })
         .range(indexOfFirstItem, indexOfLastItem);
