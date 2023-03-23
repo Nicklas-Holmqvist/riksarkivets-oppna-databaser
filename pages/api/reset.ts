@@ -12,7 +12,6 @@ type Data = {
 type NextApiRequestProps = NextApiRequest & {
   body: {
     searchDB: string;
-    searchValue: string;
   };
 };
 
@@ -20,7 +19,7 @@ export default async function handler(
   req: NextApiRequestProps,
   res: NextApiResponse<Data>
 ) {
-  const { searchDB, searchValue } = req.body;
+  const { searchDB } = req.body;
   const { data, count, error } = await supabase
     .from(searchDB)
     .select('*', { count: 'exact' })

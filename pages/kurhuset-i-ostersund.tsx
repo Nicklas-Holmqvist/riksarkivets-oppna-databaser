@@ -1,26 +1,24 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import { supabase } from '../lib/supabaseClient';
 import { useRouter } from 'next/router';
 import { InferGetServerSidePropsType } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 
+import Loader from '../components/Loader';
 import Search from '../components/Search';
 import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
-import { sortDate } from '../utils/sortDate';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
-import Loader from '../components/Loader';
 
 const Kurhuset = ({
-  startData,
+  start,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [listData, setListData] = useState<KurhusetIOstersund[] | []>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
   const { push, pathname, query } = router;
@@ -34,9 +32,10 @@ const Kurhuset = ({
   }
 
   function handleResetEvent() {
+    push(pathname + '?page=1');
     setSearchValue('');
     prevSearchValue.current = '';
-    getAllPosts();
+    resetSearch();
   }
 
   async function handleSearchEvent() {
@@ -50,7 +49,7 @@ const Kurhuset = ({
         searchValue,
       }),
     };
-    const response = await fetch('/api/get-search-result', options);
+    const response = await fetch('/api/search-posts', options);
     const data = await response.json();
     setTotalInList(data.count);
     setListData(data.data);
@@ -58,7 +57,8 @@ const Kurhuset = ({
     return data;
   }
 
-  async function handlePagination() {
+  async function getPosts() {
+    setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -68,24 +68,24 @@ const Kurhuset = ({
         pagination: { perPage: itemsPerPage, page: query.page },
       }),
     };
-    const response = await fetch('/api/handle-pagination', options);
+    const response = await fetch('/api/posts', options);
     const data = await response.json();
     setTotalInList(data.count);
     setListData(data.data);
+    setLoading(false);
     return data;
   }
 
-  async function getAllPosts() {
+  async function resetSearch() {
     setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         searchDB,
-        searchValue,
       }),
     };
-    const response = await fetch('/api/get-all-posts', options);
+    const response = await fetch('/api/reset', options);
     const data = await response.json();
 
     setTotalInList(data.count);
@@ -96,12 +96,8 @@ const Kurhuset = ({
 
   useEffect(() => {
     setLoading(true);
-    setListData(sortDate(startData.data));
-    setTotalInList(startData.count!);
+    getPosts();
     setLoading(false);
-    query.page
-      ? push(`${pathname}?page=${query.page}`)
-      : push(pathname + '?page=1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -113,7 +109,7 @@ const Kurhuset = ({
   }, [searchValue]);
 
   useEffect(() => {
-    query.page ? handlePagination() : undefined;
+    query.page ? getPosts() : undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.page]);
 
@@ -151,7 +147,7 @@ const Kurhuset = ({
               <Pagination
                 totalItems={totalInList!}
                 itemsPerPage={itemsPerPage}
-                handlePagination={handlePagination}
+                handlePagination={getPosts}
               />
             </List>
           ) : (
@@ -166,21 +162,11 @@ const Kurhuset = ({
 export default Kurhuset;
 
 export async function getServerSideProps() {
-  let { data, count, error } = await supabase
-    .from('kurhuset')
-    .select('*', { count: 'exact' })
-    .order('list_order', { ascending: true })
-    .range(0, 24);
-
-  const startData = {
-    data: data,
-    count: count,
-    error: error,
-  };
+  const start = 'start';
 
   return {
     props: {
-      startData,
+      start,
     },
   };
 }
