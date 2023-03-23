@@ -18,7 +18,7 @@ const Kurhuset = ({
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
   const { push, pathname, query } = router;
@@ -58,7 +58,7 @@ const Kurhuset = ({
   }
 
   async function getPosts() {
-    console.log(router.query);
+    setLoading(true);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -72,6 +72,7 @@ const Kurhuset = ({
     const data = await response.json();
     setTotalInList(data.count);
     setListData(data.data);
+    setLoading(false);
     return data;
   }
 
