@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import { LuChevronLeft } from '@metamist/lucide-react';
@@ -23,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
   handlePagination,
 }) => {
   const router = useRouter();
-  const { query, push, pathname, asPath } = router;
+  const { query } = router;
   let pageNumbers: number[] = [];
 
   const baseStart: number = 0;
@@ -90,12 +89,9 @@ const Pagination: React.FC<PaginationProps> = ({
                 : () => handlePagination(number)
             }
           >
-            <StyledLink
-              href={`${pathname}?page=${number}`}
-              active={Number(query.page) === number}
-            >
+            <PaginationButton active={Number(query.page) === number}>
               {number}
-            </StyledLink>
+            </PaginationButton>
           </StyledLi>
         ))}
         <StyledArrows active={currentPage >= pageNumbers.length}>
@@ -148,7 +144,6 @@ const StyledUl = styled.ul`
 
 const StyledLi = styled.li`
   list-style-type: none;
-  transition: all ease 0.3s;
   width: 3rem;
   @media (max-width: 800px) {
     width: 2rem;
@@ -158,11 +153,15 @@ const StyledLi = styled.li`
   }
 `;
 
-const StyledLink = styled(Link)<StyledLiProps>`
+const PaginationButton = styled.button<StyledLiProps>`
   display: block;
   height: 100%;
+  width: 100%;
   padding: 0 0.4rem 0 0.4rem;
+  background-color: transparent;
+  border: none;
   text-align: center;
+  transition: all ease 0.1s;
   ${({ active: active }) =>
     active
       ? css`

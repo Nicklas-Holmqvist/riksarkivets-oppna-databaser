@@ -114,6 +114,11 @@ const Kurhuset = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
+  useEffect(() => {
+    query.page ? getPosts(Number(query.page)) : undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query.page, query.search]);
+
   return (
     <MainSection>
       <Head>
