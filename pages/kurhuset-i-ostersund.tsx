@@ -135,27 +135,25 @@ const Kurhuset = () => {
           maxLength={25}
         />
       </SearchSection>
-      <ListSection>
-        <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            {listData.length !== 0 ? (
-              <List>
-                <TableList data={listData} />
-              </List>
-            ) : (
-              <NoSearchResult />
-            )}
-          </>
-        )}
-        <Pagination
-          totalItems={totalInList!}
-          itemsPerPage={itemsPerPage}
-          handlePagination={handlePagination}
-        />
-      </ListSection>
+      {loading ? (
+        <Loader />
+      ) : (
+        <ListSection>
+          <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
+          {listData.length !== 0 ? (
+            <List>
+              <TableList data={listData} />
+              <Pagination
+                totalItems={totalInList!}
+                itemsPerPage={itemsPerPage}
+                handlePagination={handlePagination}
+              />
+            </List>
+          ) : (
+            <NoSearchResult />
+          )}
+        </ListSection>
+      )}
     </MainSection>
   );
 };
