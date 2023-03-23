@@ -57,7 +57,7 @@ const Kurhuset: React.FC<KurhusetProps> = () => {
         <ButtonContainer>
           <PrimaryButton
             text="Sök i registret"
-            href="/kurhuset-i-ostersund?page=1"
+            href="/kurhuset-i-ostersund?page=1&search="
           />
           <SecondaryButton
             text="Gå till Riksarkivet"
