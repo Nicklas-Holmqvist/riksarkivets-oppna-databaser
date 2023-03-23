@@ -23,6 +23,7 @@ const Kurhuset = ({
   const router = useRouter();
   const { push, pathname, query } = router;
 
+  const search = query.search;
   const searchDB = 'kurhuset';
   const prevSearchValue = useRef('');
 
@@ -32,15 +33,39 @@ const Kurhuset = ({
   }
 
   function handleResetEvent() {
-    push(pathname + '?page=1');
+    push(pathname + '?page=1&search=');
     setSearchValue('');
     prevSearchValue.current = '';
     resetSearch();
   }
 
+  function handlePagination(page: number) {
+    push(pathname + `?page=${page}&search=${searchValue}`);
+    getPosts(page);
+  }
+
+  async function getPosts(page: number) {
+    setLoading(true);
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        searchDB,
+        search,
+        pagination: { perPage: itemsPerPage, page: page },
+      }),
+    };
+    const response = await fetch('/api/posts', options);
+    const data = await response.json();
+    setTotalInList(data.count);
+    setListData(data.data);
+    setLoading(false);
+    return data;
+  }
+
   async function handleSearchEvent() {
     setLoading(true);
-    push(pathname + '?page=1');
+    push(pathname + `?page=1&search=${searchValue}`);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -50,25 +75,6 @@ const Kurhuset = ({
       }),
     };
     const response = await fetch('/api/search-posts', options);
-    const data = await response.json();
-    setTotalInList(data.count);
-    setListData(data.data);
-    setLoading(false);
-    return data;
-  }
-
-  async function getPosts() {
-    setLoading(true);
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        searchDB,
-        searchValue,
-        pagination: { perPage: itemsPerPage, page: query.page },
-      }),
-    };
-    const response = await fetch('/api/posts', options);
     const data = await response.json();
     setTotalInList(data.count);
     setListData(data.data);
@@ -95,9 +101,9 @@ const Kurhuset = ({
   }
 
   useEffect(() => {
-    setLoading(true);
-    getPosts();
-    setLoading(false);
+    if (query.search === undefined) return;
+    else setSearchValue(query.search as string);
+    getPosts(Number(query.page));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -107,11 +113,6 @@ const Kurhuset = ({
     } else return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
-
-  useEffect(() => {
-    query.page ? getPosts() : undefined;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.page]);
 
   return (
     <MainSection>
@@ -147,7 +148,8 @@ const Kurhuset = ({
               <Pagination
                 totalItems={totalInList!}
                 itemsPerPage={itemsPerPage}
-                handlePagination={getPosts}
+                handlePagination={handlePagination}
+                searchValue={searchValue}
               />
             </List>
           ) : (

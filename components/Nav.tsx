@@ -17,7 +17,7 @@ const navLinks: NavLinksProps[] = [
   { text: 'Start', href: '/', path: '/' },
   {
     text: 'Kurhuset i Östersund',
-    href: '/kurhuset-i-ostersund?page=1',
+    href: '/kurhuset-i-ostersund?page=1&search=',
     path: '/kurhuset-i-ostersund',
   },
 ];
