@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import React, { useState } from 'react';
 
 import ExtendedItemInfo from './ExtendedItemInfo';
-import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
+import { KurhusetList } from '../types/KurhusetIOstersund';
 
 interface TableRowProps {
   active: boolean;
@@ -12,10 +12,14 @@ interface StyledButtonProps {
   active: boolean;
 }
 interface MobileListItemProps {
-  person: KurhusetIOstersund;
+  person: KurhusetList;
+  database: string;
 }
 
-const MobileListItem: React.FC<MobileListItemProps> = ({ person }) => {
+const MobileListItem: React.FC<MobileListItemProps> = ({
+  person,
+  database,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <TableRowSection>
@@ -53,7 +57,9 @@ const MobileListItem: React.FC<MobileListItemProps> = ({ person }) => {
           {open ? 'Stäng' : 'Läs mer'}
         </StyledButton>
       </TableRow>
-      {open ? <ExtendedItemInfo information={person} /> : undefined}
+      {open ? (
+        <ExtendedItemInfo id={person.list_order} database={database} />
+      ) : undefined}
     </TableRowSection>
   );
 };

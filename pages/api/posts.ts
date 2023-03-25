@@ -1,17 +1,16 @@
 import { supabase } from '../../lib/supabaseClient';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { KurhusetIOstersund } from '../../types/KurhusetIOstersund';
-import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+import { KurhusetList } from '../../types/KurhusetIOstersund';
 
 type Data = {
-  data: KurhusetIOstersund[] | null;
-  count: any;
+  data: KurhusetList[] | null;
+  count: number;
 };
 
 type NextApiRequestProps = NextApiRequest & {
   body: {
-    searchDB: string;
+    database: string;
     search: string;
     pagination: {
       perPage: number;
@@ -24,7 +23,7 @@ export default async function handler(
   req: NextApiRequestProps,
   res: NextApiResponse<Data>
 ) {
-  const { searchDB, search, pagination } = req.body;
+  const { database, search, pagination } = req.body;
 
   const indexOfLastItem = pagination.page * pagination.perPage;
   const indexOfFirstItem = indexOfLastItem - pagination.perPage;
@@ -32,8 +31,11 @@ export default async function handler(
   if (search !== '') {
     try {
       const { data, count, error } = await supabase
-        .from(searchDB)
-        .select('*', { count: 'exact' })
+        .from(database)
+        .select(
+          'list_order, number, date_of_enrollment, first_name, last_name, age, disease, discharge_date, discharge_status',
+          { count: 'exact' }
+        )
         .or(
           `first_name.ilike.${search},last_name.ilike.${search},village.ilike.${search},parish.ilike.${search},discharge_status.ilike.${search},disease.ilike.${search},full_name.ilike.${search}`
         )
@@ -50,7 +52,7 @@ export default async function handler(
       }
       const fetchedData = {
         data: data,
-        count: count,
+        count: Number(count),
         error: error,
       };
       res.status(200).json(fetchedData);
@@ -65,8 +67,11 @@ export default async function handler(
   } else {
     try {
       const { data, count, error } = await supabase
-        .from(searchDB)
-        .select('*', { count: 'exact' })
+        .from(database)
+        .select(
+          'list_order, number, date_of_enrollment, first_name, last_name, age, disease, discharge_date, discharge_status',
+          { count: 'exact' }
+        )
         .order('list_order', { ascending: true })
         .range(indexOfFirstItem, indexOfLastItem);
       if (error) {
@@ -79,7 +84,7 @@ export default async function handler(
       }
       const fetchedData = {
         data: data,
-        count: count,
+        count: Number(count),
         error: error,
       };
       res.status(200).json(fetchedData);

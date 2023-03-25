@@ -1,4 +1,4 @@
-export interface KurhusetIOstersund {
+export interface KurhusetListItem {
   list_order: number;
   number: number;
   date_of_enrollment: string;
@@ -18,4 +18,16 @@ export interface KurhusetIOstersund {
   observation: string;
   arkiv: string;
   volume: number;
+}
+
+export interface KurhusetList {
+  list_order: number;
+  number: number;
+  date_of_enrollment: string;
+  first_name: string;
+  last_name: string;
+  age: string;
+  disease: string;
+  discharge_date: string;
+  discharge_status: string;
 }
