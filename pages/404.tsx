@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 import PrimaryButton from '../components/PrimaryButton';
 
 interface Custom404Props {}
 
 const Custom404: React.FC<Custom404Props> = () => {
-  const router = useRouter();
   return (
     <Section>
       <h2>Sidan kan inte hittas!</h2>

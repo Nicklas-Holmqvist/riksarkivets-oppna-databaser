@@ -101,6 +101,8 @@ const Kurhuset = ({
   }
 
   useEffect(() => {
+    if (query.page === undefined && query.search === undefined)
+      setLoading(false);
     if (query.search === undefined) return;
     else setSearchValue(query.search as string);
     getPosts(Number(query.page));
