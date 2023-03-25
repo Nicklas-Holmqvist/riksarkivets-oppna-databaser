@@ -5,11 +5,16 @@ import styled from 'styled-components';
 interface ButtonProps {
   text: string;
   href: string;
+  replace?: boolean;
 }
 
-const SecondaryButton: React.FC<ButtonProps> = ({ text, href }) => {
+const SecondaryButton: React.FC<ButtonProps> = ({
+  text,
+  href,
+  replace = false,
+}) => {
   return (
-    <Link href={href}>
+    <Link href={href} replace={replace}>
       <Button>{text}</Button>
     </Link>
   );
