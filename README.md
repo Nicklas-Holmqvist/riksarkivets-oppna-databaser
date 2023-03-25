@@ -25,6 +25,6 @@ Färgerna är valda efter Riksarkivets egna färger.
 
 ## Följ framstegen
 
-Nästa punkt är att skapa en landingpage
+Error sida
 
 [Vercel-sida](https://historiska-databaser.vercel.app/kurhuset-i-ostersund?page=1)
