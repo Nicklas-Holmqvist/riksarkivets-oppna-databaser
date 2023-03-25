@@ -1,7 +1,7 @@
 import { supabase } from '../../lib/supabaseClient';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { KurhusetListItem } from '../../types/KurhusetListItem';
+import { KurhusetListItem } from '../../types/KurhusetIOstersund';
 
 type Data = {
   data: KurhusetListItem[] | null;
