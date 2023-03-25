@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 
 import ListItem from './ListItem';
 import MobileListItem from './MobileListItem';
-import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
+import { KurhusetList } from '../types/KurhusetIOstersund';
 
 interface TableListProps {
-  data: KurhusetIOstersund[];
+  data: KurhusetList[];
+  database: string;
 }
 
-const TableList: React.FC<TableListProps> = ({ data }) => {
+const TableList: React.FC<TableListProps> = ({ data, database }) => {
   const [mobileView, setMobileView] = useState<boolean>(false);
 
   const changeMobileView = () => {
@@ -45,9 +46,9 @@ const TableList: React.FC<TableListProps> = ({ data }) => {
         {data.map((person) => (
           <div key={person.list_order}>
             {mobileView ? (
-              <MobileListItem person={person} />
+              <MobileListItem person={person} database={database} />
             ) : (
-              <ListItem person={person} />
+              <ListItem person={person} database={database} />
             )}
           </div>
         ))}

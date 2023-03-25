@@ -1,12 +1,11 @@
 import { supabase } from '../../lib/supabaseClient';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { KurhusetIOstersund } from '../../types/KurhusetIOstersund';
-import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+import { KurhusetList } from '../../types/KurhusetIOstersund';
 
 type Data = {
-  data: KurhusetIOstersund[] | null;
-  count: any;
+  data: KurhusetList[] | null;
+  count: number;
   error: any;
 };
 
@@ -21,11 +20,14 @@ export default async function handler(
   req: NextApiRequestProps,
   res: NextApiResponse<Data>
 ) {
-  const { searchDB, searchValue } = req.body;
+  const { database, searchValue } = req.body;
   try {
     const { data, count, error } = await supabase
-      .from(searchDB)
-      .select('*', { count: 'exact' })
+      .from(database)
+      .select(
+        'list_order, number, date_of_enrollment, first_name, last_name, age, disease, discharge_date, discharge_status',
+        { count: 'exact' }
+      )
       .or(
         `first_name.ilike.${searchValue},last_name.ilike.${searchValue},village.ilike.${searchValue},parish.ilike.${searchValue},discharge_status.ilike.${searchValue},disease.ilike.${searchValue},full_name.ilike.${searchValue}`
       )
@@ -42,7 +44,7 @@ export default async function handler(
     }
     const fetchedData = {
       data: data,
-      count: count,
+      count: Number(count),
       error: error,
     };
     res.status(200).json(fetchedData);

@@ -9,12 +9,12 @@ import Search from '../components/Search';
 import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
-import { KurhusetIOstersund } from '../types/KurhusetIOstersund';
+import { KurhusetList } from '../types/KurhusetIOstersund';
 
 const Kurhuset = ({
   start,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [listData, setListData] = useState<KurhusetIOstersund[] | []>([]);
+  const [listData, setListData] = useState<KurhusetList[] | []>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
@@ -24,7 +24,7 @@ const Kurhuset = ({
   const { push, pathname, query } = router;
 
   const search = query.search;
-  const searchDB = 'kurhuset';
+  const database = 'kurhuset';
   const prevSearchValue = useRef('');
 
   function onInputChange(value: string) {
@@ -50,7 +50,7 @@ const Kurhuset = ({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        searchDB,
+        database,
         search,
         pagination: { perPage: itemsPerPage, page: page },
       }),
@@ -70,7 +70,7 @@ const Kurhuset = ({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        searchDB,
+        database,
         searchValue,
       }),
     };
@@ -88,7 +88,7 @@ const Kurhuset = ({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        searchDB,
+        database,
       }),
     };
     const response = await fetch('/api/reset', options);
@@ -151,19 +151,19 @@ const Kurhuset = ({
           <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
           {listData.length !== 0 ? (
             <List>
-              <TableList data={listData} />
-              <Pagination
-                totalItems={totalInList!}
-                itemsPerPage={itemsPerPage}
-                handlePagination={handlePagination}
-                searchValue={searchValue}
-              />
+              <TableList data={listData} database={database} />
             </List>
           ) : (
             <NoSearchResult />
           )}
         </ListSection>
       )}
+      <Pagination
+        totalItems={totalInList!}
+        itemsPerPage={itemsPerPage}
+        handlePagination={handlePagination}
+        searchValue={searchValue}
+      />
     </MainSection>
   );
 };

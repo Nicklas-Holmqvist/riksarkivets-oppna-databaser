@@ -20,7 +20,7 @@ const KeyframesSpinner = keyframes`
 
 const StyledContainer = styled.div`
   width: 100%;
-  height: 65vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
