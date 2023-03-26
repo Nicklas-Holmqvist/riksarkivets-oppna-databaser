@@ -11,7 +11,7 @@ type Data = {
 type NextApiRequestProps = NextApiRequest & {
   body: {
     database: string;
-    search: string;
+    search?: string;
     pagination: {
       perPage: number;
       page: number;
