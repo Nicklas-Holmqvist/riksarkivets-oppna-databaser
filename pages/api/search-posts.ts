@@ -21,6 +21,9 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { database, searchValue } = req.body;
+
+  const formattedSearch = searchValue.toLowerCase();
+
   try {
     const { data, count, error } = await supabase
       .from(database)
@@ -29,7 +32,7 @@ export default async function handler(
         { count: 'exact' }
       )
       .or(
-        `first_name.ilike.${searchValue},last_name.ilike.${searchValue},village.ilike.${searchValue},parish.ilike.${searchValue},discharge_status.ilike.${searchValue},disease.ilike.${searchValue},disease.match.${searchValue},full_name.ilike.${searchValue},title.ilike.${searchValue},title.match.${searchValue}`
+        `first_name.ilike.${formattedSearch},last_name.ilike.${formattedSearch},village.ilike.${formattedSearch},parish.ilike.${formattedSearch},discharge_status.ilike.${formattedSearch},disease.ilike.${formattedSearch},disease.match.${formattedSearch},full_name.ilike.${formattedSearch},title.ilike.${formattedSearch},title.match.${formattedSearch}`
       )
       .order('list_order', { ascending: true })
       .range(0, 24);
