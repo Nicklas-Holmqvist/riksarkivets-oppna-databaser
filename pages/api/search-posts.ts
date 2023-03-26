@@ -29,7 +29,7 @@ export default async function handler(
         { count: 'exact' }
       )
       .or(
-        `first_name.ilike.${searchValue},last_name.ilike.${searchValue},village.ilike.${searchValue},parish.ilike.${searchValue},discharge_status.ilike.${searchValue},disease.ilike.${searchValue},full_name.ilike.${searchValue}`
+        `first_name.ilike.${searchValue},last_name.ilike.${searchValue},village.ilike.${searchValue},parish.ilike.${searchValue},discharge_status.ilike.${searchValue},disease.ilike.${searchValue},disease.match.${searchValue},full_name.ilike.${searchValue},title.ilike.${searchValue},title.match.${searchValue}`
       )
       .order('list_order', { ascending: true })
       .range(0, 24);
