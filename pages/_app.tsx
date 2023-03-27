@@ -1,10 +1,25 @@
 import { Layout } from '../components/Layout';
 import { createGlobalStyle } from 'styled-components';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Head>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+      </Head>
       <GlobalStyles />
       <Layout>
         <Component {...pageProps} />
