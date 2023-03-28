@@ -1,7 +1,8 @@
-import { Layout } from '../components/Layout';
 import { createGlobalStyle } from 'styled-components';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+
+import { Layout } from '../components/Layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -29,12 +30,11 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const GlobalStyles = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Enriqueta&family=Inter:wght@300;600&display=swap');
 *{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;  
-  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
@@ -61,6 +61,7 @@ h1 {
   font-size: 1.5rem;
   text-align: center;
   padding: 1rem 0;
+  font-family: 'Enriqueta', sans-serif;
 }
 
 h2 {
@@ -71,6 +72,10 @@ h3 {
   font-size: 1rem;
   font-weight: normal;
   padding: 0.2rem 0;
+}
+
+p {
+  line-height: 1.4rem;
 }
 
 a {

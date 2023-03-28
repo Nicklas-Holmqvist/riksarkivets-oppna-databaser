@@ -30,7 +30,6 @@ const Button = styled.button`
   cursor: pointer;
   transition: all ease 0.2s;
   color: white;
-  font-weight: bold;
   :hover {
     background-color: white;
     color: #0d5c91;
