@@ -162,6 +162,7 @@ const PaginationButton = styled.button<StyledLiProps>`
   border: none;
   text-align: center;
   transition: all ease 0.1s;
+  font-size: 1rem;
   ${({ active: active }) =>
     active
       ? css`

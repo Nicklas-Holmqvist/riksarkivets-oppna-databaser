@@ -12,7 +12,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@metamist/lucide-react": "^0.72.0-patch4",
-    "@next/font": "13.1.1",
+    "@next/font": "^13.1.1",
     "@supabase/supabase-js": "^2.8.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
