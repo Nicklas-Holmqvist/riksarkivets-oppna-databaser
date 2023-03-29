@@ -84,7 +84,9 @@ const StyledNav = styled.nav`
 `;
 
 const StyledNavContainer = styled.div`
-  width: 20rem;
   display: flex;
   justify-content: space-between;
+  a {
+    padding-right: 1.5rem;
+  }
 `;
