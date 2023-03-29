@@ -94,6 +94,7 @@ const ImageContent = styled.div`
 
 const InformationContent = styled.div`
   width: 50%;
+  padding-right: 1rem;
   @media (max-width: 1000px) {
     width: 70%;
     margin: 0 auto;

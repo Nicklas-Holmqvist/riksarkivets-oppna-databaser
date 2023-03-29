@@ -35,7 +35,7 @@ const StyledLink = styled.span<StyledLinkProps>`
   text-decoration: none;
   cursor: pointer;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 500;
   &:after {
     content: '';
     position: absolute;
