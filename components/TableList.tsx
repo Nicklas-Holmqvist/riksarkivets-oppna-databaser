@@ -8,27 +8,14 @@ import { KurhusetList } from '../types/KurhusetIOstersund';
 interface TableListProps {
   data: KurhusetList[];
   database: string;
+  mobileView: boolean;
 }
 
-const TableList: React.FC<TableListProps> = ({ data, database }) => {
-  const [mobileView, setMobileView] = useState<boolean>(false);
-
-  const changeMobileView = () => {
-    const innerWidth = window.innerWidth;
-    if (innerWidth <= 800) setMobileView(true);
-    else {
-      setMobileView(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', changeMobileView);
-  });
-
-  useEffect(() => {
-    changeMobileView();
-  }, []);
-
+const TableList: React.FC<TableListProps> = ({
+  data,
+  database,
+  mobileView,
+}) => {
   return (
     <Table>
       {!mobileView ? (
