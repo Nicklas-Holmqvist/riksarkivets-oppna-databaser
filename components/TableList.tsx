@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 import ListItem from './ListItem';
 import MobileListItem from './MobileListItem';
@@ -8,14 +9,13 @@ import { KurhusetList } from '../types/KurhusetIOstersund';
 interface TableListProps {
   data: KurhusetList[];
   database: string;
-  mobileView: boolean;
 }
 
-const TableList: React.FC<TableListProps> = ({
-  data,
-  database,
-  mobileView,
-}) => {
+const TableList: React.FC<TableListProps> = ({ data, database }) => {
+  const mobileView = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
+
   return (
     <Table>
       {!mobileView ? (

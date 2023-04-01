@@ -18,7 +18,6 @@ const Kurhuset = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [mobileView, setMobileView] = useState<boolean>(false);
 
   const router = useRouter();
   const { push, pathname, query } = router;
@@ -26,22 +25,6 @@ const Kurhuset = () => {
   const prevSearchValue = useRef('');
   const firstLoad = useRef(false);
   const hasSearchResult = useRef(false);
-
-  const changeMobileView = () => {
-    const innerWidth = window.innerWidth;
-    if (innerWidth <= 800) setMobileView(true);
-    else {
-      setMobileView(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', changeMobileView);
-  });
-
-  useEffect(() => {
-    changeMobileView();
-  }, []);
 
   const onInputChange = useCallback(
     (value: string) => {
@@ -168,11 +151,7 @@ const Kurhuset = () => {
           <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
           {listData.length !== 0 ? (
             <List>
-              <TableList
-                data={listData}
-                database={database}
-                mobileView={mobileView}
-              />
+              <TableList data={listData} database={database} />
             </List>
           ) : (
             <NoSearchResult />
