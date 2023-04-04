@@ -15,7 +15,7 @@ export default Header;
 
 const StyledHeader = styled.header`
   transition: all ease;
-  background-color: white;
+  background-color: var(--color-white);
   @media (max-width: 800px) {
     left: 0;
     right: 0;

@@ -46,9 +46,9 @@ const Footer: React.FC<FooterProps> = () => {
 export default Footer;
 
 const FooterSection = styled.footer`
-  background-color: white;
+  background-color: var(--color-white);
   padding: 2rem 1rem;
-  border-top: 3px solid #0d5c91;
+  border-top: 3px solid var(--color-blue);
 `;
 
 const FooterContainer = styled.div`

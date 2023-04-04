@@ -23,16 +23,16 @@ const SecondaryButton: React.FC<ButtonProps> = ({
 export default SecondaryButton;
 
 const Button = styled.button`
-  background: white;
-  color: #0d5c91;
+  background: var(--color-white);
+  color: var(--color-blue);
   padding: 0.8rem 1.4rem;
-  border: 1px solid #0d5c91;
+  border: 1px solid var(--color-blue);
   border-radius: 4px;
   cursor: pointer;
   transition: all ease 0.2s;
-  color: #0d5c91;
+  color: var(--color-blue);
   :hover {
-    background-color: #0d5c91;
-    color: white;
+    background-color: var(--color-blue);
+    color: var(--color-white);
   }
 `;

@@ -39,7 +39,7 @@ const StyledLink = styled.span<StyledLinkProps>`
   &:after {
     content: '';
     position: absolute;
-    background-color: #e8a621;
+    background-color: var(--color-gold);
     ${({ active }) =>
       active
         ? css`

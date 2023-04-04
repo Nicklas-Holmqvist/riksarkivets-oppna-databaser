@@ -23,15 +23,15 @@ const PrimaryButton: React.FC<ButtonProps> = ({
 export default PrimaryButton;
 
 const Button = styled.button`
-  background: #0d5c91;
+  background: var(--color-blue);
   padding: 0.8rem 1.4rem;
-  border: 1px solid #0d5c91;
+  border: 1px solid var(--color-blue);
   border-radius: 4px;
   cursor: pointer;
   transition: all ease 0.2s;
-  color: white;
+  color: var(--color-white);
   :hover {
-    background-color: white;
-    color: #0d5c91;
+    background-color: var(--color-white);
+    color: var(--color-blue);
   }
 `;
