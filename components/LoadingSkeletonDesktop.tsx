@@ -36,7 +36,8 @@ const SkeletonCounter = styled.div`
   height: 12px;
   margin-bottom: 1rem;
   transition: all 0.5s ease;
-  animation: ${animateSkeleton} 1.5s;
+  animation: ${animateSkeleton} 0.8s;
+  transition-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   @media (width: 800px) {
     padding-left: 1rem;
@@ -48,7 +49,8 @@ const SkeletonTableHeader = styled.div`
   height: 1rem;
   margin-bottom: 0.7rem;
   transition: all 0.5s ease;
-  animation: ${animateSkeleton} 1.5s;
+  animation: ${animateSkeleton} 0.8s;
+  transition-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 `;
 
@@ -57,6 +59,7 @@ const SkeletonItem = styled.div`
   margin: 7px 0;
   background-color: var(--bg-color);
   transition: all 0.5s ease;
-  animation: ${animateSkeleton} 1.5s;
+  animation: ${animateSkeleton} 0.8s;
+  transition-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 `;
