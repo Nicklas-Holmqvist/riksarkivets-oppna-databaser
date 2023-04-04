@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from 'react-responsive';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import Loader from '../components/Loader';
@@ -9,6 +10,7 @@ import TableList from '../components/TableList';
 import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
+import LoadingSkeletonDesktop from '../components/LoadingSkeletonDesktop';
 
 const database = 'kurhuset';
 
@@ -25,6 +27,10 @@ const Kurhuset = () => {
   const prevSearchValue = useRef('');
   const firstLoad = useRef(false);
   const hasSearchResult = useRef(false);
+
+  const mobileView = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
 
   const onInputChange = useCallback(
     (value: string) => {
@@ -145,13 +151,21 @@ const Kurhuset = () => {
         />
       </SearchSection>
       {loading ? (
-        <Loader />
+        !mobileView ? (
+          <LoadingSkeletonDesktop />
+        ) : (
+          <Loader />
+        )
       ) : (
         <ListSection>
           <StyledListCount>Personer i urval: {totalInList}</StyledListCount>
           {listData.length !== 0 ? (
             <List>
-              <TableList data={listData} database={database} />
+              <TableList
+                data={listData}
+                database={database}
+                mobileView={mobileView}
+              />
             </List>
           ) : (
             <NoSearchResult />

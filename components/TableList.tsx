@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 
 import ListItem from './ListItem';
 import MobileListItem from './MobileListItem';
@@ -9,13 +8,14 @@ import { KurhusetList } from '../types/KurhusetIOstersund';
 interface TableListProps {
   data: KurhusetList[];
   database: string;
+  mobileView: boolean;
 }
 
-const TableList: React.FC<TableListProps> = ({ data, database }) => {
-  const mobileView = useMediaQuery({
-    query: '(max-width: 1024px)',
-  });
-
+const TableList: React.FC<TableListProps> = ({
+  data,
+  database,
+  mobileView,
+}) => {
   return (
     <Table>
       {!mobileView ? (
@@ -28,7 +28,7 @@ const TableList: React.FC<TableListProps> = ({ data, database }) => {
           <HeadingItem>Uskrivning</HeadingItem>
           <HeadingItem>Status</HeadingItem>
         </TableHeading>
-      ) : undefined}
+      ) : null}
       <TableRowSection>
         {data.map((person) => (
           <div key={person.list_order}>
