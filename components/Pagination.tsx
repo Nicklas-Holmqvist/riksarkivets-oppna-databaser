@@ -66,7 +66,11 @@ const Pagination: React.FC<PaginationProps> = ({
         <StyledArrows active={currentPage <= 1}>
           <LuChevronFirst
             onClick={() => (currentPage <= 1 ? undefined : handlePagination(1))}
-            color={currentPage <= 1 ? 'lightgrey' : 'black'}
+            color={
+              currentPage <= 1
+                ? 'var(--color-light-grey)'
+                : 'var(--color-black)'
+            }
             size={24}
           />
         </StyledArrows>
@@ -75,7 +79,11 @@ const Pagination: React.FC<PaginationProps> = ({
             onClick={() =>
               currentPage <= 1 ? undefined : handlePagination(currentPage - 1)
             }
-            color={currentPage <= 1 ? 'lightgrey' : 'black'}
+            color={
+              currentPage <= 1
+                ? 'var(--color-light-grey)'
+                : 'var(--color-black)'
+            }
             size={24}
           />
         </StyledArrows>
@@ -101,7 +109,11 @@ const Pagination: React.FC<PaginationProps> = ({
                 ? undefined
                 : handlePagination(currentPage + 1)
             }
-            color={currentPage >= pageNumbers.length ? 'lightgrey' : 'black'}
+            color={
+              currentPage >= pageNumbers.length
+                ? 'var(--color-light-grey)'
+                : 'var(--color-black)'
+            }
             size={24}
           />
         </StyledArrows>
@@ -112,7 +124,11 @@ const Pagination: React.FC<PaginationProps> = ({
                 ? undefined
                 : () => handlePagination(pageNumbers.length)
             }
-            color={currentPage >= pageNumbers.length ? 'lightgrey' : 'black'}
+            color={
+              currentPage >= pageNumbers.length
+                ? 'var(--color-light-grey)'
+                : 'var(--color-black)'
+            }
             size={24}
           />
         </StyledArrows>
@@ -149,7 +165,7 @@ const StyledLi = styled.li`
     width: 2rem;
   }
   :hover {
-    color: white;
+    color: var(--color-white);
   }
 `;
 

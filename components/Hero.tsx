@@ -24,7 +24,7 @@ const HeroSection = styled.section`
   justify-content: center;
   padding: 16rem 0;
   margin-bottom: 1rem;
-  background-color: white;
+  background-color: var(--color-white);
   h2 {
     padding-bottom: 0.5rem;
   }

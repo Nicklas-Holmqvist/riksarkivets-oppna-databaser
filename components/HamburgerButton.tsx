@@ -60,7 +60,7 @@ const StyledHamburgerButton = styled.button<StyledHamburgerButtonProps>`
   span {
     position: absolute;
     display: block;
-    background-color: black;
+    background-color: var(--color-black);
     width: 100%;
     height: 3px;
     transition: all 0.2s;

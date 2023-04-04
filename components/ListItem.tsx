@@ -74,21 +74,21 @@ const TableRow = styled.div<TableRowProps>`
   display: flex;
   padding: 0.8rem 0.8rem;
   margin: 0.2rem 0;
-  background-color: #fff;
+  background-color: var(--color-white);
   border-radius: 0.2rem;
   cursor: pointer;
   transition: transform ease 0.05s;
   ${({ active }) =>
     active
       ? css`
-          border: 2px solid #0d5c91;
-          box-shadow: 2px 2px 5px lightgrey;
+          border: 2px solid var(--color-blue);
+          box-shadow: 2px 2px 5px var(--color-light-grey);
           transform: scaleZ(5);
         `
       : css`
           box-shadow: unset;
           :hover {
-            box-shadow: 2px 2px 5px lightgrey;
+            box-shadow: 2px 2px 5px var(--color-light-grey);
             transform: scaleZ(5);
           }
         `};
@@ -129,17 +129,17 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   font-weight: 400;
   min-width: 80px;
-  border: 1px solid #0d5c91;
+  border: 1px solid var(--color-blue);
   border-radius: 0.2rem;
   text-align: center;
   ${({ active }) =>
     active
       ? css`
-          background-color: #0d5c91;
-          color: white;
+          background-color: var(--color-blue);
+          color: var(--color-white);
         `
       : css`
-      border: 1px solid #0d5c91;
+      border: 1px solid var(--color-blue);
           }
         `};
 `;

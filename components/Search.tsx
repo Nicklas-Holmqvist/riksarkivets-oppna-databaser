@@ -59,7 +59,7 @@ export default Search;
 
 const StyledForm = styled.form`
   border-radius: 0.2rem;
-  width: 25rem;
+  width: 30rem;
   margin: 0 auto;
   @media (max-width: 800px) {
     width: 100%;
@@ -72,24 +72,24 @@ const StyledSearchSection = styled.div`
 `;
 
 const StyledTextInput = styled.input<styledTextInput>`
-  width: 18.75rem;
+  width: 24rem;
   padding: 0.6rem 1rem;
-  color: grey;
-  background-color: white;
+  color: var(--color-var(--color-grey));
+  background-color: var(--color-white);
   border: none;
   font-size: 1rem;
   @media (max-width: 800px) {
     width: 100%;
   }
   ::placeholder {
-    color: grey;
+    color: var(--color-var(--color-grey));
     font-size: 1rem;
   }
   ${({ noResult }) =>
     noResult
       ? css`
           :focus {
-            outline: 2px solid #e8a621;
+            outline: 2px solid var(--color-gold);
           }
         `
       : css`
@@ -100,7 +100,7 @@ const StyledTextInput = styled.input<styledTextInput>`
 `;
 
 const StyledReset = styled.button`
-  background-color: white;
+  background-color: var(--color-white);
   border: none;
   padding-top: 0.2rem;
   cursor: pointer;
@@ -113,22 +113,22 @@ const StyledButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   font-weight: 400;
-  background-color: #0d5c91;
-  color: white;
+  background-color: var(--color-blue);
+  color: var(--color-white);
   min-width: 80px;
-  border: 1px solid #0d5c91;
+  border: 1px solid var(--color-blue);
   text-align: center;
   transition: all ease 0.2s;
   :active {
-    background-color: white;
-    color: #0d5c91;
+    background-color: var(--color-white);
+    color: var(--color-blue);
   }
 `;
 const StyledHelper = styled.p`
   font-size: 0.8rem;
   padding: 0.5rem 0.6rem;
   text-align: left;
-  color: grey;
+  color: var(--color-grey);
   @media (max-width: 800px) {
     width: 100%;
     padding: 0.5rem 0 1rem 0;

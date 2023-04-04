@@ -173,8 +173,8 @@ const StyledExtendedSection = styled.div`
   margin-top: -0.2rem;
   margin-bottom: 0.3rem;
   padding: 0.5rem 1rem;
-  background-color: white;
-  border: 1px solid #0d5c91;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-blue);
   border-radius: 0.2rem;
   transition: all ease 0.1s
   animation: ${animateExtendedSection} 0.5s forwards;

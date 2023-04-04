@@ -89,6 +89,7 @@ const MobileNav = styled.nav`
   height: 20rem;
   a {
     margin: 1.8rem 0;
+    padding-right: 0;
     padding-bottom: 0.5rem;
     font-size: 1rem;
   }
@@ -104,7 +105,7 @@ const MobileMenu = styled(motion.aside)`
   top: 0;
   left: 0;
   bottom: 0;
-  background: white;
+  background: var(--color-white);
   overflow: hidden;
   z-index: 200;
   transition: all;

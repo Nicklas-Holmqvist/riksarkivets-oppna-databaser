@@ -2,11 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import { Urbanist, Enriqueta } from '@next/font/google';
+import { Open_Sans, Enriqueta } from '@next/font/google';
 
 import { Layout } from '../components/Layout';
 
-const urbanist = Urbanist({
+const openSans = Open_Sans({
   weight: '400',
   subsets: ['latin'],
 });
@@ -46,8 +46,18 @@ const GlobalStyles = createGlobalStyle`
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;  
-  font-family: ${urbanist.style.fontFamily}, sans-serif;
+  font-family: ${openSans.style.fontFamily}, sans-serif;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+:root {
+  --color-white:#FEFEFE;
+  --color-black:#252525;
+  --color-blue:#0D5C91;
+  --color-gold:#E8A621;
+  --color-grey:#808080;
+  --color-light-grey:#D3D3D3;
+  --bg-color:#F5F5F5;
 }
 
 #__next {
@@ -56,7 +66,7 @@ const GlobalStyles = createGlobalStyle`
 
 html, body {
   height: 100%;
-  background-color: #F5F5F5;
+  background-color: var(--bg-color);
 }
 main {
   min-height: 100%;
@@ -66,7 +76,7 @@ main {
 }
 
 header {
-  border-bottom: 3px solid #0D5C91;
+  border-bottom: 3px solid var(--color-blue);
 }
 
 h1 {
@@ -74,10 +84,12 @@ h1 {
   text-align: center;
   padding: 1rem 0;
   font-family: ${enriqueta.style.fontFamily}, sans-serif;
+  color: var(--color-black);
 }
 
 h2 {
   font-family: ${enriqueta.style.fontFamily}, sans-serif;
+  color: var(--color-black);
 }
 
 h3 {
@@ -85,19 +97,24 @@ h3 {
   font-weight: normal;
   padding: 0.2rem 0;
   letter-spacing: 0.7px;
+  color: var(--color-black);
 }
 
 p {
-  letter-spacing: 0.7px;
+  letter-spacing: 0.6px;
   line-height: 120%;
+  color: var(--color-black);
 }
 
 a {
   text-decoration: none;
-  color: black;
+  color: var(--color-black);
 }
 
 hr {
-  margin: 0.5rem;
-  border-top: lightgrey;
-}`;
+  background: var(--color-light-grey);
+  height: 1px;
+  margin: 1rem 0.5rem;
+  border: none;
+}
+`;
