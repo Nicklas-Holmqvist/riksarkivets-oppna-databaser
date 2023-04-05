@@ -57,6 +57,7 @@ const GlobalStyles = createGlobalStyle`
   --color-gold:#E8A621;
   --color-grey:#808080;
   --color-light-grey:#D3D3D3;
+  --color-skeleton:#E1E1E1;
   --bg-color:#F5F5F5;
 }
 

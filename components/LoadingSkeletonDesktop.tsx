@@ -20,7 +20,7 @@ const animateSkeleton = keyframes`
   background-color: var(--bg-color);
 }
 50% {
-    background-color: var(--color-light-grey);
+    background-color: var(--color-skeleton);
 }
 100% {
   background-color: var(--bg-color);
