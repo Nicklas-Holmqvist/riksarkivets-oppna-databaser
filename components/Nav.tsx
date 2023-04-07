@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-
-import MobileNavigation from './MobileNavigation';
-import DesktopNavigation from './DesktopNavigation';
 import { useMediaQuery } from 'react-responsive';
+import React, { useState } from 'react';
+
+import MobileNavigation from './mobile/MobileNavigation';
+import DesktopNavigation from './desktop/DesktopNavigation';
 
 interface NavProps {}
 
@@ -33,8 +33,8 @@ const Nav: React.FC<NavProps> = () => {
   });
 
   return (
-    <StyledNav>
-      <StyledNavContainer>
+    <Navigation>
+      <Container>
         {!mobileView ? (
           <DesktopNavigation navLinks={navLinks} path={path.route} />
         ) : (
@@ -45,14 +45,14 @@ const Nav: React.FC<NavProps> = () => {
             setDrawer={() => setDrawer(!drawer)}
           />
         )}
-      </StyledNavContainer>
-    </StyledNav>
+      </Container>
+    </Navigation>
   );
 };
 
 export default Nav;
 
-const StyledNav = styled.nav`
+const Navigation = styled.nav`
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -70,7 +70,7 @@ const StyledNav = styled.nav`
   }
 `;
 
-const StyledNavContainer = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
 `;

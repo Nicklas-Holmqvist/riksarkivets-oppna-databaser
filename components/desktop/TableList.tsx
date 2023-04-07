@@ -1,41 +1,39 @@
 import styled from 'styled-components';
 import React from 'react';
 
-import ListItem from './ListItem';
-import MobileListItem from './MobileListItem';
-import { KurhusetList } from '../types/KurhusetIOstersund';
+import ListItem from '../ListItem';
+import MobileListItem from '../mobile/MobileListItem';
+import { KurhusetList } from '../../types/KurhusetIOstersund';
 
 interface TableListProps {
   data: KurhusetList[];
-  database: string;
+  databaseName: string;
+  tableTitles: string[];
   mobileView: boolean;
 }
 
 const TableList: React.FC<TableListProps> = ({
   data,
-  database,
+  databaseName,
+  tableTitles,
   mobileView,
 }) => {
   return (
     <Table>
       {!mobileView ? (
         <TableHeading>
-          <HeadingItem>Nr</HeadingItem>
-          <HeadingItem>Namn</HeadingItem>
-          <HeadingItem>Inskrivning</HeadingItem>
-          <HeadingItem>Ålder</HeadingItem>
-          <HeadingItem>Sjukdom</HeadingItem>
-          <HeadingItem>Uskrivning</HeadingItem>
-          <HeadingItem>Status</HeadingItem>
+          {tableTitles.map((title: string, index: number) => (
+            <TableTitle key={index}>{title}</TableTitle>
+          ))}
         </TableHeading>
       ) : null}
       <TableRowSection>
         {data.map((person) => (
           <div key={person.list_order}>
             {mobileView ? (
-              <MobileListItem person={person} database={database} />
+              <MobileListItem person={person} databaseName={databaseName} />
             ) : (
-              <ListItem person={person} database={database} />
+              <ListItem person={person} databaseName={databaseName} />
             )}
           </div>
         ))}
@@ -67,7 +65,7 @@ const TableRowSection = styled.div`
   }
 `;
 
-const HeadingItem = styled.span`
+const TableTitle = styled.span`
   font-weight: bold;
   width: 100%;
   :nth-child(1) {

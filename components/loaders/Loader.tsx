@@ -5,9 +5,9 @@ export interface LoaderProps {}
 
 const Loader: React.FC<LoaderProps> = () => {
   return (
-    <StyledContainer>
+    <Container>
       <StyledLoader></StyledLoader>
-    </StyledContainer>
+    </Container>
   );
 };
 
@@ -18,7 +18,7 @@ const KeyframesSpinner = keyframes`
 100% { transform: rotate(360deg); }
 `;
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 85vh;
   display: flex;

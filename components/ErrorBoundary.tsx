@@ -1,6 +1,6 @@
 import React, { ErrorInfo, ReactNode } from 'react';
 import styled from 'styled-components';
-import PrimaryButton, { Button } from './PrimaryButton';
+import { Button } from './buttons/PrimaryButton';
 import Link from 'next/link';
 
 interface Props {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import styled, { css } from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 interface NavLinkProps {
   text: string;

@@ -61,9 +61,9 @@ const Pagination: React.FC<PaginationProps> = ({
   const currentPages = pageNumbers.slice(start, end);
 
   return (
-    <StyledNavigation>
-      <StyledUl>
-        <StyledArrows active={currentPage <= 1}>
+    <Navigation>
+      <Ul>
+        <Arrows active={currentPage <= 1}>
           <LuChevronFirst
             onClick={() => (currentPage <= 1 ? undefined : handlePagination(1))}
             color={
@@ -73,8 +73,8 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             size={24}
           />
-        </StyledArrows>
-        <StyledArrows active={currentPage <= 1}>
+        </Arrows>
+        <Arrows active={currentPage <= 1}>
           <LuChevronLeft
             onClick={() =>
               currentPage <= 1 ? undefined : handlePagination(currentPage - 1)
@@ -86,10 +86,10 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             size={24}
           />
-        </StyledArrows>
+        </Arrows>
 
         {currentPages.map((number: any) => (
-          <StyledLi
+          <Li
             key={number}
             onClick={
               Number(query.page) === number
@@ -100,9 +100,9 @@ const Pagination: React.FC<PaginationProps> = ({
             <PaginationButton active={Number(query.page) === number}>
               {number}
             </PaginationButton>
-          </StyledLi>
+          </Li>
         ))}
-        <StyledArrows active={currentPage >= pageNumbers.length}>
+        <Arrows active={currentPage >= pageNumbers.length}>
           <LuChevronRight
             onClick={() =>
               currentPage >= pageNumbers.length
@@ -116,8 +116,8 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             size={24}
           />
-        </StyledArrows>
-        <StyledArrows active={currentPage >= pageNumbers.length}>
+        </Arrows>
+        <Arrows active={currentPage >= pageNumbers.length}>
           <LuChevronLast
             onClick={
               currentPage >= pageNumbers.length
@@ -131,22 +131,22 @@ const Pagination: React.FC<PaginationProps> = ({
             }
             size={24}
           />
-        </StyledArrows>
-      </StyledUl>
-    </StyledNavigation>
+        </Arrows>
+      </Ul>
+    </Navigation>
   );
 };
 
 export default Pagination;
 
-const StyledNavigation = styled.nav`
+const Navigation = styled.nav`
   padding: 1rem 0;
   @media (max-width: 800px) {
     2rem;
   }
 `;
 
-const StyledUl = styled.ul`
+const Ul = styled.ul`
   display: flex;
   justfify-content: center;
   align-items: center;
@@ -158,7 +158,7 @@ const StyledUl = styled.ul`
   }
 `;
 
-const StyledLi = styled.li`
+const Li = styled.li`
   list-style-type: none;
   width: 3rem;
   @media (max-width: 800px) {
@@ -201,7 +201,7 @@ const PaginationButton = styled.button<StyledLiProps>`
     }
   }
 `;
-const StyledArrows = styled.li<StyledLiProps>`
+const Arrows = styled.li<StyledLiProps>`
 display: flex;
 align-items:center;
 justify-content: center;

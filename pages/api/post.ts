@@ -18,11 +18,11 @@ export default async function handler(
   req: NextApiRequestProps,
   res: NextApiResponse<Data>
 ) {
-  const { database, id } = req.body;
+  const { databaseName, id } = req.body;
 
   try {
     const { data, error } = await supabase
-      .from(database)
+      .from(databaseName)
       .select('*')
       .eq('list_order', id);
     if (error) {

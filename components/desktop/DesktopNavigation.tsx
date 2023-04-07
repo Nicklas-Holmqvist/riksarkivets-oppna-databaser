@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { NavLinksProps } from './Nav';
-import NavLink, { StyledLink } from './NavLink';
 import styled from 'styled-components';
+
+import NavLink from '../links/NavLink';
+import { NavLinksProps } from '../Nav';
 
 interface DesktopNavigationProps {
   navLinks: NavLinksProps[];
@@ -16,7 +16,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
   return (
     <>
       {navLinks.map((navLink, index) => (
-        <DesktopNavLinks
+        <Links
           key={index}
           text={navLink.text}
           href={navLink.href}
@@ -29,7 +29,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
 
 export default DesktopNavigation;
 
-const DesktopNavLinks = styled(NavLink)`
+const Links = styled(NavLink)`
   a {
     padding-left: 1rem;
   }
