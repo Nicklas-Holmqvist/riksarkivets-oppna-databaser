@@ -38,7 +38,7 @@ class ErrorBoundary extends React.Component<Props, State> {
               replace
               onClick={() => this.setState({ hasError: false })}
             >
-              <Button>Något gick fel!</Button>
+              <Button>Gå tillbaka</Button>
             </Link>
           </LinkContainer>
         </Section>
