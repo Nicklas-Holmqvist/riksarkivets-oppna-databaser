@@ -11,18 +11,18 @@ interface NavLinkProps {
 
 interface StyledLinkProps {
   active: boolean;
-  desktopView: boolean;
+  mobileView: boolean;
 }
 
 const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
-  const desktopView = useMediaQuery({
-    query: '(min-width: 800px)',
+  const mobileView = useMediaQuery({
+    query: '(max-width: 800px)',
   });
 
   if (text === 'Start') {
     return (
       <Link href={href}>
-        <StyledLink active={active} desktopView={desktopView}>
+        <StyledLink active={active} mobileView={mobileView}>
           {text}
         </StyledLink>
       </Link>
@@ -30,7 +30,7 @@ const NavLink: React.FC<NavLinkProps> = ({ text, href, active }) => {
   } else {
     return (
       <Link href={`${href}`}>
-        <StyledLink active={active} desktopView={desktopView}>
+        <StyledLink active={active} mobileView={mobileView}>
           {text}
         </StyledLink>
       </Link>
@@ -46,8 +46,8 @@ export const StyledLink = styled.span<StyledLinkProps>`
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 500;
-  ${({ desktopView }) =>
-    desktopView
+  ${({ mobileView }) =>
+    !mobileView
       ? css`
           margin-right: 1rem;
         `
