@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Open_Sans, Enriqueta } from '@next/font/google';
 
@@ -35,6 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       <GlobalStyles />
+      <Analytics />
       <ErrorBoundary>
         <Layout>
           <Component {...pageProps} />
