@@ -1,10 +1,10 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import { HamburgerButton } from './HamburgerButton';
-import { NavLinksProps } from './Nav';
-import NavLink from './NavLink';
+import NavLink from '../links/NavLink';
+import { NavLinksProps } from '../Nav';
+import { HamburgerButton } from '../buttons/HamburgerButton';
 
 interface MobileNavigationProps {
   drawer: boolean;

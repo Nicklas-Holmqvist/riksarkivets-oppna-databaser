@@ -4,12 +4,12 @@ import styled from 'styled-components';
 interface NoSearchResultProps {}
 
 const NoSearchResult: React.FC<NoSearchResultProps> = () => {
-  return <StyledSection>Din sökning gav inget resultat!</StyledSection>;
+  return <SearchSection>Din sökning gav inget resultat!</SearchSection>;
 };
 
 export default NoSearchResult;
 
-const StyledSection = styled.section`
+const SearchSection = styled.section`
   width: 100%;
   height: 30rem;
   display: flex;

@@ -4,15 +4,25 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import Loader from '../components/Loader';
+import Loader from '../components/loaders/Loader';
 import Search from '../components/Search';
-import TableList from '../components/TableList';
+import TableList from '../components/desktop/TableList';
 import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
-import LoadingSkeletonDesktop from '../components/LoadingSkeletonDesktop';
+import LoadingSkeletonDesktop from '../components/loaders/LoadingSkeletonDesktop';
 
-const database = 'kurhuset';
+const databaseName = 'kurhuset';
+
+const tableTitles: string[] = [
+  'Nr',
+  'Namn',
+  'Inskrivning',
+  'Ålder',
+  'Sjukdom',
+  'Utskrivning',
+  'Status',
+];
 
 const Kurhuset = () => {
   const [listData, setListData] = useState<KurhusetList[] | []>([]);
@@ -47,7 +57,7 @@ const Kurhuset = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          database,
+          databaseName,
           search,
           pagination: { perPage: itemsPerPage, page: page },
         }),
@@ -163,7 +173,8 @@ const Kurhuset = () => {
             <List>
               <TableList
                 data={listData}
-                database={database}
+                databaseName={databaseName}
+                tableTitles={tableTitles}
                 mobileView={mobileView}
               />
             </List>

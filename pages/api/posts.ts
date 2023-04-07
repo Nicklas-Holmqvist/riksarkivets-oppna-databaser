@@ -10,7 +10,7 @@ type Data = {
 
 type NextApiRequestProps = NextApiRequest & {
   body: {
-    database: string;
+    databaseName: string;
     search?: string;
     pagination: {
       perPage: number;
@@ -23,7 +23,7 @@ export default async function handler(
   req: NextApiRequestProps,
   res: NextApiResponse<Data>
 ) {
-  const { database, search, pagination } = req.body;
+  const { databaseName, search, pagination } = req.body;
 
   const indexOfLastItem = pagination.page * pagination.perPage;
   const indexOfFirstItem = indexOfLastItem - pagination.perPage;
@@ -33,7 +33,7 @@ export default async function handler(
   if (search !== '') {
     try {
       const { data, count, error } = await supabase
-        .from(database)
+        .from(databaseName)
         .select(
           'list_order, number, date_of_enrollment, first_name, last_name, age, disease, discharge_date, discharge_status',
           { count: 'exact' }
@@ -69,7 +69,7 @@ export default async function handler(
   } else {
     try {
       const { data, count, error } = await supabase
-        .from(database)
+        .from(databaseName)
         .select(
           'list_order, number, date_of_enrollment, first_name, last_name, age, disease, discharge_date, discharge_status',
           { count: 'exact' }

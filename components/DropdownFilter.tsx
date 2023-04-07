@@ -13,7 +13,7 @@ const DropdownFilter: React.FC<SearchableFilterProps> = ({
   onDropdownChange,
 }) => {
   return (
-    <StyledDiv>
+    <Container>
       <label id={id}>{id}:</label>
       <select
         name={id}
@@ -29,13 +29,13 @@ const DropdownFilter: React.FC<SearchableFilterProps> = ({
           <option key={dropdownValue}>{dropdownValue}</option>
         ))}
       </select>
-    </StyledDiv>
+    </Container>
   );
 };
 
 export default DropdownFilter;
 
-const StyledDiv = styled.div`
+const Container = styled.div`
   display: flex;
   padding: 1rem 0;
   width: 15rem;

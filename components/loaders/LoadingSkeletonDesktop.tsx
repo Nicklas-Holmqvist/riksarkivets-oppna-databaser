@@ -3,13 +3,13 @@ import styled, { keyframes } from 'styled-components';
 
 const LoadingSkeletonDesktop = () => {
   return (
-    <SkeletonContainer>
-      <SkeletonCounter></SkeletonCounter>
-      <SkeletonTableHeader></SkeletonTableHeader>
+    <Section>
+      <Counter></Counter>
+      <TableTitles></TableTitles>
       {Array.from({ length: 25 }, (index: number) => (
-        <SkeletonItem key={index}></SkeletonItem>
+        <ListItem key={index}></ListItem>
       ))}
-    </SkeletonContainer>
+    </Section>
   );
 };
 
@@ -27,11 +27,11 @@ const animateSkeleton = keyframes`
 }
 `;
 
-const SkeletonContainer = styled.section`
+const Section = styled.section`
   padding-top: 0.2rem;
 `;
 
-const SkeletonCounter = styled.div`
+const Counter = styled.div`
   width: 132px;
   height: 12px;
   margin-bottom: 1rem;
@@ -44,7 +44,7 @@ const SkeletonCounter = styled.div`
   }
 `;
 
-const SkeletonTableHeader = styled.div`
+const TableTitles = styled.div`
   width: 100%;
   height: 1rem;
   margin-bottom: 0.7rem;
@@ -54,7 +54,7 @@ const SkeletonTableHeader = styled.div`
   animation-iteration-count: infinite;
 `;
 
-const SkeletonItem = styled.div`
+const ListItem = styled.div`
   height: 47px;
   margin: 7px 0;
   background-color: var(--bg-color);

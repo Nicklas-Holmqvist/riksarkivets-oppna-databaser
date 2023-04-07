@@ -1,17 +1,17 @@
 import styled, { keyframes } from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
-import LoaderText from './LoaderText';
+import LoaderText from './loaders/LoaderText';
 import { KurhusetListItem } from '../types/KurhusetIOstersund';
 
 interface ExtendedItemInfoProps {
   id: number;
-  database: string;
+  databaseName: string;
 }
 
 const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({
   id,
-  database,
+  databaseName,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [item, setItem] = useState<KurhusetListItem[] | []>([]);
@@ -30,7 +30,7 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          database,
+          databaseName,
           id,
         }),
       };
@@ -50,108 +50,107 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({
       return data;
     }
     getItem();
-  }, [database, id]);
+  }, [databaseName, id]);
 
   return (
-    <StyledExtendedSection>
+    <Section>
       {loading && Object.keys(item).length === 0 ? (
         <LoaderText text={'Laddar information...'} />
       ) : (
         <>
           <h3>
-            <StyledSpan>Nummer {item[0].number}</StyledSpan>,{' '}
-            {item[0].first_name}{' '}
+            <Span>Nummer {item[0].number}</Span>, {item[0].first_name}{' '}
             {item[0].last_name !== undefined ? item[0].last_name : ''}
           </h3>
-          <StyledInformationSection>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Inskrivningsdatum: </StyledSpan>
+          <InformationSection>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Inskrivningsdatum: </Span>
                 {controlValidText(item[0].date_of_enrollment)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Titel: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Titel: </Span>
                 {controlValidText(item[0].title)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Ålder: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Ålder: </Span>
                 {controlValidText(item[0].age)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Familj: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Familj: </Span>
                 {controlValidText(item[0].family)}
-              </StyledParagraph>
-            </StyledInformationContainer>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Socken: </StyledSpan>
+              </Paragraph>
+            </InformationContainer>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Socken: </Span>
                 {controlValidText(item[0].parish)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Hemort: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Hemort: </Span>
                 {controlValidText(item[0].village)}
-              </StyledParagraph>
-            </StyledInformationContainer>
-          </StyledInformationSection>
+              </Paragraph>
+            </InformationContainer>
+          </InformationSection>
           <hr />
-          <StyledInformationSection>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Sjukdom: </StyledSpan>
+          <InformationSection>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Sjukdom: </Span>
                 {controlValidText(item[0].disease)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Beskrivning: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Beskrivning: </Span>
                 {controlValidText(item[0].disease_description)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Behandling: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Behandling: </Span>
                 {controlValidText(item[0].disease_treatment)}
-              </StyledParagraph>
-            </StyledInformationContainer>
-          </StyledInformationSection>
+              </Paragraph>
+            </InformationContainer>
+          </InformationSection>
           <hr />
-          <StyledInformationSection>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Utskrivningsdatum: </StyledSpan>
+          <InformationSection>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Utskrivningsdatum: </Span>
                 {controlValidText(item[0].discharge_date)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Anmärkning: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Anmärkning: </Span>
                 {controlValidText(item[0].observation)}
-              </StyledParagraph>
-            </StyledInformationContainer>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Vårdtid: </StyledSpan>
+              </Paragraph>
+            </InformationContainer>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Vårdtid: </Span>
 
                 {difference + ' dagar'}
-              </StyledParagraph>
-            </StyledInformationContainer>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Utskrivningsstatus: </StyledSpan>
+              </Paragraph>
+            </InformationContainer>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Utskrivningsstatus: </Span>
                 {controlValidText(item[0].discharge_status)}
-              </StyledParagraph>
-            </StyledInformationContainer>
-          </StyledInformationSection>
+              </Paragraph>
+            </InformationContainer>
+          </InformationSection>
           <hr />
-          <StyledInformationSection>
-            <StyledInformationContainer>
-              <StyledParagraph>
-                <StyledSpan>Arkiv: </StyledSpan>
+          <InformationSection>
+            <InformationContainer>
+              <Paragraph>
+                <Span>Arkiv: </Span>
                 {controlValidText(item[0].arkiv)}
-              </StyledParagraph>
-              <StyledParagraph>
-                <StyledSpan>Volym: </StyledSpan>
+              </Paragraph>
+              <Paragraph>
+                <Span>Volym: </Span>
                 {item[0].volume}
-              </StyledParagraph>
-            </StyledInformationContainer>
-          </StyledInformationSection>
+              </Paragraph>
+            </InformationContainer>
+          </InformationSection>
         </>
       )}
-    </StyledExtendedSection>
+    </Section>
   );
 };
 
@@ -166,7 +165,7 @@ const animateExtendedSection = keyframes`
 }
 `;
 
-const StyledExtendedSection = styled.div`
+const Section = styled.div`
   width: 97%;
   top: 20rem;
   margin: 0 auto;
@@ -180,23 +179,23 @@ const StyledExtendedSection = styled.div`
   animation: ${animateExtendedSection} 0.5s forwards;
 `;
 
-const StyledInformationSection = styled.div`
+const InformationSection = styled.div`
   display: flex;
   flex-wrap: wrap;
   transition: all ease 0.2s;
 `;
 
-const StyledInformationContainer = styled.div`
+const InformationContainer = styled.div`
   width: 20rem;
   @media (max-width: 800px) {
     width: 100%;
   }
 `;
 
-const StyledParagraph = styled.p`
+const Paragraph = styled.p`
   padding: 0.2rem 0;
 `;
 
-const StyledSpan = styled.span`
+const Span = styled.span`
   font-weight: 700;
 `;

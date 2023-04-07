@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
-import PrimaryButton from './PrimaryButton';
-import SecondaryButton from './SecondaryButton';
+
+import PrimaryButton from './buttons/PrimaryButton';
+import SecondaryButton from './buttons/SecondaryButton';
 
 interface KurhusetProps {}
 

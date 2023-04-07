@@ -28,9 +28,9 @@ const Search: React.FC<SearchProps> = ({
   maxLength,
 }) => {
   return (
-    <StyledForm onSubmit={(event) => event.preventDefault()}>
-      <StyledSearchSection>
-        <StyledTextInput
+    <Form onSubmit={(event) => event.preventDefault()}>
+      <SearchSection>
+        <TextInput
           type="text"
           value={searchValue}
           onChange={(event) => onInputChange(event.target.value)}
@@ -39,25 +39,25 @@ const Search: React.FC<SearchProps> = ({
           noResult={noResult}
         />
 
-        <StyledButton
+        <Button
           onClick={searchValue.length === 0 ? undefined : handleSearchEvent}
         >
           Sök
-        </StyledButton>
-        <StyledReset onClick={handleResetEvent}>
+        </Button>
+        <ResetButton onClick={handleResetEvent}>
           {searchValue.length === 0 ? undefined : (
             <LuX color="black" size={18} />
           )}
-        </StyledReset>
-      </StyledSearchSection>
-      <StyledHelper>{helper}</StyledHelper>
-    </StyledForm>
+        </ResetButton>
+      </SearchSection>
+      <HelperText>{helper}</HelperText>
+    </Form>
   );
 };
 
 export default Search;
 
-const StyledForm = styled.form`
+const Form = styled.form`
   border-radius: 0.2rem;
   width: 30rem;
   margin: 0 auto;
@@ -66,12 +66,12 @@ const StyledForm = styled.form`
     padding: 0 1rem;
   }
 `;
-const StyledSearchSection = styled.div`
+const SearchSection = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const StyledTextInput = styled.input<styledTextInput>`
+const TextInput = styled.input<styledTextInput>`
   width: 24rem;
   padding: 0.6rem 1rem;
   color: var(--color-var(--color-grey));
@@ -99,7 +99,7 @@ const StyledTextInput = styled.input<styledTextInput>`
         `};
 `;
 
-const StyledReset = styled.button`
+const ResetButton = styled.button`
   background-color: var(--color-white);
   border: none;
   padding-top: 0.2rem;
@@ -108,7 +108,7 @@ const StyledReset = styled.button`
   transform: translateX(-7rem);
 `;
 
-const StyledButton = styled.button`
+const Button = styled.button`
   padding: 0.2rem 0.6rem;
   background-color: transparent;
   cursor: pointer;
@@ -124,7 +124,7 @@ const StyledButton = styled.button`
     color: var(--color-blue);
   }
 `;
-const StyledHelper = styled.p`
+const HelperText = styled.p`
   font-size: 0.8rem;
   padding: 0.5rem 0.6rem;
   text-align: left;

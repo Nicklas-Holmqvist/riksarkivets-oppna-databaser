@@ -12,10 +12,10 @@ interface StyledButtonProps {
 }
 interface ListItemProps {
   person: KurhusetList;
-  database: string;
+  databaseName: string;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ person, database }) => {
+const ListItem: React.FC<ListItemProps> = ({ person, databaseName }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -54,7 +54,7 @@ const ListItem: React.FC<ListItemProps> = ({ person, database }) => {
         </StyledButton>
       </TableRow>
       {open ? (
-        <ExtendedItemInfo id={person.list_order} database={database} />
+        <ExtendedItemInfo id={person.list_order} databaseName={databaseName} />
       ) : undefined}
     </TableRowSection>
   );

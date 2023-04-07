@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import SimpleLink from './links/SimpleLink';
+
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
   return (
-    <FooterSection>
-      <FooterContainer>
+    <Section>
+      <Container>
         <Content>
           <Title>Information</Title>
           <Paragraph>
@@ -20,38 +22,41 @@ const Footer: React.FC<FooterProps> = () => {
           <Title>Skapad av</Title>
           <Paragraph>Nicklas Holmqvist</Paragraph>
           <Title>Driver</Title>
-          <a href="https://www.glomdvarld.se/" target="_blank" rel="noreferrer">
-            Glömdvärld.se
-          </a>
+          <SimpleLink
+            href={'https://www.glomdvarld.se/'}
+            text={'Glömdvärld.se'}
+            target={'_blank'}
+          />
           <br />
-          <a
-            href="https://www.facebook.com/glomd.varld.marks.harad/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Glömd värld i Marks härad
-          </a>
+          <SimpleLink
+            href={'https://www.facebook.com/glomd.varld.marks.harad/'}
+            text={'Glömd värld i Marks härad'}
+            target={'_blank'}
+          />
         </Content>
         <Content>
           <Title>Kontakt</Title>
-          <a href="mailto:nicklas_holmqvist@outlook.com?subject=Historiska databaser">
-            nicklas_holmqvist@outlook.com
-          </a>
+          <SimpleLink
+            href={
+              'mailto:nicklas_holmqvist@outlook.com?subject=Historiska databaser'
+            }
+            text={'nicklas_holmqvist@outlook.com'}
+          />
         </Content>
-      </FooterContainer>
-    </FooterSection>
+      </Container>
+    </Section>
   );
 };
 
 export default Footer;
 
-const FooterSection = styled.footer`
+const Section = styled.footer`
   background-color: var(--color-white);
   padding: 2rem 1rem;
   border-top: 3px solid var(--color-blue);
 `;
 
-const FooterContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 1200px;
