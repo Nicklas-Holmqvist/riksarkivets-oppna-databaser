@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import MobileNavigation from './MobileNavigation';
 import DesktopNavigation from './DesktopNavigation';
+import { useMediaQuery } from 'react-responsive';
 
 interface NavProps {}
 
@@ -24,26 +25,12 @@ const navLinks: NavLinksProps[] = [
 
 const Nav: React.FC<NavProps> = () => {
   const [drawer, setDrawer] = useState<boolean>(false);
-  const [mobileView, setMobileView] = useState<boolean>(false);
 
   const path = useRouter();
 
-  function changeMobileView() {
-    const innerWidth = window.innerWidth;
-    if (innerWidth <= 800) setMobileView(true);
-    else {
-      setMobileView(false);
-      setDrawer(false);
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', changeMobileView);
+  const mobileView = useMediaQuery({
+    query: '(max-width: 800px)',
   });
-
-  useEffect(() => {
-    changeMobileView();
-  }, []);
 
   return (
     <StyledNav>
@@ -86,7 +73,4 @@ const StyledNav = styled.nav`
 const StyledNavContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  a {
-    padding-right: 1.5rem;
-  }
 `;
