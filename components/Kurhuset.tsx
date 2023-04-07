@@ -15,6 +15,7 @@ const Kurhuset: React.FC<KurhusetProps> = () => {
           alt="Kurhuset i Östersund"
           width={411}
           height={500}
+          priority
         />
       </ImageContent>
       <InformationContent>
