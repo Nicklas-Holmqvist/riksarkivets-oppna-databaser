@@ -22,7 +22,7 @@ const PrimaryButton: React.FC<ButtonProps> = ({
 
 export default PrimaryButton;
 
-const Button = styled.button`
+export const Button = styled.button`
   background: var(--color-blue);
   padding: 0.8rem 1.4rem;
   border: 1px solid var(--color-blue);

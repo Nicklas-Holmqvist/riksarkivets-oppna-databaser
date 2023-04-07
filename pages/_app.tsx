@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { Open_Sans, Enriqueta } from '@next/font/google';
 
 import { Layout } from '../components/Layout';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const openSans = Open_Sans({
   weight: '400',
@@ -34,9 +35,11 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       <GlobalStyles />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ErrorBoundary>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ErrorBoundary>
     </>
   );
 }
