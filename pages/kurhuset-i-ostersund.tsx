@@ -163,9 +163,9 @@ const Kurhuset = () => {
       </SearchSection>
       {loading ? (
         !mobileView ? (
-          <LoadingSkeletonDesktop />
+          <LoadingSkeletonDesktop itemsPerPage={itemsPerPage} />
         ) : (
-          <LoadingSkeletonMobile />
+          <LoadingSkeletonMobile itemsPerPage={itemsPerPage} />
         )
       ) : (
         <ListSection>

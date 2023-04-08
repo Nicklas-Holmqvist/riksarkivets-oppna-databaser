@@ -3,13 +3,17 @@ import styled from 'styled-components';
 
 import { Counter, ListItem } from './LoadingSkeletonDesktop';
 
-interface LoadingSkeletonMobileProps {}
+interface LoadingSkeletonMobileProps {
+  itemsPerPage: number;
+}
 
-const LoadingSkeletonMobile: React.FC<LoadingSkeletonMobileProps> = () => {
+const LoadingSkeletonMobile: React.FC<LoadingSkeletonMobileProps> = ({
+  itemsPerPage,
+}) => {
   return (
     <Section>
       <Counter></Counter>
-      {Array.from({ length: 25 }, (index: number) => (
+      {Array.from({ length: itemsPerPage }, (index: number) => (
         <MobileListItem key={index}></MobileListItem>
       ))}
     </Section>
