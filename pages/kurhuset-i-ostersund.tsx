@@ -11,6 +11,7 @@ import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
 import LoadingSkeletonDesktop from '../components/loaders/LoadingSkeletonDesktop';
+import LoadingSkeletonMobile from '../components/loaders/LoadingSkeletonMobile';
 
 const databaseName = 'kurhuset';
 
@@ -162,9 +163,9 @@ const Kurhuset = () => {
       </SearchSection>
       {loading ? (
         !mobileView ? (
-          <LoadingSkeletonDesktop />
+          <LoadingSkeletonDesktop itemsPerPage={itemsPerPage} />
         ) : (
-          <Loader />
+          <LoadingSkeletonMobile itemsPerPage={itemsPerPage} />
         )
       ) : (
         <ListSection>

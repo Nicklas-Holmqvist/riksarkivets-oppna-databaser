@@ -1,12 +1,18 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const LoadingSkeletonDesktop = () => {
+interface LoadingSkeletonDesktopProps {
+  itemsPerPage: number;
+}
+
+const LoadingSkeletonDesktop: React.FC<LoadingSkeletonDesktopProps> = ({
+  itemsPerPage,
+}) => {
   return (
     <Section>
       <Counter></Counter>
       <TableTitles></TableTitles>
-      {Array.from({ length: 25 }, (index: number) => (
+      {Array.from({ length: itemsPerPage }, (index: number) => (
         <ListItem key={index}></ListItem>
       ))}
     </Section>
@@ -31,7 +37,7 @@ const Section = styled.section`
   padding-top: 0.2rem;
 `;
 
-const Counter = styled.div`
+export const Counter = styled.div`
   width: 132px;
   height: 12px;
   margin-bottom: 1rem;
@@ -54,7 +60,7 @@ const TableTitles = styled.div`
   animation-iteration-count: infinite;
 `;
 
-const ListItem = styled.div`
+export const ListItem = styled.div`
   height: 47px;
   margin: 7px 0;
   background-color: var(--bg-color);
