@@ -28,7 +28,7 @@ export default async function handler(
   const indexOfLastItem = pagination.page * pagination.perPage;
   const indexOfFirstItem = indexOfLastItem - pagination.perPage;
 
-  const formattedSearch = search.toLowerCase();
+  const formattedSearch = search;
 
   if (search !== '') {
     try {
@@ -39,7 +39,7 @@ export default async function handler(
           { count: 'exact' }
         )
         .or(
-          `first_name.ilike.${formattedSearch},last_name.ilike.${formattedSearch},village.ilike.${formattedSearch},parish.ilike.${formattedSearch},discharge_status.ilike.${formattedSearch},disease.ilike.${formattedSearch},disease.match.${formattedSearch},full_name.ilike.${formattedSearch},title.ilike.${formattedSearch},title.match.${formattedSearch}`
+          `first_name.ilike.${formattedSearch},last_name.ilike.${formattedSearch},full_name.ilike.${formattedSearch},village.ilike.${formattedSearch},parish.ilike.${formattedSearch},discharge_status.ilike.${formattedSearch},disease.ilike.${formattedSearch},disease.match.${formattedSearch},full_name.ilike.${formattedSearch},title.match.${formattedSearch},title.ilike.${formattedSearch}`
         )
         .order('list_order', { ascending: true })
         .range(indexOfFirstItem, indexOfLastItem);

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import Loader from '../components/loaders/Loader';
 import Search from '../components/Search';
 import TableList from '../components/desktop/TableList';
 import Pagination from '../components/Pagination';
@@ -100,6 +99,7 @@ const Kurhuset = () => {
       if (query.page === undefined && query.search === undefined)
         setLoading(false);
       firstLoad.current = true;
+
       if (query.search === undefined) return;
       else setSearchValue(query.search as string);
       getPosts(Number(query.page), query.search as string);
