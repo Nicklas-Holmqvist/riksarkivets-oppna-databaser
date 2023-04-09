@@ -4,6 +4,7 @@ export interface KurhusetListItem {
   date_of_enrollment: string;
   first_name: string;
   last_name: string;
+  full_name: string;
   age: string;
   title: string;
   family: string;

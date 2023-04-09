@@ -59,8 +59,7 @@ const ExtendedItemInfo: React.FC<ExtendedItemInfoProps> = ({
       ) : (
         <>
           <h3>
-            <Span>Nummer {item[0].number}</Span>, {item[0].first_name}{' '}
-            {item[0].last_name !== undefined ? item[0].last_name : ''}
+            <Span>Nummer {item[0].number}</Span>, {item[0].full_name}
           </h3>
           <InformationSection>
             <InformationContainer>

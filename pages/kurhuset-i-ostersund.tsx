@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import Loader from '../components/loaders/Loader';
 import Search from '../components/Search';
 import TableList from '../components/desktop/TableList';
 import Pagination from '../components/Pagination';
@@ -12,7 +11,6 @@ import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
 import LoadingSkeletonDesktop from '../components/loaders/LoadingSkeletonDesktop';
 import LoadingSkeletonMobile from '../components/loaders/LoadingSkeletonMobile';
-import DropdownFilter from '../components/DropdownFilter';
 
 const databaseName = 'kurhuset';
 
@@ -32,9 +30,6 @@ const Kurhuset = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filterValues, setFilterValues] = useState([]);
-
-  console.log(filterValues);
 
   const router = useRouter();
   const { push, pathname, query } = router;
@@ -99,84 +94,12 @@ const Kurhuset = () => {
     getPosts(1, '');
   }, [getPosts, pathname, push]);
 
-  const prevDropdownValueRef = useRef(false);
-  function onDropdownChange(id: string, value: string) {
-    prevDropdownValueRef.current = false;
-    switch (id) {
-      case 'Socken':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            socken: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            socken: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      case 'By':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            by: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            by: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      case 'Titel':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            titel: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            titel: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      case 'Status':
-        if (value === 'reset') {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            utskrivningsstatus: '',
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        } else {
-          setFilterValues((oldState) => ({
-            ...oldState,
-            utskrivningsstatus: value,
-          }));
-          prevDropdownValueRef.current = true;
-          break;
-        }
-      default:
-        console.log('Inget värde!');
-    }
-  }
-
   useEffect(() => {
     if (firstLoad.current === false) {
       if (query.page === undefined && query.search === undefined)
         setLoading(false);
       firstLoad.current = true;
+
       if (query.search === undefined) return;
       else setSearchValue(query.search as string);
       getPosts(Number(query.page), query.search as string);
@@ -238,7 +161,6 @@ const Kurhuset = () => {
           maxLength={25}
         />
       </SearchSection>
-      <DropdownFilter data={[]} id={''} onDropdownChange={onDropdownChange} />
       {loading ? (
         !mobileView ? (
           <LoadingSkeletonDesktop itemsPerPage={itemsPerPage} />
