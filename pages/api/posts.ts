@@ -28,7 +28,7 @@ export default async function handler(
   const indexOfLastItem = pagination.page * pagination.perPage;
   const indexOfFirstItem = indexOfLastItem - pagination.perPage;
 
-  const formattedSearch = search;
+  const formattedSearch = search.toLowerCase();
 
   if (search !== '') {
     try {
