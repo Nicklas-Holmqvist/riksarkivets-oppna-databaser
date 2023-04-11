@@ -29,7 +29,7 @@ const MobileListItem: React.FC<MobileListItemProps> = ({
           {person.number}
         </RowItem>
         <RowItem>
-          <StyledSpan>Namns: </StyledSpan>
+          <StyledSpan>Namn: </StyledSpan>
           {person.first_name + ' '}
           {person.last_name !== undefined ? person.last_name : ''}
         </RowItem>
