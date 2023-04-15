@@ -44,6 +44,16 @@ const Search: React.FC<SearchProps> = ({
     setShowHistory(false);
   }
 
+  function removeOneFromLocalStorage(value: string) {
+    const indexOfLocalStorage = searches.findIndex((search: any) => {
+      return search.value === value;
+    });
+    searches.splice(indexOfLocalStorage, 1);
+    if (searches.length === 0)
+      return localStorage.setItem('searchHistory', JSON.stringify(null));
+    else return localStorage.setItem('searchHistory', JSON.stringify(searches));
+  }
+
   useEffect(() => {
     function handleOutsideClick(event: any) {
       if (historyRef.current && !historyRef.current.contains(event.target)) {
@@ -88,6 +98,7 @@ const Search: React.FC<SearchProps> = ({
           searches={searches}
           handleHistoryEvent={handleHistoryEvent}
           setShowHistory={setShowHistory}
+          removeOneFromLocalStorage={removeOneFromLocalStorage}
         />
       ) : null}
     </Form>
