@@ -31,10 +31,13 @@ const Kurhuset = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const localHistory: SearchesProps[] = JSON.parse(
-    `${localStorage.getItem('searchHistory')}`
+  const [localHistory, setLocalHistory] = useState<SearchesProps[] | null>(
+    null
   );
+
+  useEffect(() => {
+    setLocalHistory(JSON.parse(`${localStorage.getItem('searchHistory')}`));
+  }, [listData]);
 
   const router = useRouter();
   const { push, pathname, query } = router;
