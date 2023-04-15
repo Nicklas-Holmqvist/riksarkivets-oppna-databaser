@@ -8,24 +8,24 @@ export interface SearchesProps {
 }
 
 interface SearchHistoryProps {
-  searches: SearchesProps[];
+  localHistory: SearchesProps[] | null;
   handleHistoryEvent: (oldSearch: string) => void;
   setShowHistory: (showHistory: boolean) => void;
   removeOneFromLocalStorage: (value: string) => void;
 }
 
 const SearchHistory: React.FC<SearchHistoryProps> = ({
-  searches,
+  localHistory,
   handleHistoryEvent,
   setShowHistory,
   removeOneFromLocalStorage,
 }) => {
   return (
     <>
-      {searches !== null ? (
+      {localHistory !== null ? (
         <List>
           <h4>Senaste 10 sökningarna:</h4>
-          {searches.map((search: SearchesProps) => (
+          {localHistory.map((search: SearchesProps) => (
             <ListItem key={search.value}>
               <ListText
                 onClick={() => {

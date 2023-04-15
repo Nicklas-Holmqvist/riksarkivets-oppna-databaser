@@ -36,10 +36,6 @@ const Search: React.FC<SearchProps> = ({
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const historyRef = useRef<HTMLDivElement>(null);
 
-  const searches: SearchesProps[] = JSON.parse(
-    `${localStorage.getItem('searchHistory')}`
-  );
-
   function handleClickEvent(event: string) {
     if (event === 'search') {
       handleSearchEvent();
@@ -105,7 +101,7 @@ const Search: React.FC<SearchProps> = ({
       <HelperText>{helper}</HelperText>
       {showHistory && history !== null ? (
         <SearchHistory
-          searches={searches}
+          localHistory={localHistory}
           handleHistoryEvent={handleHistoryEvent}
           setShowHistory={setShowHistory}
           removeOneFromLocalStorage={removeOneFromLocalStorage}
