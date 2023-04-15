@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { LuX } from '@metamist/lucide-react';
 import styled, { css } from 'styled-components';
-import SearchHistory from './searchHistory';
+import React, { useEffect, useRef, useState } from 'react';
+
+import SearchHistory, { SearchesProps } from './searchHistory';
 
 interface styledTextInput {
   noResult: boolean;
@@ -33,7 +34,9 @@ const Search: React.FC<SearchProps> = ({
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const historyRef = useRef<HTMLDivElement>(null);
 
-  const searches: any = JSON.parse(localStorage.getItem('searchHistory'));
+  const searches: SearchesProps[] = JSON.parse(
+    `${localStorage.getItem('searchHistory')}`
+  );
 
   function handleClickEvent(event: string) {
     if (event === 'search') {

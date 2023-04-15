@@ -9,9 +9,9 @@ import TableList from '../components/desktop/TableList';
 import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
+import { SearchesProps } from '../components/searchHistory';
 import LoadingSkeletonDesktop from '../components/loaders/LoadingSkeletonDesktop';
 import LoadingSkeletonMobile from '../components/loaders/LoadingSkeletonMobile';
-import { SearchesProps } from '../components/searchHistory';
 
 const databaseName = 'kurhuset';
 
@@ -32,7 +32,9 @@ const Kurhuset = () => {
   const [totalInList, setTotalInList] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const localHistory: any = JSON.parse(localStorage.getItem('searchHistory'));
+  const localHistory: SearchesProps[] = JSON.parse(
+    `${localStorage.getItem('searchHistory')}`
+  );
 
   const router = useRouter();
   const { push, pathname, query } = router;
