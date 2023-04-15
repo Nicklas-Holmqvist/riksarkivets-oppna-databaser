@@ -13,6 +13,7 @@ interface SearchProps {
   handleSearchEvent: () => void;
   handleResetEvent: () => void;
   handleHistoryEvent: (oldSearch: string) => void;
+  localHistory: SearchesProps[] | null;
   searchValue: string;
   placeholder: string;
   helper: string;
@@ -25,6 +26,7 @@ const Search: React.FC<SearchProps> = ({
   handleSearchEvent,
   handleResetEvent,
   handleHistoryEvent,
+  localHistory,
   searchValue,
   placeholder,
   helper,
@@ -48,13 +50,18 @@ const Search: React.FC<SearchProps> = ({
   }
 
   function removeOneFromLocalStorage(value: string) {
-    const indexOfLocalStorage = searches.findIndex((search: any) => {
+    if (localHistory === null) return;
+    const indexOfLocalStorage = localHistory.findIndex((search: any) => {
       return search.value === value;
     });
-    searches.splice(indexOfLocalStorage, 1);
-    if (searches.length === 0)
+    localHistory.splice(indexOfLocalStorage, 1);
+    if (localHistory.length === 0)
       return localStorage.setItem('searchHistory', JSON.stringify(null));
-    else return localStorage.setItem('searchHistory', JSON.stringify(searches));
+    else
+      return localStorage.setItem(
+        'searchHistory',
+        JSON.stringify(localHistory)
+      );
   }
 
   useEffect(() => {

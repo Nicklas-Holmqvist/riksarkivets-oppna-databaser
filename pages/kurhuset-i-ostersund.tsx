@@ -199,6 +199,7 @@ const Kurhuset = () => {
           handleSearchEvent={handleSearchEvent}
           handleResetEvent={handleResetEvent}
           handleHistoryEvent={handleHistoryEvent}
+          localHistory={localHistory}
           searchValue={searchValue}
           placeholder="Sök i databas"
           helper="Sökfält: För-, efternamn, titel, socken, by, sjukdom och status"
