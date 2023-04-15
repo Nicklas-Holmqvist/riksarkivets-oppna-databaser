@@ -70,6 +70,13 @@ const List = styled.div`
   background-color: var(--color-white);
   animation: ${animateList} 0.5s forwards;
   box-shadow: 2px 2px 5px var(--color-light-grey);
+  @media (max-width: 800px) {
+    margin: 0;
+    width: auto;
+    right: 1rem;
+    left: 1rem;
+    padding-bottom: 0;
+  }
   h4 {
     padding-bottom: 0.5rem;
     text-align: left;
@@ -77,10 +84,12 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  &:last-child {
+    padding-bottom: 0;
+  }
 `;
 
 const ListText = styled.p`
@@ -88,6 +97,9 @@ const ListText = styled.p`
   text-align: left;
   padding-bottom: 0.4rem;
   cursor: pointer;
+  @media (max-width: 800px) {
+    padding-bottom: 0.8rem;
+  }
   :hover {
     font-weight: 600;
   }
