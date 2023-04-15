@@ -94,6 +94,15 @@ const Kurhuset = () => {
     getPosts(1, '');
   }, [getPosts, pathname, push]);
 
+  const handleHistoryEvent = useCallback(
+    (oldSearch: string) => {
+      hasSearchResult.current = true;
+      push(pathname + `?page=1&search=${oldSearch}`);
+      getPosts(1, oldSearch);
+    },
+    [getPosts, pathname, push]
+  );
+
   useEffect(() => {
     if (firstLoad.current === false) {
       if (query.page === undefined && query.search === undefined)
@@ -154,6 +163,7 @@ const Kurhuset = () => {
           onInputChange={onInputChange}
           handleSearchEvent={handleSearchEvent}
           handleResetEvent={handleResetEvent}
+          handleHistoryEvent={handleHistoryEvent}
           searchValue={searchValue}
           placeholder="Sök i databas"
           helper="Sökfält: För-, efternamn, titel, socken, by, sjukdom och status"

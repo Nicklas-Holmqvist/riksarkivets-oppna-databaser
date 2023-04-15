@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LuX } from '@metamist/lucide-react';
 import styled, { css } from 'styled-components';
+import SearchHistory from './searchHistory';
 
 interface styledTextInput {
   noResult: boolean;
@@ -10,6 +11,7 @@ interface SearchProps {
   onInputChange: (value: string) => void;
   handleSearchEvent: () => void;
   handleResetEvent: () => void;
+  handleHistoryEvent: (oldSearch: string) => void;
   searchValue: string;
   placeholder: string;
   helper: string;
@@ -21,15 +23,43 @@ const Search: React.FC<SearchProps> = ({
   onInputChange,
   handleSearchEvent,
   handleResetEvent,
+  handleHistoryEvent,
   searchValue,
   placeholder,
   helper,
   noResult,
   maxLength,
 }) => {
+  const [showHistory, setShowHistory] = useState<boolean>(false);
+  const historyRef = useRef<HTMLDivElement>(null);
+
+  const history: string[] | [] = ['frösön'];
+
+  function handleClickEvent(event: string) {
+    if (event === 'search') {
+      handleSearchEvent();
+    } else if (event === 'reset') {
+      handleResetEvent();
+    }
+    setShowHistory(false);
+  }
+
+  useEffect(() => {
+    function handleOutsideClick(event: any) {
+      console.log({ event: event.target });
+      if (historyRef.current && !historyRef.current.contains(event.target)) {
+        setShowHistory(false);
+      }
+    }
+
+    // Adding click event listener
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [historyRef]);
+
   return (
     <Form onSubmit={(event) => event.preventDefault()}>
-      <SearchSection>
+      <SearchSection ref={historyRef}>
         <TextInput
           type="text"
           value={searchValue}
@@ -37,20 +67,32 @@ const Search: React.FC<SearchProps> = ({
           maxLength={maxLength}
           placeholder={placeholder}
           noResult={noResult}
+          onFocus={() => setShowHistory(true)}
         />
 
         <Button
-          onClick={searchValue.length === 0 ? undefined : handleSearchEvent}
+          onClick={
+            searchValue.length === 0
+              ? undefined
+              : () => handleClickEvent('search')
+          }
         >
           Sök
         </Button>
-        <ResetButton onClick={handleResetEvent}>
+        <ResetButton onClick={() => handleClickEvent('reset')}>
           {searchValue.length === 0 ? undefined : (
             <LuX color="black" size={18} />
           )}
         </ResetButton>
       </SearchSection>
       <HelperText>{helper}</HelperText>
+      {showHistory && history.length !== 0 ? (
+        <SearchHistory
+          searches={history}
+          handleHistoryEvent={handleHistoryEvent}
+          setShowHistory={setShowHistory}
+        />
+      ) : undefined}
     </Form>
   );
 };
@@ -58,6 +100,7 @@ const Search: React.FC<SearchProps> = ({
 export default Search;
 
 const Form = styled.form`
+  position: relative;
   border-radius: 0.2rem;
   width: 30rem;
   margin: 0 auto;
