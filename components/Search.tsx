@@ -1,6 +1,8 @@
-import React from 'react';
 import { LuX } from '@metamist/lucide-react';
 import styled, { css } from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+
+import SearchHistory, { SearchesProps } from './searchHistory';
 
 interface styledTextInput {
   noResult: boolean;
@@ -10,6 +12,8 @@ interface SearchProps {
   onInputChange: (value: string) => void;
   handleSearchEvent: () => void;
   handleResetEvent: () => void;
+  handleHistoryEvent: (oldSearch: string) => void;
+  localHistory: SearchesProps[] | null;
   searchValue: string;
   placeholder: string;
   helper: string;
@@ -21,15 +25,54 @@ const Search: React.FC<SearchProps> = ({
   onInputChange,
   handleSearchEvent,
   handleResetEvent,
+  handleHistoryEvent,
+  localHistory,
   searchValue,
   placeholder,
   helper,
   noResult,
   maxLength,
 }) => {
+  const [showHistory, setShowHistory] = useState<boolean>(false);
+  const historyRef = useRef<HTMLDivElement>(null);
+
+  function handleClickEvent(event: string) {
+    if (event === 'search') {
+      handleSearchEvent();
+    } else if (event === 'reset') {
+      handleResetEvent();
+    }
+    setShowHistory(false);
+  }
+
+  function removeOneFromLocalStorage(value: string) {
+    if (localHistory === null) return;
+    const indexOfLocalStorage = localHistory.findIndex((search: any) => {
+      return search.value === value;
+    });
+    localHistory.splice(indexOfLocalStorage, 1);
+    if (localHistory.length === 0)
+      return localStorage.setItem('searchHistory', JSON.stringify(null));
+    else
+      return localStorage.setItem(
+        'searchHistory',
+        JSON.stringify(localHistory)
+      );
+  }
+
+  useEffect(() => {
+    function handleOutsideClick(event: any) {
+      if (historyRef.current && !historyRef.current.contains(event.target)) {
+        setShowHistory(false);
+      }
+    }
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [historyRef]);
+
   return (
     <Form onSubmit={(event) => event.preventDefault()}>
-      <SearchSection>
+      <SearchSection ref={historyRef}>
         <TextInput
           type="text"
           value={searchValue}
@@ -37,20 +80,33 @@ const Search: React.FC<SearchProps> = ({
           maxLength={maxLength}
           placeholder={placeholder}
           noResult={noResult}
+          onFocus={() => setShowHistory(true)}
         />
 
         <Button
-          onClick={searchValue.length === 0 ? undefined : handleSearchEvent}
+          onClick={
+            searchValue.length === 0
+              ? undefined
+              : () => handleClickEvent('search')
+          }
         >
           Sök
         </Button>
-        <ResetButton onClick={handleResetEvent}>
+        <ResetButton onClick={() => handleClickEvent('reset')}>
           {searchValue.length === 0 ? undefined : (
             <LuX color="black" size={18} />
           )}
         </ResetButton>
       </SearchSection>
       <HelperText>{helper}</HelperText>
+      {showHistory && history !== null ? (
+        <SearchHistory
+          localHistory={localHistory}
+          handleHistoryEvent={handleHistoryEvent}
+          setShowHistory={setShowHistory}
+          removeOneFromLocalStorage={removeOneFromLocalStorage}
+        />
+      ) : null}
     </Form>
   );
 };
@@ -58,6 +114,7 @@ const Search: React.FC<SearchProps> = ({
 export default Search;
 
 const Form = styled.form`
+  position: relative;
   border-radius: 0.2rem;
   width: 30rem;
   margin: 0 auto;

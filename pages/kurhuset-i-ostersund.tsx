@@ -9,6 +9,7 @@ import TableList from '../components/desktop/TableList';
 import Pagination from '../components/Pagination';
 import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
+import { SearchesProps } from '../components/searchHistory';
 import LoadingSkeletonDesktop from '../components/loaders/LoadingSkeletonDesktop';
 import LoadingSkeletonMobile from '../components/loaders/LoadingSkeletonMobile';
 
@@ -30,6 +31,13 @@ const Kurhuset = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [totalInList, setTotalInList] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [localHistory, setLocalHistory] = useState<SearchesProps[] | null>(
+    null
+  );
+
+  useEffect(() => {
+    setLocalHistory(JSON.parse(`${localStorage.getItem('searchHistory')}`));
+  }, [listData]);
 
   const router = useRouter();
   const { push, pathname, query } = router;
@@ -50,6 +58,31 @@ const Kurhuset = () => {
     [searchValue]
   );
 
+  const handleLocalStorage = useCallback(
+    (value: string, count: number) => {
+      const newSearchValue = { value: value, count: count };
+      if (value === '') return;
+      if (localHistory === null)
+        return localStorage.setItem(
+          'searchHistory',
+          JSON.stringify([newSearchValue])
+        );
+      if (
+        localHistory.find((value: SearchesProps) => value.value === searchValue)
+      )
+        return null;
+      if (localHistory.length === 10) {
+        localHistory.shift();
+        localHistory.push(newSearchValue);
+        localStorage.setItem('searchHistory', JSON.stringify(localHistory));
+      } else {
+        localHistory.push(newSearchValue);
+        localStorage.setItem('searchHistory', JSON.stringify(localHistory));
+      }
+    },
+    [localHistory, searchValue]
+  );
+
   const getPosts = useCallback(
     async (page: number, search: string) => {
       setLoading(true);
@@ -67,9 +100,11 @@ const Kurhuset = () => {
       setTotalInList(data.count);
       setListData(data.data);
       setLoading(false);
+      handleLocalStorage(searchValue, data.count);
+
       return data;
     },
-    [itemsPerPage]
+    [handleLocalStorage, itemsPerPage, searchValue]
   );
 
   const handlePagination = useCallback(
@@ -93,6 +128,15 @@ const Kurhuset = () => {
     prevSearchValue.current = '';
     getPosts(1, '');
   }, [getPosts, pathname, push]);
+
+  const handleHistoryEvent = useCallback(
+    (oldSearch: string) => {
+      hasSearchResult.current = true;
+      push(pathname + `?page=1&search=${oldSearch}`);
+      getPosts(1, oldSearch);
+    },
+    [getPosts, pathname, push]
+  );
 
   useEffect(() => {
     if (firstLoad.current === false) {
@@ -154,6 +198,8 @@ const Kurhuset = () => {
           onInputChange={onInputChange}
           handleSearchEvent={handleSearchEvent}
           handleResetEvent={handleResetEvent}
+          handleHistoryEvent={handleHistoryEvent}
+          localHistory={localHistory}
           searchValue={searchValue}
           placeholder="Sök i databas"
           helper="Sökfält: För-, efternamn, titel, socken, by, sjukdom och status"
