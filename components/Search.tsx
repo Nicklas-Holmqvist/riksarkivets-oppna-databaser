@@ -46,7 +46,6 @@ const Search: React.FC<SearchProps> = ({
 
   useEffect(() => {
     function handleOutsideClick(event: any) {
-      console.log({ event: event.target });
       if (historyRef.current && !historyRef.current.contains(event.target)) {
         setShowHistory(false);
       }

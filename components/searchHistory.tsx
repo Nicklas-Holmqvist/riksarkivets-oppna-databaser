@@ -1,8 +1,13 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+export interface SearchesProps {
+  value: string;
+  count: number;
+}
+
 interface SearchHistoryProps {
-  searches: string[];
+  searches: SearchesProps[];
   handleHistoryEvent: (oldSearch: string) => void;
   setShowHistory: (showHistory: boolean) => void;
 }
@@ -16,16 +21,16 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({
     <>
       {searches !== null ? (
         <List>
-          <h4>Senaste sökningarna:</h4>
-          {searches.map((search) => (
+          <h4>Senaste 10 sökningarna:</h4>
+          {searches.map((search: SearchesProps) => (
             <ListText
-              key={search}
+              key={search.value}
               onClick={() => {
-                handleHistoryEvent(search);
+                handleHistoryEvent(search.value);
                 setShowHistory(false);
               }}
             >
-              {search}
+              {search.value} - {search.count} träffar
             </ListText>
           ))}
         </List>
@@ -50,7 +55,7 @@ const List = styled.div`
   width: 29rem;
   top: 2.8rem;
   margin-left: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.1rem 1rem;
   z-index: 500;
   background-color: var(--color-white);
   animation: ${animateList} 0.5s forwards;
@@ -63,7 +68,7 @@ const List = styled.div`
 const ListText = styled.p`
   font-style: italic;
   text-align: left;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.4rem;
   cursor: pointer;
   :hover {
     font-weight: 600;

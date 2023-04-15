@@ -11,6 +11,7 @@ import NoSearchResult from '../components/NoSearchResult';
 import { KurhusetList } from '../types/KurhusetIOstersund';
 import LoadingSkeletonDesktop from '../components/loaders/LoadingSkeletonDesktop';
 import LoadingSkeletonMobile from '../components/loaders/LoadingSkeletonMobile';
+import { SearchesProps } from '../components/searchHistory';
 
 const databaseName = 'kurhuset';
 
@@ -31,6 +32,8 @@ const Kurhuset = () => {
   const [totalInList, setTotalInList] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const localHistory: any = JSON.parse(localStorage.getItem('searchHistory'));
+
   const router = useRouter();
   const { push, pathname, query } = router;
 
@@ -50,15 +53,30 @@ const Kurhuset = () => {
     [searchValue]
   );
 
-  const handleLocalStorage = useCallback((searchValue: string) => {
-    const localHistory: any = JSON.parse(localStorage.getItem('searchHistory'));
-
-    if (localHistory === null) return [searchValue];
-    else {
-      localHistory.push(searchValue);
-      return localHistory;
-    }
-  }, []);
+  const handleLocalStorage = useCallback(
+    (value: string, count: number) => {
+      const newSearchValue = { value: value, count: count };
+      if (value === '') return;
+      if (localHistory === null)
+        return localStorage.setItem(
+          'searchHistory',
+          JSON.stringify([newSearchValue])
+        );
+      if (
+        localHistory.find((value: SearchesProps) => value.value === searchValue)
+      )
+        return null;
+      if (localHistory.length === 10) {
+        localHistory.shift();
+        localHistory.push(newSearchValue);
+        localStorage.setItem('searchHistory', JSON.stringify(localHistory));
+      } else {
+        localHistory.push(newSearchValue);
+        localStorage.setItem('searchHistory', JSON.stringify(localHistory));
+      }
+    },
+    [localHistory, searchValue]
+  );
 
   const getPosts = useCallback(
     async (page: number, search: string) => {
@@ -77,9 +95,11 @@ const Kurhuset = () => {
       setTotalInList(data.count);
       setListData(data.data);
       setLoading(false);
+      handleLocalStorage(searchValue, data.count);
+
       return data;
     },
-    [itemsPerPage]
+    [handleLocalStorage, itemsPerPage, searchValue]
   );
 
   const handlePagination = useCallback(
@@ -93,12 +113,8 @@ const Kurhuset = () => {
   const handleSearchEvent = useCallback(() => {
     hasSearchResult.current = true;
     push(pathname + `?page=1&search=${searchValue}`);
-    localStorage.setItem(
-      'searchHistory',
-      JSON.stringify(handleLocalStorage(searchValue))
-    );
     getPosts(1, searchValue);
-  }, [getPosts, handleLocalStorage, pathname, push, searchValue]);
+  }, [getPosts, pathname, push, searchValue]);
 
   const handleResetEvent = useCallback(() => {
     push(pathname + '?page=1&search=');
