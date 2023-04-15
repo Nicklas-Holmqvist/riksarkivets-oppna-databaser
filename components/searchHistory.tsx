@@ -13,20 +13,24 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({
   setShowHistory,
 }) => {
   return (
-    <List>
-      <h4>Senaste sökningarna:</h4>
-      {searches.map((search) => (
-        <ListText
-          key={search}
-          onClick={() => {
-            handleHistoryEvent(search);
-            setShowHistory(false);
-          }}
-        >
-          {search}
-        </ListText>
-      ))}
-    </List>
+    <>
+      {searches !== null ? (
+        <List>
+          <h4>Senaste sökningarna:</h4>
+          {searches.map((search) => (
+            <ListText
+              key={search}
+              onClick={() => {
+                handleHistoryEvent(search);
+                setShowHistory(false);
+              }}
+            >
+              {search}
+            </ListText>
+          ))}
+        </List>
+      ) : null}
+    </>
   );
 };
 
@@ -46,7 +50,7 @@ const List = styled.div`
   width: 29rem;
   top: 2.8rem;
   margin-left: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   z-index: 500;
   background-color: var(--color-white);
   animation: ${animateList} 0.5s forwards;
@@ -61,4 +65,7 @@ const ListText = styled.p`
   text-align: left;
   padding-bottom: 0.2rem;
   cursor: pointer;
+  :hover {
+    font-weight: 600;
+  }
 `;

@@ -33,7 +33,7 @@ const Search: React.FC<SearchProps> = ({
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const historyRef = useRef<HTMLDivElement>(null);
 
-  const history: string[] | [] = ['frösön'];
+  const searches: any = JSON.parse(localStorage.getItem('searchHistory'));
 
   function handleClickEvent(event: string) {
     if (event === 'search') {
@@ -51,8 +51,6 @@ const Search: React.FC<SearchProps> = ({
         setShowHistory(false);
       }
     }
-
-    // Adding click event listener
     document.addEventListener('click', handleOutsideClick);
     return () => document.removeEventListener('click', handleOutsideClick);
   }, [historyRef]);
@@ -86,13 +84,13 @@ const Search: React.FC<SearchProps> = ({
         </ResetButton>
       </SearchSection>
       <HelperText>{helper}</HelperText>
-      {showHistory && history.length !== 0 ? (
+      {showHistory && history !== null ? (
         <SearchHistory
-          searches={history}
+          searches={searches}
           handleHistoryEvent={handleHistoryEvent}
           setShowHistory={setShowHistory}
         />
-      ) : undefined}
+      ) : null}
     </Form>
   );
 };

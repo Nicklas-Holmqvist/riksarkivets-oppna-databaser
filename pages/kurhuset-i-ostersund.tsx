@@ -50,6 +50,16 @@ const Kurhuset = () => {
     [searchValue]
   );
 
+  const handleLocalStorage = useCallback((searchValue: string) => {
+    const localHistory: any = JSON.parse(localStorage.getItem('searchHistory'));
+
+    if (localHistory === null) return [searchValue];
+    else {
+      localHistory.push(searchValue);
+      return localHistory;
+    }
+  }, []);
+
   const getPosts = useCallback(
     async (page: number, search: string) => {
       setLoading(true);
@@ -83,8 +93,12 @@ const Kurhuset = () => {
   const handleSearchEvent = useCallback(() => {
     hasSearchResult.current = true;
     push(pathname + `?page=1&search=${searchValue}`);
+    localStorage.setItem(
+      'searchHistory',
+      JSON.stringify(handleLocalStorage(searchValue))
+    );
     getPosts(1, searchValue);
-  }, [getPosts, pathname, push, searchValue]);
+  }, [getPosts, handleLocalStorage, pathname, push, searchValue]);
 
   const handleResetEvent = useCallback(() => {
     push(pathname + '?page=1&search=');
