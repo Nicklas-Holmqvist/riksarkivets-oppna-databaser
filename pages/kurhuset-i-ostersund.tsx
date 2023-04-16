@@ -35,10 +35,6 @@ const Kurhuset = () => {
     null
   );
 
-  useEffect(() => {
-    setLocalHistory(JSON.parse(`${localStorage.getItem('searchHistory')}`));
-  }, [listData]);
-
   const router = useRouter();
   const { push, pathname, query } = router;
 
@@ -139,6 +135,10 @@ const Kurhuset = () => {
   );
 
   useEffect(() => {
+    setLocalHistory(JSON.parse(`${localStorage.getItem('searchHistory')}`));
+  }, [loading]);
+
+  useEffect(() => {
     if (firstLoad.current === false) {
       if (query.page === undefined && query.search === undefined)
         setLoading(false);
@@ -199,6 +199,7 @@ const Kurhuset = () => {
           handleSearchEvent={handleSearchEvent}
           handleResetEvent={handleResetEvent}
           handleHistoryEvent={handleHistoryEvent}
+          handleSetLocalHistory={setLocalHistory}
           localHistory={localHistory}
           searchValue={searchValue}
           placeholder="Sök i databas"

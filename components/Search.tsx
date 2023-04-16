@@ -13,6 +13,7 @@ interface SearchProps {
   handleSearchEvent: () => void;
   handleResetEvent: () => void;
   handleHistoryEvent: (oldSearch: string) => void;
+  handleSetLocalHistory: (localHistory: SearchesProps[] | null) => void;
   localHistory: SearchesProps[] | null;
   searchValue: string;
   placeholder: string;
@@ -26,6 +27,7 @@ const Search: React.FC<SearchProps> = ({
   handleSearchEvent,
   handleResetEvent,
   handleHistoryEvent,
+  handleSetLocalHistory,
   localHistory,
   searchValue,
   placeholder,
@@ -51,13 +53,16 @@ const Search: React.FC<SearchProps> = ({
       return search.value === value;
     });
     localHistory.splice(indexOfLocalStorage, 1);
-    if (localHistory.length === 0)
+    if (localHistory.length === 0) {
+      handleSetLocalHistory(null);
       return localStorage.setItem('searchHistory', JSON.stringify(null));
-    else
+    } else {
+      handleSetLocalHistory(localHistory);
       return localStorage.setItem(
         'searchHistory',
         JSON.stringify(localHistory)
       );
+    }
   }
 
   useEffect(() => {
