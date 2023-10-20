@@ -14,7 +14,7 @@ Tech-stack:
 * Supabase
 
 ## Figma design
-i did a basic design in Figma as a guideline and the colors I picked from Riksarkivets own page.
+I did a basic design in Figma as a guideline and the colors I picked from Riksarkivets own page.
 
 ![image](https://user-images.githubusercontent.com/70426543/216139853-ae63f32c-1bf8-46ac-97db-c291444d835d.png)
 
@@ -34,4 +34,4 @@ i did a basic design in Figma as a guideline and the colors I picked from Riksar
 
 Error page
 
-[Vercel-sida](https://historiska-databaser.vercel.app/kurhuset-i-ostersund?page=1)
+[Vercel-page](https://historiska-databaser.vercel.app/kurhuset-i-ostersund?page=1)
