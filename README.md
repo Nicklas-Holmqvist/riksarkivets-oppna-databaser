@@ -21,14 +21,16 @@ I did a basic design in Figma as a guideline and the colors I picked from Riksar
 ![image](https://user-images.githubusercontent.com/70426543/216139966-d64b2221-a1b6-480e-b28d-a0e74eddb19a.png)
 
 ## Features
+* The search value and paginationpage is stored in url for easy sharing
 * Searchable fields: First- and lastname, title, parish, village, sickness and status
 * Skeleton load in list
 * Patient opens in the list and make a api fetch for the data
 
-## Wishlist
+## Wishlist & have to fix
 * Sortby
 * Remove all the searches and just have names and then have filter
 * Add more datalists
+* FIX - Remove doublefetch
 
 ## Last completed task
 
